@@ -16,19 +16,40 @@ geometry: margin=1in
 
 # Table of Contents
 
+## Introduction to R and RNG descriptive/graph data summary: Haim
+
++ Summary statistics
++ Boxplots / Violin plots
+
+Homework ideas:
+
++ Generate data and summarize them
+
+## Paradoxes: HaiYing
+
++ Birthday
++ Monte Hall
++ Birth gender
++ Simpson 
+
+Homework ideas:
+
+## Central Limit Theorem / Law of Large Number: Haim
+
++ Statistics: mean/variance
++ Uncertainty
++ Limit to normal
+
+## Sampling design; data collection: HaiYing
+
 ## Probability versus Statistics
 
-## Central Limit Theorem
+## Hide and Seek: Estimation (point/interval): Jun
 
-## Hide and Seek: Estimation (point/interval)
++ Robustness-Efficiency Tradeoff
++ Bias-Variance Tradeoff
 
-## Robustness-Efficiency Tradeoff
-
-## Bias-Variance Tradeoff
-
-## Hypothesis Testing
-
-## Paradoxes
+## Hypothesis Testing: Jun
 
 ## EDA (visualizaiton and maps)
 
