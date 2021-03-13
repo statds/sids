@@ -71,14 +71,68 @@ Next, go the Rstudio download website \url{https://rstudio.com/products/rstudio/
 \includegraphics[scale=0.4]{RstudioMain.png}
 \end{center}
 
-\begin{shaded}
-\textbf{Some highlighted text}\newline
-The velocity at any point, \textit{P} (position, \textit{r}) is given by:
-\begin{equation}
-v = \omega\  x \ r
-\end{equation}
-\end{shaded}
+The left-hand side of the screen contains the Console tab. Notice the $>$ sign (called the `prompt'). When you see this character, it means the R is ready for the next command. Put the cursor there, and then type\\
+\begin{tcolorbox}[colback=gray!20,boxrule=0pt,frame hidden]
+\begin{verbatim}
+2+2
+\end{verbatim}
+\end{tcolorbox}
+and hit Enter on the keyboard. You should get the following on the Console:
+\begin{tcolorbox}[colback=gray!20,boxrule=0pt,frame hidden]
+\begin{verbatim}
+[1] 4
+\end{verbatim}
+\end{tcolorbox}
 
+Notice the top-right part of the Rstudio window. You should see an `Environment' and a `History' tab. Click on History. Notice that your previous input appears there. Try entering another calculation or command and see that they appear in the session's history. For example, try entering the following (without the prompt sign)
+ \begin{tcolorbox}[colback=gray!20,boxrule=0pt,frame hidden]
+\begin{verbatim}
+> 3^5
+> date()
+\end{verbatim}
+\end{tcolorbox}
+
+Click on the Environment tab. It should be empty when you start R for the first time. In the Console, type
+\begin{tcolorbox}[colback=gray!20,boxrule=0pt,frame hidden]
+\begin{verbatim}
+> myFirstVariable <- factorial(5)
+\end{verbatim}
+\end{tcolorbox}
+Notice that nothing was printed in the Console, but the Environment tab now contains a table with one row, with `myFirstVariable' appearing in the cell on the left, and its value (120) on the right. Any object appearing in the Environment tab is available to you throughout your R session, and you don't have to recalculate it. For example, you can try the following:
+\begin{tcolorbox}[colback=gray!20,boxrule=0pt,frame hidden]
+\begin{verbatim}
+> myFirstVariable/6
+\end{verbatim}
+\end{tcolorbox}
+The Console should now display 20.
+
+The lower-right side of the IDE contains a file browser (the Files tab), information about installed packages (more about it later), and any plot generated during the R session. It also contains a Help tab, to obtain information about built-in functions.
+
+Finally, before we move on to the next section, in the Rstudio top menu, click on File, then on New File, and then on R Script. Alternatively, you can click on little green `+' icon in the top-left part of the IDE. This will split the left side of the Rstudio IDE into two parts -- the lower part will contain the Console, and the top part will contain a tab labeled `Untitled1'. This is were you can enter R code which you will save to a permanent file, and re-use later.
+For example, enter the following in the blank space in the Untitled1 tab:
+\begin{tcolorbox}[colback=gray!20,boxrule=0pt,frame hidden]
+\begin{verbatim}
+# This is my first R program
+cat('Hello, World!\n')
+\end{verbatim}
+\end{tcolorbox}
+Then, click on File $>$ Save, and in the `Save As' box enter FirstProgram.R and click the Save button.
+Notice that the tab name is now FirstProgram.R.
+
+In that part of the window, there should now be a small button called Source. Click on it. The program will be executed and the output will be shown in the Console. You can also execute individual lines in the source code. Just put the cursor anywhere in that line, and click on the Run button (which is near the Source button.)
+
+That's it. In the rest of these notes we will see more features of Rstudio, but you are now ready to start learning programming in R.
+
+\section{Basic Operations in R}
+
+%\begin{shaded}
+%\textbf{Some highlighted text}\newline
+%The velocity at any point, \textit{P} (position, \textit{r}) is given by:
+%\begin{equation}
+%v = \omega\  x \ r
+%\end{equation}
+%\end{shaded}
+%
 %Consider an inertial reference frame (i.e not accelerating) which will be denoted S$_0$, and a accelerating reference frame, \textit{S} that has an acceleration of \textit{A}. 
 %\begin{note}
 %\textbf{Capital Letters refer to the accelerating reference frame \textit{S} while lowercase letters refer to the inertial reference frame S$_0$}

@@ -48,6 +48,6 @@ Thumbs.db
 *.mov
 *.wmv
 
-.out
-.aux
-.synctex.gz
+*.out
+*.aux
+*.synctex.gz
