@@ -51,3 +51,5 @@ Thumbs.db
 *.out
 *.aux
 *.synctex.gz
+
+_minted-*
