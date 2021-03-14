@@ -47,8 +47,6 @@
 }
 
 
-
-
 \begin{document}
 \setcounter{section}{0}
 \title{Getting Ready}
@@ -124,6 +122,36 @@ In that part of the window, there should now be a small button called Source. Cl
 That's it. In the rest of these notes we will see more features of Rstudio, but you are now ready to start learning programming in R.
 
 \section{Basic Operations in R}
+In this course, much of the learning will be done by using simulated data, so let's start by learning how to generate data. The basic function to generate random data is \texttt{runif} which is used to draw random numbers, uniformly between 0 and 1. In the following example we create 10,000 random draws from a uniform distribution, keep these numbers in a variable called simData, and plot a histogram to show the distribution of the data we have generated. The \texttt{set.seed} function is used to ensure that every time we run this code, we will get the same set of random numbers. This is called \textit{reproducible code}. 
+\begin{tcolorbox}[colback=gray!20,boxrule=0pt,frame hidden]
+\begin{verbatim}
+# Generate 10,000 points from a uniform distribution
+set.seed(210313)
+n <- 10000
+simData <- runif(n)
+hist(simData)
+\end{verbatim}
+\end{tcolorbox}
+This will produce the following:
+\begin{center}
+\includegraphics[scale=0.3]{Note01HistUnif.png}
+\end{center}
+From the range and the flatness of the histogram we can see that the generated data is indeed uniform on [0,1]. The \texttt{runif} function can be used to draw random numbers uniformly on any finite interval. For example, if we want our random numbers to be in the interval [1,5] we will run the following code:
+\begin{tcolorbox}[colback=gray!20,boxrule=0pt,frame hidden]
+\begin{verbatim}
+simData <- runif(n, min=1, max=5)
+\end{verbatim}
+\end{tcolorbox}
+Try it, and draw the histogram as in the previous example.
+
+
+
+%Introduction to R and RNG descriptive/graph data summary: Haim
+%    Summary statistics
+%    Boxplots / Violin plots
+%Homework ideas:
+%    Generate data and summarize them
+
 
 %\begin{shaded}
 %\textbf{Some highlighted text}\newline
