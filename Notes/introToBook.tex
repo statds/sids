@@ -144,6 +144,17 @@ simData <- runif(n, min=1, max=5)
 \end{tcolorbox}
 Try it, and draw the histogram as in the previous example.
 
+From a random draw of a uniform distribution, we can generate random numbers from other distributions. For example, we want to simulate coin flips, and count the number of Heads that we get. Let's say we want to simulate 200 coin tosses. We will draw 200 random numbers from a uniform distribution, and decide that we got Heads in the $i$-th toss if the $i$-the random number is less than 0.5, and Tails otherwise.
+Try the following code multiple times. What do you observe? We will discuss it further in a different lecture.
+\begin{tcolorbox}[colback=gray!20,boxrule=0pt,frame hidden]
+\begin{verbatim}
+n <- 200
+cat("Number of Heads is: ", sum((runif(n) < 0.5)), "\n")
+\end{verbatim}
+\end{tcolorbox}
+
+Statistical inference is based on a mental exercise in which we ask, if we could repeat the same experiment many, many times, what would we see?
+
 
 
 %Introduction to R and RNG descriptive/graph data summary: Haim
