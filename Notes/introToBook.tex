@@ -144,22 +144,28 @@ Try it, and draw the histogram as in the previous example.
 From a random draw of a uniform distribution, we can generate random numbers from other distributions. For example, we want to simulate coin flips, and count the number of Heads that we get. Let's say we want to simulate 200 coin tosses. We will draw 200 random numbers from a uniform distribution, and decide that we got Heads in the $i$-th toss if the $i$-the random number is less than 0.5, and Tails otherwise.
 Try the following code multiple times. What do you observe? We will discuss it further in a different lecture.
 \begin{minted}[frame=lines, framesep=2mm, baselinestretch=1.2, bgcolor=gray!20,fontsize=\footnotesize,linenos]{R}
-n <- 200
-cat("Number of Heads is: ", sum((runif(n) < 0.5)), "\n")
+n.trials <- 200
+cat("Number of Heads is: ", sum((runif(n.trials) < 0.5)), "\n")
 \end{minted}
 
 Statistical inference is based on a mental exercise in which we ask, if we could repeat the same experiment infinitely many times, what would we see? With simulations, we can get a good approximation. For example, the 200 coin-tosses experiment can be repeated, say, 1,000 times. One way is to use loops, like in the following example:
 \begin{minted}[frame=lines, framesep=2mm, baselinestretch=1.2, bgcolor=gray!20,fontsize=\footnotesize,linenos]{R}
-n <- 200  # the number of coin-tosses in each experiment
+n.trials <- 200  # the number of coin-tosses in each experiment
 reps <- 10000  # the number of experiments
 Heads <- rep(0, reps)  # A vector to store the results (initialize with 0s)
 for (i in 1:reps) {
-  Heads[i] <- sum((runif(n) < 0.5))
+  Heads[i] <- sum((runif(n.trials) < 0.5))
 }
 hist(Heads, breaks=30)
 \end{minted}
-We've used a \texttt{for} loop, with an index variable called \texttt{i} which runs from 1 to 10,000. In each iteration we draw $n=200$ random numbers from a uniform distribution. For each value which turned out to be less than 0.5, \texttt{runif(n) < 0.5} is set to TRUE. Otherwise, \texttt{runif(n) < 0.5} is set to FALSE. When we use the \texttt{sum} function, the TRUE values count as 1 each, while FALSE ones counts as 0, so the result is the number of Heads. The results is stored in the $i$-th position in the vector we called \texttt{Heads}.
+We've used a \texttt{for} loop, with an index variable called \texttt{i} which runs from 1 to 10,000. In each iteration we draw $n.trials=200$ random numbers from a uniform distribution. For each value which turned out to be less than 0.5, \texttt{runif(n.trials) < 0.5} is set to TRUE. Otherwise, \texttt{runif(n.trials) < 0.5} is set to FALSE. When we use the \texttt{sum} function, the TRUE values count as 1 each, while FALSE ones counts as 0, so the result is the number of Heads. The results is stored in the $i$-th position in the vector we called \texttt{Heads}.
 
+Using the uniform distribution, we have created a different distribution, called the `binomial'. The mathematical notation is $Bin(N, p)$ where $N$ is the number of trials where in each trial there can be exactly two outcomes (e.g., coin tosses), and $p$ is the probability of the first possible outcome (e.g., Head), and $1-p$ is the probability of the second possible outcome.
+
+R has a built-in function to generate random numbers from many different distributions, so the code above can be replaced by the following, which uses the \texttt{rbinom} function:
+\begin{minted}[frame=lines, framesep=2mm, baselinestretch=1.2, bgcolor=gray!20,fontsize=\footnotesize,linenos]{R}
+Heads <- rbinom(reps, n.trials, 0.5)
+\end{minted}
 
 %Introduction to R and RNG descriptive/graph data summary: Haim
 %    Summary statistics
