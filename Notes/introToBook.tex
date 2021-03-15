@@ -161,13 +161,14 @@ hist(Heads, breaks=30)
 \end{minted}
 We've used a \texttt{for} loop, with an index variable called \texttt{i} which runs from 1 to 100. In each iteration we draw $n.trials=200$ random numbers from a uniform distribution. For each value which turned out to be less than 0.5, \texttt{runif(n.trials) < 0.5} is set to TRUE. Otherwise, \texttt{runif(n.trials) < 0.5} is set to FALSE. When we use the \texttt{sum} function, the TRUE values count as 1 each, while FALSE ones counts as 0, so the result is the number of Heads. The results is stored in the $i$-th position in the vector we called \texttt{Heads}.
 
-Using the uniform distribution, we have created a different distribution, called the `binomial'. The mathematical notation is $Bin(N, p)$ where $N$ is the number of trials where in each trial there can be exactly two outcomes (e.g., coin tosses), and $p$ is the probability of the first possible outcome (e.g., Head), and $1-p$ is the probability of the second possible outcome.
+Using the uniform distribution, we have created a random draw from a different distribution, called the `binomial'. The mathematical notation is $Bin(N, p)$ where $N$ is the number of trials such that in each trial there can be exactly two outcomes (e.g., coin tosses), and $p$ is the probability of the first possible outcome (e.g., Head), and $1-p$ is the probability of the second possible outcome.
 
 R has a built-in function to generate random numbers from many different distributions, so the code above can be replaced by the following, which uses the \texttt{rbinom} function:
 \begin{minted}[frame=lines, framesep=2mm, baselinestretch=1.2, bgcolor=gray!20,fontsize=\footnotesize,linenos]{R}
 Heads <- rbinom(reps, n.trials, 0.5)
 Hist(Heads)
 \end{minted}
+
 
 Exercises:
 \begin{enumerate}
@@ -177,7 +178,16 @@ Exercises:
 \end{enumerate}
 
 \subsection{Summary statistics}
-
+Let's generate some data:
+\begin{minted}[frame=lines, framesep=2mm, baselinestretch=1.2, bgcolor=gray!20,fontsize=\footnotesize,linenos]{R}
+n <- 1000
+lambda <- 10
+x <- -log(runif(n))/lambda
+\end{minted}
+We will introduce some statistical functions to summarize data. The most commonly used one is the mean (a.k.a. the average), $\overline{x}$:
+$$\overline{x}=\frac{x_1+\ldots+x_n}{n}\,.$$
+Other ways to estimate some sort of `central tendency' of a distribution are:
+ (i) the trimmed mean, which is similar to the mean, except that the smallest and largest $p\cdot 100\%$  of the values are excluded from the computation. For example, if we take $p=0.1$ with the simulated data, only 800 data points are used in the calculation of the trimmed mean; (ii) The median is a number, $x_{0.5}$, such that half the data points are greater than $x_{0.5}$ and half are less than or equal to $x_{0.5}$.
 
 
 %Introduction to R and RNG descriptive/graph data summary: Haim
