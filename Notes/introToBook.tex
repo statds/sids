@@ -180,15 +180,26 @@ Exercises:
 \subsection{Summary statistics}
 Let's generate some data:
 \begin{minted}[frame=lines, framesep=2mm, baselinestretch=1.2, bgcolor=gray!20,fontsize=\footnotesize,linenos]{R}
-n <- 1000
+n <- 10000
 lambda <- 10
 x <- -log(runif(n))/lambda
 \end{minted}
 We will introduce some statistical functions to summarize data. The most commonly used one is the mean (a.k.a. the average), $\overline{x}$:
 $$\overline{x}=\frac{x_1+\ldots+x_n}{n}\,.$$
 Other ways to estimate some sort of `central tendency' of a distribution are:
- (i) the trimmed mean, which is similar to the mean, except that the smallest and largest $p\cdot 100\%$  of the values are excluded from the computation. For example, if we take $p=0.1$ with the simulated data, only 800 data points are used in the calculation of the trimmed mean; (ii) The median is a number, $x_{0.5}$, such that half the data points are greater than $x_{0.5}$ and half are less than or equal to $x_{0.5}$.
+ (i) the trimmed mean, which is similar to the mean, except that the smallest and largest $p\cdot 100\%$  of the values are excluded from the computation. For example, if we take $p=0.1$ with the simulated data, only 800 data points are used in the calculation of the trimmed mean; (ii) The median is a number, $x_{0.5}$, such that half the data points are greater than $x_{0.5}$ and half are less than or equal to $x_{0.5}$. 
 
+Try the following:
+\begin{minted}[frame=lines, framesep=2mm, baselinestretch=1.2, bgcolor=gray!20,fontsize=\footnotesize,linenos]{R}
+mean(x)mean(x, trim=0.1)median(x)
+\end{minted}
+
+var, sd, IQR, fivenum, summary, boxplot, quantile, 
+discrete data
+matrices
+density plot
+Q-Q plot
+more distributions - Poisson, normal, beta, gamma, lognormal
 
 %Introduction to R and RNG descriptive/graph data summary: Haim
 %    Summary statistics
