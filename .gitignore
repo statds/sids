@@ -53,3 +53,4 @@ Thumbs.db
 *.synctex.gz
 
 _minted-*
+.Rproj.user
