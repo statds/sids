@@ -3,6 +3,14 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
+# Temps from compiling this book
+_book/
+_bookdown_files/
+
+# R temporary files
+.Rhistory
+.RData
+
 # Node artifact files
 node_modules/
 dist/
