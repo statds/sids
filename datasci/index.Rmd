@@ -1,34 +1,57 @@
 --- 
-title: "A Minimal Book Example"
-author: "Yihui Xie"
+title: "Data Science for Kids"
+author: "Haim Bar, HaiYing Wang, and Jun Yan"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+description: "This is an introduction of data science for kids with hands-on
+  simulation experiments. Early materials were prepared for a pre-college 
+  camp in summer 2021 at UConn."
 ---
 
-# Prerequisites
 
-This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports, e.g., a math equation $a^2 + b^2 = c^2$.
+# Preface {-}
 
-The **bookdown** package can be installed from CRAN or Github:
+## Who this book is for {-}
+This book is the product of our efforts to promote data science among
+high school students. 
 
-```{r eval=FALSE}
-install.packages("bookdown")
-# or the development version
-# devtools::install_github("rstudio/bookdown")
-```
+Many interesting points ...
 
-Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading `#`.
+## How to read this book {-}
+
+Some chapters can be skipped ...
+
+## Computing language {-}
+
+We use R because ...
+
+
+
+# Prerequisites {-}
+
+We hope the widest accessibility.
+
+<!-- This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports, e.g., a math equation $a^2 + b^2 = c^2$. -->
+
+<!-- The **bookdown** package can be installed from CRAN or Github: -->
+
+<!-- ```{r eval=FALSE} -->
+<!-- install.packages("bookdown") -->
+<!-- # or the development version -->
+<!-- # devtools::install_github("rstudio/bookdown") -->
+<!-- ``` -->
+
+<!-- Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading `#`. -->
 
 To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.org/tinytex/>.
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+    .packages(), 'bookdown', 'knitr', 'rmarkdown'
 ), 'packages.bib')
 ```
