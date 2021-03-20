@@ -2,18 +2,21 @@
 title: "Data Science for Kids"
 author: "Haim Bar, HaiYing Wang, and Jun Yan"
 date: "`r Sys.Date()`"
-site: bookdown::bookdown_site
+output: pdf_document
 documentclass: krantz
-bibliography: [book.bib, packages.bib]
+bibliography:
+- book.bib
+- packages.bib
 biblio-style: apalike
-fontsize: '12pt, krantz2'
-monofont: "Source Code Pro"
-monofontoptions: "Scale=0.85"
+fontsize: 12pt, krantz2
+monofont: Source Code Pro
+monofontoptions: Scale=0.85
 link-citations: yes
 colorlinks: yes
-description: "This is an introduction of data science for kids with hands-on
-  simulation experiments. Early materials were prepared for a pre-college 
-  camp in summer 2021 at UConn."
+description: This is an introduction of data science for kids with hands-on simulation
+  experiments. Early materials were prepared for a pre-college camp in summer 2021
+  at UConn.
+site: bookdown::bookdown_site
 ---
 
 # Styles for ourselves {-}
