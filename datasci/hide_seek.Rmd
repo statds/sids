@@ -1,0 +1,11 @@
+# Estimation: A hide and seek game with the nature {#ch:estimation}
+
+
+The area of a circle with radiur $r$ is
+
+\begin{align}
+	R = \pi r^2.
+(\#eq:area)
+\end{align}
+
+
