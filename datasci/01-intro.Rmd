@@ -5,11 +5,17 @@ In this class, we will use the R language, and the RStudio integrated developmen
 \subsection{Installing R and Rstudio}
 Go to the website of the Comprehensive R Archive Network (https://cran.r-project.org/) and download the latest version of R for your operating system (Windows, MacOS, or Linux). As of \today, the latest version is 4.0.4. Follow the installation instructions.
 
-Next, go the Rstudio download website (https://rstudio.com/products/rstudio/download/) and get the Desktop version (open source license). As of \today, the version is 1.4.1106. Follow the installation instruction. An icon that looks like this: \includegraphics[scale=0.3]{images/RstudioLogo.png} will be on your computer's desktop. Double-click on this icon to start the R session. The Rstudio IDE will open, and look like this:
+Next, go the Rstudio download website
+(https://rstudio.com/products/rstudio/download/) and get the Desktop version
+(open source license). As of \today, the version is 1.4.1106. Follow the
+installation instruction. An icon that looks like this:
+`r include_image("images/RstudioLogo.png", html_opts="height=20px", latex_opts="height=2.5%")`
+will be on your computer's desktop. Double-click on this icon to start the R session. The Rstudio IDE will open, and look like this:
 
-\begin{center}
-\includegraphics[scale=0.4]{images/RstudioMain.png}
-\end{center}
+```{r, fig.align="center", echo=FALSE, out.width="70%"}
+knitr::include_graphics("images/RstudioMain.png")
+```
+
 
 The left-hand side of the screen contains the Console tab. Notice the $>$ sign (called the 'prompt'). When you see this character, it means the R is ready for the next command. Put the cursor there, and then type
 
