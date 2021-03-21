@@ -1,0 +1,153 @@
+--- 
+title: "Data Science for Kids"
+author: "Haim Bar, HaiYing Wang, and Jun Yan"
+date: "`r Sys.Date()`"
+output: pdf_document
+documentclass: krantz
+bibliography:
+- book.bib
+- packages.bib
+biblio-style: apalike
+fontsize: 12pt, krantz2
+monofont: Source Code Pro
+monofontoptions: Scale=0.85
+link-citations: yes
+colorlinks: yes
+description: This is an introduction of data science for kids with hands-on simulation
+  experiments. Early materials were prepared for a pre-college camp in summer 2021
+  at UConn.
+site: bookdown::bookdown_site
+---
+
+# Notes for ourselves {-}
+
+Placeholder
+
+
+## Styles {-}
+## Reminders {-}
+## Who this book is for {-}
+## How to read this book {-}
+## Computing language {-}
+## About the authors {-}
+
+<!--chapter:end:index.Rmd-->
+
+# Introduction {#intro}
+
+In this class, we will use the R language, and the RStudio integrated development environment (IDE). Before the first meeting, install the necessary software on your personal computer by executing the following instructions.
+
+## Installing R and Rstudio
+Go to the website of the Comprehensive R Archive Network (https://cran.r-project.org/) and download the latest version of R for your operating system (Windows, MacOS, or Linux). As of \today, the latest version is 4.0.4. Follow the installation instructions.
+
+Next, go the Rstudio download website
+(https://rstudio.com/products/rstudio/download/) and get the Desktop version
+(open source license). As of \today, the version is 1.4.1106. Follow the
+installation instruction. An icon that looks like this:
+`r include_image("images/RstudioLogo.png", html_opts="height=20px", latex_opts="height=2.5%")`
+will be on your computer's desktop. Double-click on this icon to start the R session. The Rstudio IDE will open, and look like this:
+
+```{r, fig.align="center", echo=FALSE, out.width="70%"}
+knitr::include_graphics("images/RstudioMain.png")
+```
+
+
+The left-hand side of the screen contains the Console tab. Notice the $>$ sign (called the 'prompt'). When you see this character, it means the R is ready for the next command. Put the cursor there, and then type
+
+```
+2 + 2
+```
+
+and hit Enter on the keyboard. You should get the following on the Console:
+```{r, echo=FALSE, comment=""}
+2 + 2
+```
+
+Notice the top-right part of the Rstudio window. You should see an 'Environment' and a 'History' tab. Click on History. Notice that your previous input appears there. Try entering another calculation or command and see that they appear in the session's history. For example, try entering the following 
+```{r, comment="", eval=FALSE}
+3 ^ 5
+date()
+```
+
+Click on the Environment tab. It should be empty when you start R for the first time. In the Console, type
+```{r, comment="", eval=FALSE}
+myFirstVariable <- factorial(5)
+```
+Notice that nothing was printed in the Console, but the Environment tab now contains a table with one row, with 'myFirstVariable' appearing in the cell on the left, and its value (120) on the right. Any object appearing in the Environment tab is available to you throughout your R session, and you don't have to recalculate it. For example, you can try the following:
+```{r ,comment="", eval=FALSE}
+myFirstVariable/6
+```
+The Console should now display 20.
+
+The lower-right side of the IDE contains a file browser (the Files tab), information about installed packages (more about it later), and any plot generated during the R session. It also contains a Help tab, to obtain information about built-in functions.
+
+Finally, before we move on to the next section, in the Rstudio top menu, click on File, then on New File, and then on R Script. Alternatively, you can click on little green '+' icon in the top-left part of the IDE. This will split the left side of the Rstudio IDE into two parts -- the lower part will contain the Console, and the top part will contain a tab labeled 'Untitled1'. This is were you can enter R code which you will save to a permanent file, and re-use later.
+For example, enter the following in the blank space in the Untitled1 tab:
+```{r, comment="", eval=FALSE}
+# This is my first R program
+cat('Hello, World!\n')
+```
+Then, click on File $>$ Save, and in the 'Save As' box enter FirstProgram.R and click the Save button.
+Notice that the tab name is now FirstProgram.R.
+
+In that part of the window, there should now be a small button called Source. Click on it. The program will be executed and the output will be shown in the Console. You can also execute individual lines in the source code. Just put the cursor anywhere in that line, and click on the Run button (which is near the Source button.)
+
+That's it. In the rest of these notes we will see more features of Rstudio, but you are now ready to start learning programming in R.
+
+<!--
+KEEP LINE WIDTH UNDER 70 IN SOURCE
+(We need to develop a few styles that we all agree on and keep them).
+
+You can label chapter and section titles using `{#label}` after them
+, e.g., we can reference Chapter \@ref(intro). If you do not manually
+label them, there will be automatic labels anyway, e.g., 
+Chapter~\@ref(ch:estimation).
+
+
+Figures and tables with captions will be placed in
+`figure` and `table` environments, respectively.
+
+```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+par(mar = c(4, 4, .1, .1))
+plot(pressure, type = 'b', pch = 19)
+```
+
+Reference a figure by its code chunk label with the `fig:` prefix,
+e.g., see Figure~\@ref(fig:nice-fig). Similarly, you can reference
+tables generated from `knitr::kable()`, e.g., see 
+Table~\@ref(tab:nice-tab).
+
+```{r nice-tab, tidy=FALSE}
+knitr::kable(
+  head(iris, 20), caption = 'Here is a nice table!',
+  booktabs = TRUE
+)
+```
+
+You can write citations, too. For example, we are using the
+**bookdown** package [@R-bookdown] in this sample book,
+which was built on top of R Markdown and **knitr** [@xie2015].
+-->
+
+<!--chapter:end:01-intro.Rmd-->
+
+# Estimation: A hide and seek game with the nature {#ch:estimation}
+
+
+The area of a circle with radiur $r$ is
+
+\begin{align}
+	R = \pi r^2.
+(\#eq:area)
+\end{align}
+
+
+
+<!--chapter:end:05-hide_seek.Rmd-->
+
+`r if (knitr::is_html_output()) '
+# References {-}
+'`
+
+<!--chapter:end:99-references.Rmd-->
+
