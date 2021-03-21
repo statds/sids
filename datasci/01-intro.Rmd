@@ -5,31 +5,31 @@ In this class, we will use the R language, and the RStudio integrated developmen
 \subsection{Installing R and Rstudio}
 Go to the website of the Comprehensive R Archive Network (https://cran.r-project.org/) and download the latest version of R for your operating system (Windows, MacOS, or Linux). As of \today, the latest version is 4.0.4. Follow the installation instructions.
 
-Next, go the Rstudio download website (https://rstudio.com/products/rstudio/download/) and get the Desktop version (open source license). As of \today, the version is 1.4.1106. Follow the installation instruction. An icon that looks like this: \includegraphics[scale=0.3]{RstudioLogo.png} will be on your computer's desktop. Double-click on this icon to start the R session. The Rstudio IDE will open, and look like this:
+Next, go the Rstudio download website (https://rstudio.com/products/rstudio/download/) and get the Desktop version (open source license). As of \today, the version is 1.4.1106. Follow the installation instruction. An icon that looks like this: \includegraphics[scale=0.3]{images/RstudioLogo.png} will be on your computer's desktop. Double-click on this icon to start the R session. The Rstudio IDE will open, and look like this:
 
 \begin{center}
-\includegraphics[scale=0.4]{RstudioMain.png}
+\includegraphics[scale=0.4]{images/RstudioMain.png}
 \end{center}
 
 The left-hand side of the screen contains the Console tab. Notice the $>$ sign (called the 'prompt'). When you see this character, it means the R is ready for the next command. Put the cursor there, and then type
 
 ```
-2+2
+2 + 2
 ```
 
 and hit Enter on the keyboard. You should get the following on the Console:
-```{r ,echo=FALSE, comment=""}
-2+2
+```{r, echo=FALSE, comment=""}
+2 + 2
 ```
 
 Notice the top-right part of the Rstudio window. You should see an 'Environment' and a 'History' tab. Click on History. Notice that your previous input appears there. Try entering another calculation or command and see that they appear in the session's history. For example, try entering the following 
-```{r ,comment="", eval=FALSE}
-3^5
+```{r, comment="", eval=FALSE}
+3 ^ 5
 date()
 ```
 
 Click on the Environment tab. It should be empty when you start R for the first time. In the Console, type
-```{r ,comment="", eval=FALSE}
+```{r, comment="", eval=FALSE}
 myFirstVariable <- factorial(5)
 ```
 Notice that nothing was printed in the Console, but the Environment tab now contains a table with one row, with 'myFirstVariable' appearing in the cell on the left, and its value (120) on the right. Any object appearing in the Environment tab is available to you throughout your R session, and you don't have to recalculate it. For example, you can try the following:
@@ -42,7 +42,7 @@ The lower-right side of the IDE contains a file browser (the Files tab), informa
 
 Finally, before we move on to the next section, in the Rstudio top menu, click on File, then on New File, and then on R Script. Alternatively, you can click on little green '+' icon in the top-left part of the IDE. This will split the left side of the Rstudio IDE into two parts -- the lower part will contain the Console, and the top part will contain a tab labeled 'Untitled1'. This is were you can enter R code which you will save to a permanent file, and re-use later.
 For example, enter the following in the blank space in the Untitled1 tab:
-```{r ,comment="", eval=FALSE}
+```{r, comment="", eval=FALSE}
 # This is my first R program
 cat('Hello, World!\n')
 ```
