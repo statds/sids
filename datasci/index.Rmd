@@ -9,7 +9,7 @@ bibliography:
 - packages.bib
 biblio-style: apalike
 fontsize: 12pt, krantz2
-monofont: Source Code Pro
+# monofont: Source Code Pro
 monofontoptions: Scale=0.85
 link-citations: yes
 colorlinks: yes
