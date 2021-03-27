@@ -11,9 +11,9 @@ Let's set up a true $\mu$ that no one knows and generate a random sample of size
 $n = 20$.
 ```{r}
 set.seed(123) # each student can contribute a digit to make mu really unknown
-mu  <- runif(1, min =- 10, max = 10)
+mu <- runif(1, min =- 10, max = 10)
 n <- 20
-x  <- rnorm(n, mean = mu, sd = 1)
+x <- rnorm(n, mean = mu, sd = 1)
 summary(x)
 ```
 
@@ -28,10 +28,7 @@ Let us consider a few candidate estimators
 
 The three estimates based on the observed sample are
 ```{r}
-mu1 <- mean(x)
-mu2 <- median(x)
-mu3 <- mean(range(x))
-(estimates <- c(mu1, mu2, mu3))
+(estimates <- c(mu1 = mean(x), mu2 = median(x), mu3 = mean(range(x))))
 ```
 
 **Mean Squared Error**
@@ -55,11 +52,12 @@ Now the game becomes a racing game. We do it through a simulation study.
 Let us construct a function to do replicate of such game.
 ```{r}
 do1rep <- function(n, mu) {
+    ## generate data
     x <- rnorm(n, mean = mu, sd = 1)
-    mu1 <- mean(x)
-    mu2 <- median(x)
-    mu3 <- mean(range(x))
-    return((c(mu1, mu2, mu3) - mu)^2)
+    ## collect estimates
+    est <-  c(mu1 = mean(x), mu2 = median(x), mu3 = mean(range(x)))
+    ## return squared error
+    return((est - mu)^2)
 }
 ```
 
