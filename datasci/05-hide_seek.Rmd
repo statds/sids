@@ -37,9 +37,7 @@ mu3 <- mean(range(x))
 **Mean Squared Error**
 To assess which estimator is better, we compare them with the true value of
 $\mu$. The squared error of an estimator $\hat\mu$ of $\mu$ is
-\[
-\text{SE(\hat\mu) = (\hat\mu - \mu)^2
-\]
+$(\hat\mu - \mu)^2$.
 For the three estimates based on the given sample, we have:
 ```{r}
 (estimates - mu)^2
