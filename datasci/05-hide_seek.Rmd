@@ -87,4 +87,6 @@ The area of a circle with radiur $r$ is
 (\#eq:area)
 \end{align}
 
-
+\begin{align*}
+\mathrm{MSE}(\hat\mu) = (\hat\mu - \mu)^2
+\end{align*}
