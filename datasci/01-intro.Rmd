@@ -117,7 +117,7 @@ Exercises:
 ### Summary statistics
 Let's generate some data:
 ```{r, echo=TRUE, comment=""}
-n <- 10000
+n <- 1000
 lambda <- 10
 x <- -log(runif(n))/lambda
 ```
