@@ -3,6 +3,7 @@ delete_merged_file: true
 rmd_files:
     - "index.Rmd"
     - "01-intro.Rmd"
+    - "02-probability.Rmd"
     - "05-hide_seek.Rmd"
     - "06-hypothesis.Rmd"
     - "99-references.Rmd"
