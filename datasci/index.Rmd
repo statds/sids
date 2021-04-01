@@ -11,8 +11,8 @@ biblio-style: apalike
 fontsize: 12pt, krantz2
 # monofont: "Source Code Pro"
 # monofontoptions: "Scale=0.7"
-# monofont: "Inconsolata"
-monofontoptions: "Scale=0.5"
+monofont: "Inconsolata"
+monofontoptions: "Scale=0.85"
 link-citations: yes
 colorlinks: yes
 description: This is an introduction of data science for kids with hands-on simulation
