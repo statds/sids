@@ -1,6 +1,8 @@
 MAIN = main
 OUT  = $(MAIN).pdf
-RNW = $(wildcard Rnw/*.Rnw)
+RNW_DIR = Rnw
+RNW_SRC = $(wildcard $(RNW_DIR)/*.Rnw)
+RNW_OUT = $(patsubst %.Rnw,%.tex,$(RNW_SRC))
 TEXSRC = $(wildcard *.tex)
 BIBSRC = book.bib packages.bib
 ## executables
@@ -12,7 +14,7 @@ MAKEINDEX = makeindex
 all: $(OUT)
 
 
-$(OUT): $(TEXSRC) $(BIBSRC)
+$(OUT): $(TEXSRC) $(BIBSRC) $(RNW_OUT)
 	$(TEX) $(MAIN)
 	$(BIBTEX) $(MAIN)
 	while grep -e 'Rerun to get' -e 'run LaTeX again' *.log ; do $(TEX) $(MAIN) ; done
@@ -21,8 +23,7 @@ $(OUT): $(TEXSRC) $(BIBSRC)
 
 
 Rnw/%.tex: Rnw/%.Rnw
-	cd Rnw;
-	Rscript -e "knitr::knit('$^')"
+	@Rscript -e "knitr::knit('$<', output = '$@')"
 
 .PNONY: clean
 clean:
