@@ -6,6 +6,15 @@
 # Temps from compiling this book
 _book/
 _bookdown_files/
+book/figure/
+book/main.bbl
+book/main.blg
+book/main.idx
+book/main.ilg
+book/main.ind
+book/main.pdf
+book/main.toc
+book/00why.*
 
 # R temporary files
 .Rhistory
