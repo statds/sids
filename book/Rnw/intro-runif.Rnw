@@ -1,0 +1,7 @@
+<<intro, eval=TRUE, >>=
+# Generate 10,000 points from a uniform distribution
+set.seed(210313)
+n <- 10000
+simData <- runif(n)
+hist(simData)
+@ 

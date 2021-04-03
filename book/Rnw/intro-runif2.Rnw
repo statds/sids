@@ -1,0 +1,4 @@
+<<intro, eval=TRUE, >>=
+n <- 10000
+simData <- runif(n, min=1, max=5)
+@ 

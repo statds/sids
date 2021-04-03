@@ -1,0 +1,6 @@
+<<intro, eval=TRUE, >>=
+reps <- 1000
+n.trials <- 200
+Heads <- rbinom(reps, n.trials, 0.5)
+hist(Heads)
+@ 

@@ -1,0 +1,8 @@
+<<intro, eval=TRUE, >>=
+n <- 10000
+lambda <- 10
+x <- -log(runif(n))/lambda
+mean(x)
+mean(x, trim=0.1)
+median(x)
+@ 

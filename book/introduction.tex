@@ -74,3 +74,69 @@ Notice that the tab name is now FirstProgram.R.
 In that part of the window, there should now be a small button called Source. Click on it. The program will be executed and the output will be shown in the Console. You can also execute individual lines in the source code. Just put the cursor anywhere in that line, and click on the Run button (which is near the Source button.)
 
 That's it. In the rest of these notes we will see more features of Rstudio, but you are now ready to start learning programming in R.
+
+
+\section{Basic Operations in R}
+\subsection{Generating random numbers}
+In this course, much of the learning will be done by using simulated data, so let's start by learning how to generate data. The basic function to generate random data is \texttt{runif} which is used to draw random numbers, uniformly between 0 and 1. In the following example we create 10,000 random draws from a uniform distribution, keep these numbers in a variable called simData, and plot a histogram to show the distribution of the data we have generated. The \texttt{set.seed} function is used to ensure that every time we run this code, we will get the same set of random numbers. This is called \textit{reproducible code}. 
+\input{Rnw/intro-runif}
+
+From the range and the flatness of the histogram we can see that the generated data is indeed uniform on [0,1]. The \texttt{runif} function can be used to draw random numbers uniformly on any finite interval. For example, if we want our random numbers to be in the interval [1,5] we will run the following code:
+\input{Rnw/intro-runif2}
+Try it, and draw the histogram as in the previous example.
+
+From a random draw of a uniform distribution, we can generate random numbers from other distributions. For example, we want to simulate coin flips, and count the number of Heads that we get. Let's say we want to simulate 200 coin tosses. We will draw 200 random numbers from a uniform distribution, and decide that we got Heads in the $i$-th toss if the $i$-the random number is less than 0.5, and Tails otherwise.
+Try the following code multiple times. What do you observe? We will discuss it further in a different lecture.
+\input{Rnw/intro-headtails}
+
+
+Statistical inference is based on a mental exercise in which we ask, if we could repeat the same experiment infinitely many times, what would we see? With simulations, we can get a good approximation. For example, the 200 coin-tosses experiment can be repeated, say, 100 times. One way is to use loops, like in the following example:
+\input{Rnw/intro-headtails2}
+
+We've used a \texttt{for} loop, with an index variable called \texttt{i} which runs from 1 to 100. In each iteration we draw $n.trials=200$ random numbers from a uniform distribution. For each value which turned out to be less than 0.5, \texttt{runif(n.trials) < 0.5} is set to TRUE. Otherwise, \texttt{runif(n.trials) < 0.5} is set to FALSE. When we use the \texttt{sum} function, the TRUE values count as 1 each, while FALSE ones counts as 0, so the result is the number of Heads. The results is stored in the $i$-th position in the vector we called \texttt{Heads}.
+
+Using the uniform distribution, we have created a random draw from a different distribution, called the `binomial'. The mathematical notation is $Bin(N, p)$ where $N$ is the number of trials such that in each trial there can be exactly two outcomes (e.g., coin tosses), and $p$ is the probability of the first possible outcome (e.g., Head), and $1-p$ is the probability of the second possible outcome.
+
+R has a built-in function to generate random numbers from many different distributions, so the code above can be replaced by the following, which uses the \texttt{rbinom} function:
+\input{Rnw/intro-rbinom}
+
+
+Exercises:
+\begin{enumerate}
+\item Change the number of simulated coin-toss datasets (\texttt{reps}) to 1,000 and rerun the code. Then change it to 10,000 and run it again. What do you notice?
+\item Change the probability of Heads to 0.2 and run the code again. Then, change it to 0.8. What do you observe?
+\item Try other values of the number of trials and the probability of Heads.
+\end{enumerate}
+
+\subsection{Summary statistics}
+Let's generate some data:
+\input{Rnw/intro-rexp1}
+
+We will introduce some statistical functions to summarize data. The most commonly used one is the mean (a.k.a. the average), $\overline{x}$:\\
+$$\overline{x}=\frac{x_1+\ldots+x_n}{n}\,.$$
+Other ways to estimate some sort of `central tendency' of a distribution are:
+ (i) the trimmed mean, which is similar to the mean, except that the smallest and largest $p\cdot 100\%$  of the values are excluded from the computation. For example, if we take $p=0.1$ with the simulated data, only 800 data points are used in the calculation of the trimmed mean; (ii) The median is a number, $x_{0.5}$, such that half the data points are greater than $x_{0.5}$ and half are less than or equal to $x_{0.5}$. 
+
+Try the following:
+\input{Rnw/intro-rexp2}
+
+The distribution of $x$ is shown below as a \textit{box-and-whisker plot} (or simply, boxplot). This is a very simple representation of numeric data, which is constructed by summarizing the data using a few numeric characteristics. The boxplot below is drawn horizontally, and the vertical grey line inside the box is the median. Similar to the median, we find the first quartile -- a point $x_{25}$ such that 25\% of the values are less than $x_{25}$ and 75\% are greater than $x_{25}$; and the third quartile -- a point $x_{75}$ such that 75\% of the values are less than $x_{75}$ and 25\% are greater than $x_{75}$. The first and third quartiles are the vertical edges of the box, also called the lower and upper hinges. So, the box represents 50\% of the data. The range between the first and third quartiles is called the \textit{Inter-Quartile Range}, or IQR.
+The `whiskers', which are the dashed grey lines, are constructed by adding 1.5$\cdot$IQR to each side of the box. If the result is smaller than the minimum value (or greater than the maximum), then the whisker only extends to the minimum (maximum). Points within the range between the two whiskers are not plotted individually, since their distribution is summarized succinctly by the box-and-whiskers plot. Points outside the range between the two whiskers are considered `outliers', or extreme values, and are shown explicitly. 
+
+
+A boxplot does not include the mean, or the trimmed mean, but we have added them here as a red circle and brown diamond, respectively, in order to show that they are different than the mean. The mean is smaller in this case, because the distribution is skewed to the left -- there are many more data points in the range closer to zero, so the sample mean is affected by this large number of small values. The median, on the other hand, does not depend on the scale of the data. It simply represents where half the data lies. 
+
+The plot was generated with the following code. Try it, and try changing some of the parameters to understand their role. We will cover the details in a chapter dedicated to visualization.
+%boxplot(x, cex=0.5, col=4,border = "grey66", horizontal = T, axes=F, at=0.25)
+%axis(1, pos = 0)
+%points(mean(x),0.25,col=2, pch=19, cex=0.7)
+%points(mean(x, trim=0.1),0.25, col="brown", pch=18)
+
+
+
+var, sd, fivenum, summary, quantile, 
+discrete data
+matrices
+density plot
+Q-Q plot
+more distributions - Poisson, normal, beta, gamma, lognormal
