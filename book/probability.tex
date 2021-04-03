@@ -27,7 +27,7 @@ Some concepts:
 \end{itemize}
 
 \hypertarget{example-elevator-waiting-time}{%
-  \section{Example: elevator waiting
+  \section{Elevator waiting
     time}\label{example-elevator-waiting-time}}
 
 Mr. Smith works on the 13th floor of a 15 floor building. The only
@@ -43,6 +43,38 @@ There are 12 floors below the 13th floor and 15 floors above it, so the probabil
 We can simulate this situation:
 
 \input{Rnw/probability-elevator}
+
+\hypertarget{birthday-problem}{%
+  \section{Birthday Problem}\label{birthday-problem}}
+
+Suppose that a room contains 23 people. What is the probability that
+at least two of them have a common birthday? Since each year has 365
+days, this probability seems very small, but it is actually about
+0.5. What is the probability that some one in that room has the same
+birthday as yours? This probability is quite small
+($\approx0.061$). In order to have the probability that someone's
+birthday is the same as yours, we need 253 random selected people to
+be in that room.
+
+Let's use s simulation to verify the aforementioned numbers.
+
+% \begin{equation*}
+%   P(A)=1-P(A^c)=1-\frac{P_{365,n}}{365^n}=1-\frac{365\times364\times\cdots\times(365 - n + 1)}{365^n}
+% \end{equation*}
+% Some numbers:\\
+% \begin{tabular}{lrrrrrr}\hline
+%   $n$ & 4 & 16 & 23 & 32 & 40 & 56 \\
+%   \hline
+%   $P(A)$ & .016 & .284 & .507 & .753 & .891 & .988 \\\hline
+% \end{tabular}
+% \begin{equation*}
+%   P(A)=1-P(A^c)=1-\frac{364^n}{365^n}
+% \end{equation*}
+
+
+\hypertarget{the-two-child-problem}{%
+\section{The Two Child Problem}\label{the-two-child-problem}}
+
 
 \hypertarget{simpsons-paradox}{%
 \section{Simpson's Paradox}\label{simpsons-paradox}}
@@ -132,10 +164,7 @@ To explain this, \cite{bickel1975sex} noticed that women tended to apply to more
 
 To use simulation to further illustrate this, we simulate a data set with four groups in the following.
 \input{Rnw/probability-Simpson}
-We see that for the whole data, $y$ has an increase pattern as $x$ increases, but for each sub group $y$ has a decrease pattern as $x$ increases. 
-
-\hypertarget{the-two-child-problem}{%
-\section{The Two Child Problem}\label{the-two-child-problem}}
+We see that for the whole data, $y$ has an increase pattern as $x$ increases, but for each sub group $y$ has a decrease pattern as $x$ increases.
 
 \hypertarget{prisoners-problem}{%
 \section{100 prisoners problem}\label{prisoners-problem}}
