@@ -28,5 +28,9 @@ Rnw/%.tex: Rnw/%.Rnw
 .PNONY: clean
 clean:
 	rm -rf $(OUT) *~ .*~ .\#* .Rhistory *.aux *.bbl *.blg *.dvi *.out *.log *.toc \
-	*.fff *.fdb_latexmk *.fls *.ttt *diff* *oldtmp* .blb *.idx *.ilg *.ind
+	*.fff *.fdb_latexmk *.fls *.ttt *diff* *oldtmp* .blb *.idx *.ilg *.ind \
 
+
+cleaner:
+	make clean
+	rm $(RNW_OUT)
