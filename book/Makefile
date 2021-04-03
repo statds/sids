@@ -27,7 +27,7 @@ $(HTMLOUT): $(PDFOUT)
 
 
 Rnw/%.tex: Rnw/%.Rnw
-	@Rscript -e "knitr::knit('$<', output = '$@')"
+	@Rscript -e "setwd('$(RNW_DIR)'); knitr::knit('$(<F)', output = '$(@F)')"
 
 .PNONY: clean
 clean:
