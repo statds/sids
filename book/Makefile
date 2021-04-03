@@ -1,5 +1,6 @@
 MAIN = main
-OUT  = $(MAIN).pdf
+PDFOUT  = $(MAIN).pdf
+HTMLOUT = $(MAIN).html
 RNW_DIR = Rnw
 RNW_SRC = $(wildcard $(RNW_DIR)/*.Rnw)
 RNW_OUT = $(patsubst %.Rnw,%.tex,$(RNW_SRC))
@@ -10,16 +11,19 @@ TEX    = xelatex
 BIBTEX = bibtex
 MAKEINDEX = makeindex
 
-.PHONY: all
-all: $(OUT)
+.PHONY: pdf html
+pdf: $(PDFOUT)
+html: $(HTMLOUT)
 
-
-$(OUT): $(TEXSRC) $(BIBSRC) $(RNW_OUT)
+$(PDFOUT): $(TEXSRC) $(BIBSRC) $(RNW_OUT)
 	$(TEX) $(MAIN)
 	$(BIBTEX) $(MAIN)
 	while grep -e 'Rerun to get' -e 'run LaTeX again' *.log ; do $(TEX) $(MAIN) ; done
 	$(MAKEINDEX) $(MAIN)
 	$(TEX) $(MAIN)
+
+$(HTMLOUT): $(PDFOUT)
+	pdf2htmlEX --zoom 1.3 $(PDFOUT)
 
 
 Rnw/%.tex: Rnw/%.Rnw
