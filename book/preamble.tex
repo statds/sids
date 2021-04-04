@@ -272,3 +272,12 @@
 \usepackage{alltt}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 %%% end of the preamble from knitr
+
+% self defined environment and commands
+\newcounter{example}% [section]
+\newenvironment{example}[1][]{\refstepcounter{example}\par\medskip
+   \noindent \textbf{Example~\theexample. (#1)} \rmfamily}{\medskip}
+   % \noindent \textbf{Example~\thesection.\theexample. (#1)} \rmfamily}{\medskip}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}% [section]
