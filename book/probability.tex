@@ -76,9 +76,147 @@ Let's use s simulation to verify the aforementioned numbers.
 %   P(A)=1-P(A^c)=1-\frac{364^n}{365^n}
 % \end{equation*}
 
+\hypertarget{Two-Child}{%
+  \section{Two Child Problem}\label{Two-Child}}
 
-\hypertarget{the-two-child-problem}{%
-\section{The Two Child Problem}\label{the-two-child-problem}}
+Consider the following two problems:
+\begin{enumerate}
+\item Mr. Jones has two children. The older child is a girl. What is the
+  probability that both children are girls?
+\item Mr. Smith has two children. At least one of them is a girl. What is the
+  probability that both children are girls?
+\end{enumerate}
+
+Let's list the possibilities of \{older child, younger child\} (sample space):
+\{Boy, Boy\}, \{Boy, Girl\}, \{Girl, Boy\}, \{Girl,Girl\}. There are four
+elements in total.
+
+For the first question, two elements satisfy the situation: \{Girl, Boy\},
+\{Girl,Girl\}. Thus the probability is $\frac{2}{4}=\frac{1}{2}$.
+
+For the second question, three elements satisfy the situation: \{Boy, Girl\},
+\{Girl, Boy\}, \{Girl,Girl\}. Thus the probability is $\frac{3}{4}$.
+
+
+\hypertarget{Fair-Division}{%
+  \section{Fair Division}\label{Fair-Division}}
+
+Tom and Jerry, each put 30 dollar in a jackpot to start a game. Suppose that
+they have equal chance to win and the one who wins three times takes all the 60
+dollars. Now, Tom has won twice and Jerry has won once, but then something
+happens and the game must be stopped. How should they split the 60 dollars
+according their probabilities of winning if the game was finished?
+
+It seems Tom has won twice and Jerry has won once so the 60 dollars should be
+split as $40:20$. However, these are not proportional to their probabilities of
+winning. They need at most another two games to know the final winner. Here are
+the four possible results of the two games: \{Tom, Tom\}, \{Tom, Jerry\},
+\{Jerry, Tom\}, \{Jerry, Jerry\}. Tom will be the winner for three of the four
+results, so the fair division should be $45:15$.
+
+\hypertarget{Henry-Choice}{%
+  \section{Henry's Choice}\label{Henry-Choice}}
+
+Henry has been caught stealing cattle, and is brought into town for justice. The
+judge is his ex-wife Gretchen, who wants to show him some sympathy, but the law
+clearly calls for two shots to be taken at Henry from close range. To make
+things a little better for Henry, Gretchen tells him she will place two bullets
+into a six-chambered revolver in successive order. She will spin the chamber,
+close it, and take one shot. If Henry is still alive, she will then either take
+another shot, or spin the chamber again before shooting.
+
+Henry is a bit incredulous that his own ex-wife would carry out the punishment,
+and a bit sad that she was always such a rule follower. He steels himself as
+Gretchen loads the chambers, spins the revolver, and pulls the trigger. Whew! It
+was blank. Then Gretchen asks, "Do you want me to pull the trigger again, or
+should I spin the chamber a second time before pulling the trigger?" What should Henry choose?
+
+We know that the first chamber Gretchen fired was one of the four empty
+chambers. Since the bullets were placed in consecutive order, one of the empty
+chambers is followed by a bullet, and the other three empty chambers are
+followed by another empty chamber. So if Henry has Gretchen pull the trigger
+again, the probability that a bullet will be fired is 1/4.
+
+If Gretchen spins the chamber again, the probability that she shoots Henry would
+be 2/6, or 1/3, since there are two possible bullets that would be in firing
+position out of the six possible chambers that would be in position.
+
+\hypertarget{Intransitive-Dice}{%
+\section{Intransitive Dice}\label{Intransitive-Dice}}
+
+We know that in general if $A>B$ and $B>C$ then $C>A$. However, this may not be the case in the word of probability.
+
+Consider three dice with different sides numbers:
+\begin{itemize}
+\item Die A has sides 2, 2, 4, 4, 9, 9.
+\item Die B has sides 1, 1, 6, 6, 8, 8.
+\item Die C has sides 3, 3, 5, 5, 7, 7.
+\end{itemize}
+
+To play a game using dice A and B, you can chose which die to roll and your opponent rolls the other. The one who tolls a larger number wins. Which die do you want to choose?
+
+Let's table the possible results to see the better die.
+\begin{center}
+  \begin{tabular}{cc|ccc}\hline
+    &   & \multicolumn{3}{c}{B} \\
+    % \cline{3-5}
+    &   & 1                & 6                & 8                \\ \hline
+    \multirow{3}{*}{A}
+    & 2 & \color{red}$A>B$ & $A<B$            & $A<B$            \\
+    & 4 & \color{red}$A>B$ & $A<B$            & $A<B$            \\
+    & 9 & \color{red}$A>B$ & \color{red}$A>B$ & \color{red}$A>B$ \\\hline
+  \end{tabular}
+\end{center}
+
+Since die A wins five out of the nine possible results and all possible results occur with equal probability, we know that die A has a higher winning probability ($\frac{5}{9}$) than die B. We should choose die A over die B. 
+
+Now consider dice B and C.
+\begin{center}
+  \begin{tabular}{cc|ccc}\hline
+    &   & \multicolumn{3}{c}{B} \\
+    % \cline{3-5}
+    &   & 1                & 6                & 8                \\ \hline
+    \multirow{3}{*}{C}
+    & 3 & \color{red}$C>B$ & $C<B$            & $C<B$            \\
+    & 5 & \color{red}$C>B$ & $C<B$            & $C<B$            \\
+    & 7 & \color{red}$C>B$ & \color{red}$C>B$ & $C<B$ \\\hline
+  \end{tabular}
+\end{center}
+
+We see that die B has a higher winning probability ($\frac{5}{9}$) than die C, so we should choose die B over die C. 
+
+Since we should choose die A over die B, and choose die B over die C, does this mean that we should choose die A over die C if these two dice are to be selected. Surprisingly, the answer is NO. Here is the table of the possible results.
+\begin{center}
+  \begin{tabular}{cc|ccc}\hline
+    &   & \multicolumn{3}{c}{C} \\
+    % \cline{3-5}
+    &   & 3                & 5                & 7                \\ \hline
+    \multirow{3}{*}{A}
+    & 2 & $A<C$            & $A<C$            & $A<C$            \\
+    & 4 & \color{red}$A>C$ & $A<C$            & $A<C$            \\
+    & 9 & \color{red}$A>C$ & \color{red}$A>C$ & \color{red}$A>C$ \\\hline
+  \end{tabular}
+\end{center}
+We should choose die C over die A!
+
+Here is an experiment to simulate the intransitive dice.
+
+\input{Rnw/probability-IntransitiveDice}
+
+A set of dice is intransitive if it contains three dice, A, B, and C, with the property that A rolls higher than B more than half the time, and B rolls higher than C more than half the time, but it is not true that A rolls higher than C more than half the time. In other words, a set of dice is intransitive if the binary relation – X rolls a higher number than Y more than half the time – on its elements is not transitive.
+
+\hypertarget{Bertrand-Box}{%
+\section{Bertrand's Box}\label{Bertrand-Box}}
+
+Bertrand's box paradox was first posed by Joseph Bertrand 1889. Here is the
+question: There are three boxes, one contains two gold coins, one contains two
+silver coins, and one contains a gold coin and a silver coin.
+
+A box is selected at random and a coin is taken from that box at random. If the
+coin is a gold coin, what is the probability that the other coin in that box is
+also a gold coin.
+
+\input{Rnw/probability-BertrandBox}
 
 
 \hypertarget{simpsons-paradox}{%
@@ -139,20 +277,22 @@ University of California, Berkeley. In 1973 UC Berkeley was sued for
 sex-discrimination. Here are the overall numbers for the six largest
 departments in fall admission of 1973.
 
-\begin{center}
+\begin{table}
+  \centering
 \begin{tabular}{crrcrr}\hline
  \multicolumn{3}{c}{Men} & \multicolumn{3}{c}{Women} \\\hline
- Applicants & \multicolumn{2}{c}{Admitted}     & Applicants & \multicolumn{2}{c}{Admitted} \\\hline
- 2691       & 1198 & ({\bf 44.5}\%) & 1835       & 557 & (30.4\%) \\\hline
+ Applicants & \multicolumn{2}{c}{Admitted} & Applicants & \multicolumn{2}{c}{Admitted} \\\hline
+ 2691 & 1198 & ({\bf 44.5}\%) & 1835 & 557 & (30.4\%) \\\hline
 \end{tabular}
-\end{center}
+\end{table}
 
 This table shows that men were more likely than women to be admitted,
 and the difference was so significant. Let's see which departments
 were mainly responsible for this gender bias. To do this we broke open
 the data according to each departments.
 
-\begin{center}
+\begin{table}
+  \centering
 \begin{tabular}{ccrrcrr}\hline
   & \multicolumn{3}{c}{Men}  & \multicolumn{3}{c}{Women} \\\cline{2-7}
 Department & Applicants  & \multicolumn{2}{c}{Admitted} & Applicants  & \multicolumn{2}{c}{Admitted} \\\hline
@@ -163,7 +303,7 @@ D & 417 & 138& (33\%) & 375 & 131& (35\%) \\
 E & 191 & 53 & (28\%) & 393 & 94 &(24\%)  \\
 F & 373 & 22 & (6\%) & 341 & 24 &(7\%)  \\\hline
 \end{tabular}
-\end{center}
+\end{table}
 \jy{we need to set some style guidelines on code, floats, etc.}
 
 Things get strange after we divide the data according different
@@ -220,7 +360,29 @@ gives the prisoners more than 0.30 probability to survive
 \end{enumerate}
 
 In the following, we define two functions to simulate the method of randomly open 50 drawers and the better strategy, respectively. 
+
 \input{Rnw/probability-100prisoners}
+
+\hypertarget{Monty-Hall-problem}{%
+\section{Monty Hall problem}\label{Monty-Hall-problem}}
+
+% The problem was originally posed (and solved) in a letter by Steve Selvin to the American Statistician in 1975.
+% Selvin, Steve (February 1975a). "A problem in probability (letter to the editor)". The American Statistician. 29 (1): 67–71.
+% Selvin, Steve (February 1975a). "A problem in probability (letter to the editor)". The American Statistician. 29 (1): 67–71.
+% It became famous as a question from reader Craig F. Whitaker's letter quoted in Marilyn vos Savant's "Ask Marilyn" column in Parade magazine in 1990:
+% Selvin, Steve (February 1975a). "A problem in probability (letter to the editor)". The American Statistician. 29 (1): 67–71.
+% The Monty Hall problem is mathematically equivalent to the earlier Three Prisoners problem
+% Gardner, Martin (October 1959). "Mathematical Games: Problems involving questions of probability and ambiguity". Scientific American. 201 (4): 174–182.
+% Gardner, Martin (1959). "Mathematical Games: How three modern mathematicians disproved a celebrated conjecture of Leonhard Euler". Scientific American. 201 (5): 188
+
+Suppose you're on a game show, and you're given the choice of three doors:
+Behind one door is a car; behind the others, goats. You pick a door, say No. 1,
+and the host, who knows what's behind the doors, opens another door, say No. 3,
+which has a goat. He then says to you, "Do you want to pick door No. 2?" Is it
+to your advantage to switch your choice?
+
+\input{Rnw/probability-MontyHall}
+
 
 %%% Local Variables:
 %%% coding: utf-8

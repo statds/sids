@@ -1,0 +1,13 @@
+<<probability-IntransitiveDice, eval=TRUE, >>=
+set.seed(2021)
+A = c(2, 2, 4, 4, 9, 9)
+B = c(1, 1, 6, 6, 8, 8)
+C = c(3, 3, 5, 5, 7, 7)
+n = 1000
+rollA = sample(A, n, replace = TRUE)
+rollB = sample(B, n, replace = TRUE)
+rollC = sample(C, n, replace = TRUE)
+mean(rollA > rollB)
+mean(rollB > rollC)
+mean(rollC > rollA)
+@
