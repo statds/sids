@@ -279,5 +279,47 @@
    \noindent \textbf{Example~\theexample. (#1)} \rmfamily}{\medskip}
    % \noindent \textbf{Example~\thesection.\theexample. (#1)} \rmfamily}{\medskip}
 
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}% [section]
+% \theoremstyle{remark}
+% \newtheorem*{remark}{Remark}% [section]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% from copulaR
+\usepackage{mathtools}% fix amsmath deficiencies
+\usepackage{amssymb}% sophisticated mathematical symbols with amstex
+\usepackage{amsthm}% theorem environments
+\usepackage{thmtools}% for declaring theorems
+
+% Theorems
+\newif\ifstarttheorem
+
+% For everything but examples and fallacies
+\declaretheoremstyle[%
+  spaceabove=0.5em,
+  spacebelow=0.5em,
+  headfont=\sffamily\bfseries\global\starttheoremtrue,
+  notefont=\sffamily\bfseries,
+  notebraces={(}{)},
+  headpunct={},
+  bodyfont=\normalfont,
+  postheadspace=\newline,%
+  qed=\qedsymbol%
+  % => If an example ends with a figure which is pushed to the next page (or
+  %    just further than 'here'), the qed symbol is not placed correctly.
+  %    => Need to work with \clearpage (*before* the figure) at the final
+  %       editing stage
+  % Note: A hook of the following form did not provide better results:
+  % postfoothook={\vspace{-0.5\baselineskip}\hfill\qedsymbol}% we cannot push it further up (in case example ends with text)
+]{mythmstyle}
+\declaretheorem[style=mythmstyle, numberwithin=section]{definition}% activate style
+\declaretheorem[style=mythmstyle, sibling=definition]{lemma}
+\declaretheorem[style=mythmstyle, sibling=definition]{proposition}
+\declaretheorem[style=mythmstyle, sibling=definition]{theorem}
+\declaretheorem[style=mythmstyle, sibling=definition]{corollary}
+\declaretheorem[style=mythmstyle, sibling=definition]{remark}
+\declaretheorem[style=mythmstyle, sibling=definition]{algorithm}
+\declaretheorem[style=mythmstyle, sibling=definition]{illustration}
+
+% For fallacies
+\declaretheorem[style=mythmstyle]{fallacy}% no 'sibling = definition'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,6 +1,8 @@
 \hypertarget{ch:estimation}{%
-\chapter{Estimation: A hide and seek game with the nature}\label{ch:estimation}}
+\chapter{Estimation: A hide-and-seek game with the nature}\label{ch:estimation}}
 
+
+\section{Introduction}
 Consider this game setup. We have a random sample of size \(n\) from a normal
 distribution \(N(\mu, 1)\), where \(\mu\) is unknown, and we want to estimate \(\mu\)
 with this sample. An estimator is a quantity constructed from the observed
@@ -9,133 +11,35 @@ assess which is better?
 
 \input{Rnw/est-hide-normal}
 
-% Let's set up a true \(\mu\) that no one knows and generate a random sample of size
-% \(n = 20\).
+\section{Seeking strategies}
 
-% \begin{Shaded}
-% \begin{Highlighting}[]
-% \FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{) }\CommentTok{\# each student can contribute a digit to make mu really unknown}
-% \NormalTok{mu }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{, }\AttributeTok{min =}\SpecialCharTok{{-}} \DecValTok{10}\NormalTok{, }\AttributeTok{max =} \DecValTok{10}\NormalTok{)}
-% \NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{20}
-% \NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n, }\AttributeTok{mean =}\NormalTok{ mu, }\AttributeTok{sd =} \DecValTok{1}\NormalTok{)}
-% \FunctionTok{summary}\NormalTok{(x)}
-% \end{Highlighting}
-% \end{Shaded}
+To play the hide-and-seek game better, we need to select a good strategy. From
+the examples in the last section, it seems that which strategy is better depends
+on the underlying truth, which is unknown.
 
-% \begin{verbatim}
-%    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-%  -5.976  -4.520  -3.877  -3.946  -3.046  -1.720 
-% \end{verbatim}
 
-% \textbf{Estimators}
+Let's start with an example.
+\begin{illustration}[Likelihood in guessing jars]
+  % \indexExSix{Computing ranks in the presence of ties}
+\label{example:has-jars}
+There are 9 jars. The first jar has 9 red and 1 green balls; the second jar has
+8 red and 2 green balls; $\cdots\cdots$; the 9th jar has 1 red and 9 green
+balls. Now, one jar is randomly selected, from which one ball is randomly
+selected, and the ball is red. Which jar was the one that was selected?
 
-% Let us consider a few candidate estimators
+There are nine possibilities. If the selected jar were the first one, the
+probability that a randomly selected ball is red is 9/10. If the selected jar
+were the second one, the probability that a randomly selected ball is red is
+8/10. Continue until the 9th jar. With this calculation, which jar should we
+guess?
 
-% \begin{itemize}
-% \tightlist
-% \item
-%   Sample mean,
-% \item
-%   Sample median.
-% \item
-%   Midrange.
-% \end{itemize}
+The first one!
+\end{illustration}
 
-% The three estimates based on the observed sample are
+The principle we use here is the so-called maximum likelihood estimation. The
+unknown true has 9 possibilities. We choose the one that gives the highest
+likelihood of observing a randomly selected ball being red.
 
-% \begin{Shaded}
-% \begin{Highlighting}[]
-% \NormalTok{(estimates }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{mu1 =} \FunctionTok{mean}\NormalTok{(x), }\AttributeTok{mu2 =} \FunctionTok{median}\NormalTok{(x), }\AttributeTok{mu3 =} \FunctionTok{mean}\NormalTok{(}\FunctionTok{range}\NormalTok{(x))))}
-% \end{Highlighting}
-% \end{Shaded}
-
-% \begin{verbatim}
-%       mu1       mu2       mu3 
-% -3.945533 -3.877437 -3.847917 
-% \end{verbatim}
-
-% \textbf{Mean Squared Error}
-% To assess which estimator is better, we compare them with the true value of
-% \(\mu\). The squared error of an estimator \(\hat\mu\) of \(\mu\) is
-% \((\hat\mu - \mu)^2\).
-% For the three estimates based on the given sample, we have:
-
-% \begin{Shaded}
-% \begin{Highlighting}[]
-% \NormalTok{(estimates }\SpecialCharTok{{-}}\NormalTok{ mu)}\SpecialCharTok{\^{}}\DecValTok{2}
-% \end{Highlighting}
-% \end{Shaded}
-
-% \begin{verbatim}
-%        mu1        mu2        mu3 
-% 0.09175876 0.13765041 0.16042665 
-% \end{verbatim}
-
-% Note that this comparison is for only the given sample. A good estimator may by
-% chance behaves worse than a bad estimator. A real assessment of the quality of
-% the estimator should be based on a large number of replicates, where we can
-% check which estimator performs the best on average. To do so, we need to play
-% this game repeatedly, collect the squared errors of the estimators, and compare
-% their means, that is, mean squared error.
-
-% Now the game becomes a racing game. We do it through a simulation study.
-% Let us construct a function to do replicate of such game.
-
-% \begin{Shaded}
-% \begin{Highlighting}[]
-% \NormalTok{do1rep }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n, mu) \{}
-%     \DocumentationTok{\#\# generate data}
-% \NormalTok{    x }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n, }\AttributeTok{mean =}\NormalTok{ mu, }\AttributeTok{sd =} \DecValTok{1}\NormalTok{)}
-%     \DocumentationTok{\#\# collect estimates}
-% \NormalTok{    est }\OtherTok{\textless{}{-}}  \FunctionTok{c}\NormalTok{(}\AttributeTok{mu1 =} \FunctionTok{mean}\NormalTok{(x), }\AttributeTok{mu2 =} \FunctionTok{median}\NormalTok{(x), }\AttributeTok{mu3 =} \FunctionTok{mean}\NormalTok{(}\FunctionTok{range}\NormalTok{(x)))}
-%     \DocumentationTok{\#\# return squared error}
-%     \FunctionTok{return}\NormalTok{((est }\SpecialCharTok{{-}}\NormalTok{ mu)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
-% \NormalTok{\}}
-% \end{Highlighting}
-% \end{Shaded}
-
-% Each time we call this function, the experiment is done and the squared errors
-% of the three estimators are returned.
-
-% \begin{Shaded}
-% \begin{Highlighting}[]
-% \FunctionTok{do1rep}\NormalTok{(n, mu)}
-% \end{Highlighting}
-% \end{Shaded}
-
-% \begin{verbatim}
-%        mu1        mu2        mu3 
-% 0.17323711 0.07180305 1.16285198 
-% \end{verbatim}
-
-% \begin{Shaded}
-% \begin{Highlighting}[]
-% \FunctionTok{do1rep}\NormalTok{(n, mu)}
-% \end{Highlighting}
-% \end{Shaded}
-
-% \begin{verbatim}
-%        mu1        mu2        mu3 
-% 0.02543683 0.02323603 0.03439818 
-% \end{verbatim}
-
-% Which estimator is winning the game? Let's repeat the experiment 1000 times and
-% compare the MSE.
-
-% \begin{Shaded}
-% \begin{Highlighting}[]
-% \NormalTok{nrep }\OtherTok{\textless{}{-}} \DecValTok{1000}
-% \NormalTok{sim }\OtherTok{\textless{}{-}} \FunctionTok{replicate}\NormalTok{(nrep, }\FunctionTok{do1rep}\NormalTok{(n, mu))}
-% \FunctionTok{rowMeans}\NormalTok{(sim)}
-% \end{Highlighting}
-% \end{Shaded}
-
-% \begin{verbatim}
-%        mu1        mu2        mu3 
-% 0.05115881 0.07603630 0.13703344 
-% \end{verbatim}
-
-% The first estimator, the sample mean, is a clear winner!
 
 % The area of a circle with radiur \(r\) is
 

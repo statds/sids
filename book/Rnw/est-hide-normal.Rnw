@@ -21,9 +21,6 @@ The three estimates based on the observed sample are
 <<hide-normal-one>>=
 (estimates <- c(mu1 = mean(x), mu2 = median(x), mu3 = mean(range(x))))
 @ 
-```{r}
-
-```
 
 **Mean Squared Error**
 To assess which estimator is better, we compare them with the true value of
@@ -73,4 +70,31 @@ sim <- replicate(nrep, do1rep(n, mu))
 rowMeans(sim)
 @ 
 
+
 The first estimator, the sample mean, is a clear winner!
+
+
+\begin{illustration}[Hide-and-seek with a Cauchy population]
+  % \indexExSix{Computing ranks in the presence of ties}
+\label{example:has-cauchy}
+Now let's change the distribution of the population from normal to Cauchy.
+<<hide-cauchy>>=
+set.seed(1979)
+mu <- runif(1, min =- 10, max = 10)
+x <- rcauchy(n, location = mu)
+summary(x)
+
+do1rep <- function(n, mu) {
+    ## generate data
+    x <- rcauchy(n, location = mu)
+    ## collect estimates
+    est <-  c(mu1 = mean(x), mu2 = median(x), mu3 = mean(range(x)))
+    ## return squared error
+    return((est - mu)^2)
+}
+
+sim <- replicate(nrep, do1rep(n, mu))
+rowMeans(sim)
+@
+Which estimator is the winner this time?
+\end{illustration}
