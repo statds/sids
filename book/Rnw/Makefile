@@ -6,3 +6,5 @@ all: $(TEX_OUTPUT)
 
 %.tex: %.Rnw
 	Rscript -e "knitr::knit('$<')"
+	rsync -r figure/ ../figure
+
