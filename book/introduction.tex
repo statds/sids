@@ -4,20 +4,20 @@
 In this class, we will use the \R language, and the RStudio integrated development environment (IDE). Before the first meeting, install the necessary software on your personal computer by executing the following instructions.
 
 \hypertarget{installing-r-and-rstudio}{%
-\section{Installing R and Rstudio}\label{installing-r-and-rstudio}}
+\section{Installing \R and Rstudio}\label{installing-r-and-rstudio}}
 
-Go to the website of the Comprehensive R Archive Network (\url{https://cran.r-project.org/}) and download the latest version of R for your operating system (Windows, MacOS, or Linux). As of \today, the latest version is 4.0.4. Follow the installation instructions.
+Go to the website of the Comprehensive R Archive Network (\url{https://cran.r-project.org/}) and download the latest version of \R for your operating system (Windows, MacOS, or Linux). As of \today, the latest version is 4.0.4. Follow the installation instructions.
 
 Next, go the Rstudio download website
 (\url{https://rstudio.com/products/rstudio/download/}) and get the Desktop version
 (open source license). As of \today, the version is 1.4.1106. Follow the
 installation instruction. An icon that looks like this:
 \includegraphics[width=\textwidth,height=0.025\textheight]{images/RstudioLogo.png}
-will be on your computer's desktop. Double-click on this icon to start the R session. The Rstudio IDE will open, and look like this:
+will be on your computer's desktop. Double-click on this icon to start the \R session. The Rstudio IDE will open, and look like this:
 
-\begin{center}\includegraphics[width=0.7\linewidth]{images/RstudioMain} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{images/RstudioMain} \end{center}
 
-The left-hand side of the screen contains the Console tab. Notice the \(>\) sign (called the `prompt'). When you see this character, it means that R is ready for the next command. Put the cursor there, and then type
+The left-hand side of the screen contains the Console tab. Notice the \(>\) sign (called the `prompt'). When you see this character, it means that \R is ready for the next command. Put the cursor there, and then type
 
 \begin{verbatim}
 2 + 2
@@ -38,7 +38,7 @@ Notice the top-right part of the Rstudio window. You should see an `Environment'
 \end{Highlighting}
 \end{Shaded}
 
-Click on the Environment tab. It should be empty when you start R for the first time. In the Console, type
+Click on the Environment tab. It should be empty when you start \R for the first time. In the Console, type
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -46,7 +46,7 @@ Click on the Environment tab. It should be empty when you start R for the first 
 \end{Highlighting}
 \end{Shaded}
 
-Notice that nothing was printed in the Console, but the Environment tab now contains a table with one row, with `myFirstVariable' appearing in the cell on the left, and its value (120) on the right. Any object appearing in the Environment tab is available to you throughout your R session, and you don't have to recalculate it. For example, you can try the following:
+Notice that nothing was printed in the Console, but the Environment tab now contains a table with one row, with `myFirstVariable' appearing in the cell on the left, and its value (120) on the right. Any object appearing in the Environment tab is available to you throughout your \R session, and you don't have to recalculate it. For example, you can try the following:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -56,14 +56,14 @@ Notice that nothing was printed in the Console, but the Environment tab now cont
 
 The Console should now display 20.
 
-The lower-right side of the IDE contains a file browser (the Files tab), information about installed packages (more about it later), and any plot generated during the R session. It also contains a Help tab, to obtain information about built-in functions.
+The lower-right side of the IDE contains a file browser (the Files tab), information about installed packages (more about it later), and any plot generated during the \R session. It also contains a Help tab, to obtain information about built-in functions.
 
-Finally, before we move on to the next section, in the Rstudio top menu, click on File, then on New File, and then on R Script. Alternatively, you can click on little green `+' icon in the top-left part of the IDE. This will split the left side of the Rstudio IDE into two parts -- the lower part will contain the Console, and the top part will contain a tab labeled `Untitled1'. This is were you can enter R code which you will save to a permanent file, and re-use later.
+Finally, before we move on to the next section, in the Rstudio top menu, click on File, then on New File, and then on \R Script. Alternatively, you can click on little green `+' icon in the top-left part of the IDE. This will split the left side of the Rstudio IDE into two parts -- the lower part will contain the Console, and the top part will contain a tab labeled `Untitled1'. This is were you can enter \R code which you will save to a permanent file, and re-use later.
 For example, enter the following in the blank space in the Untitled1 tab:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# This is my first R program}
+\CommentTok{\# This is my first \R program}
 \FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}Hello, World!}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
