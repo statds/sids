@@ -1,4 +1,0 @@
-<<intro, eval=TRUE, >>=
-n.trials <- 200
-cat("Number of Heads is: ", sum((runif(n.trials) < 0.5)), "\n")
-@ 
