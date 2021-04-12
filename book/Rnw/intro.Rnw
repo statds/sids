@@ -1,0 +1,68 @@
+In this course, much of the learning will be done by using simulated data, so let's start by learning how to generate data. The basic function to generate random data is \texttt{runif} which is used to draw random numbers, uniformly between 0 and 1. In the following example we create 10,000 random draws from a uniform distribution, keep these numbers in a variable called simData, and plot a histogram to show the distribution of the data we have generated. The \texttt{set.seed} function is used to ensure that every time we run this code, we will get the same set of random numbers. This is called \textit{reproducible code}. 
+<<intro-runif, eval=TRUE, fig.align='center', fig.width=4, fig.height=4, fig.cap="A histogram of 10,000 randomly drawn numbers from a standard uniform distribution." >>=
+# Generate 10,000 points from a uniform distribution
+set.seed(210313)
+n <- 10000
+simData <- runif(n)
+hist(simData)
+@ 
+
+
+From the range and the flatness of the histogram we can see that the generated data is indeed uniform on [0,1]. The \texttt{runif} function can be used to draw random numbers uniformly on any finite interval. For example, if we want our random numbers to be in the interval [1,5] we will run the following code:
+
+<<intro-runif-with-range, eval=FALSE, >>=
+n <- 10000
+simData <- runif(n, min=1, max=5)
+@ 
+
+Try it, and draw the histogram as in the previous example. Try it with a fixed seed and verify that you get the same output. Then, run the code without a fixed seed and observe that you get a different distribution each time. Since the number of random draws is fairly large, the shape of the histogram will not change much.
+
+From a random draw of a uniform distribution we can generate random numbers from other distributions. For example, we want to simulate (fair) coin flips, and count the number of Heads that we get. Let's say we want to simulate 200 coin tosses. We will draw 200 random numbers from a uniform distribution, and decide that we got Heads in the $i$-th toss if the $i$-the random number is less than 0.5, and Tails otherwise.
+Try the following code multiple times. What do you observe? We will discuss it further in a different lecture.
+<<intro-heads, eval=TRUE, comment="Outout:" >>=
+# Simulate 200 coin-flips, using the runif function:
+n.trials <- 200
+cat("Number of Heads is: ", sum(runif(n.trials) < 0.5), "\n")
+@ 
+
+A few comments:
+\begin{itemize}
+\item A comment in R starts with \#. Any text following the \# sign is considered user-documentation and is not executed by R.
+\item Pick good variable names. They should describe the meaning of the value, yet be short enough to type. Variable names must begin with a letter, and can't contain spaces. They should not be the same as an existing function name.
+\item We have used the \texttt{cat} function to print (concatenate) text to the console. Fixed text appears in double (or single) quotes, but the content of variables or output from R functions should not be quoted. The \verb|\n| symbol tells R to print a newline character at the end. Try to see what happens if you remove it.
+\item The expression within the \texttt{sum} function produces TRUE/FALSE (Boolean) values. First, we draw n.trials random numbers from a uniform distribution. Then, each one is compared with 0.5. If the value is less than 0.5, the returned value is TRUE. Otherwise, it's FALSE. This demonstrates one of R's greatest features - allowing to run 'vectorized' code. In one line, we generated 200 random numbers and compared each one to 0.5, and as a result, we got 200 Boolean values which we have added together (TRUE counts as 1, and FALSE counts as 0.) So, the result in the sum is the number of Heads in 200 tosses.
+\end{itemize}
+
+Statistical inference is based on a mental exercise in which we ask, if we could repeat the same experiment infinitely many times, what would we see? With simulations, we can get a good approximation. For example, the 200 coin-tosses experiment can be repeated, say, 100 times. One way is to use loops, like in the following example:
+<<intro-heads2, eval=TRUE, fig.align='center', fig.width=4, fig.height=4, fig.cap="A histogram of 100 experiments, from each we get the total number of Heads in 200 fair coin tosses." >>=
+set.seed(442886)
+n.trials <- 200  # the number of coin-tosses in each experiment
+reps <- 100  # the number of experiments
+Heads <- rep(0, reps)  # A vector to store the results (initialize with 0s)
+for (i in 1:reps) {
+  Heads[i] <- sum((runif(n.trials) < 0.5))
+}
+hist(Heads, breaks=20)
+@ 
+
+
+We've used a \texttt{for} loop, with an index variable called \texttt{i} which runs from 1 to 100. In each iteration we simulated n.trials=200 coin tosses, as before. The result from each iteration is stored in the $i$-th position in the vector we called Heads.
+
+Using the uniform distribution, we have created a random draw from a different distribution, called the `binomial'. The mathematical notation is $Bin(N, p)$ where $N$ is the number of trials such that in each trial there can be exactly two outcomes (e.g., coin tosses), and $p$ is the probability of the first possible outcome (e.g., Head), and $1-p$ is the probability of the second possible outcome (e.g., Tail).
+R has a built-in function to generate random numbers from many different distributions, so the code above can be replaced by the following, which uses the \texttt{rbinom} function:
+<<intro-binomial, eval=TRUE, fig.align='center', fig.width=4, fig.height=4, fig.cap="A histogram of 100 binomial experiments, using \texttt{rbinom} to simulate 200 fair coin tosses in each experiment." >>=
+set.seed(442886)
+reps <- 100
+n.trials <- 200
+Heads <- rbinom(reps, n.trials, 0.5)
+hist(Heads, breaks=20)
+@ 
+
+
+Exercises:
+\begin{enumerate}
+\item Change the number of simulated coin-toss datasets (\texttt{reps}) to 1,000 and rerun the code. Then change it to 10,000 and run it again. What do you notice?
+\item Change the probability of Heads to 0.2 and run the code again. Then, change it to 0.8. What do you observe?
+\item Try other values of the number of trials and the probability of Heads.
+\end{enumerate}
+
