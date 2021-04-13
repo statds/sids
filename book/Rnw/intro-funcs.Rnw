@@ -5,6 +5,17 @@ help(help)
 ?help
 @
 
+When we start an \R session, it's important to determine the `working directory'. This is the folder on our computer which \R will use to search for data or code files and save results. To find out which folder is currently used, we use the \code{getwd()} function
+<<intro-getwd, eval=TRUE, comment="">>=
+getwd()
+@
+
+If we want (and we often will), we may change the working directory by using \code{setwd()}.  
+<<intro-setwd, eval=TRUE, comment="">>=
+setwd("~/Desktop")
+@
+The \verb|~/| notation is a shortcut to your home directory. Using this shortcut is convenient because if you are using different computers, the home directory may be different on each one.
+
 Data is stored in variables. We can get the data from a file (Excel, comma-separated values, etc.), the Internet, or we can generate it ourselves. Let's start by generating some data.
 The simplest function to create data is called \code{c()}, which stands for `combine'.
 <<intro-c, eval=TRUE, comment="">>=
@@ -67,9 +78,40 @@ The \code{sample()} function in this example us used to draw 20 cards at random 
 
 Check the class and the structure of the variable pokerHand, using the functions we've mentioned earlier.
 
+We can save variables to a file, in order to use them in a later session.
+<<intro-save, eval=FALSE, comment="">>=
+save(pokerHand, file="pokerHand.RData")
+@
+If we don't specify the complete path, the file will be stored in the current working directory. Recall that you can find out which directory is used with the \code{getwd()} function, and set it to another directory with \code{setwd()}.
+Then, we may get the saved variables by using the following:
+<<intro-load, eval=FALSE, comment="">>=
+load("pokerHand.RData")
+@
+After you use the \code{load()} function, the variable pokerHand will be available to use.
+
+Variables which we do not save, will not be available once we terminate the current \R session. When we quit an \R session, we have an option to save the entire session's information. However, if there are variables, datasets, or functions which we have created and want to save, it's better to save them explicitly.
+
+There are a few constants in \R, including the letters of the alphabet (upper- and lower-case), the month names, and the number $\pi$.
+<<intro-const, eval=TRUE, comment="">>=
 LETTERS
 letters
 month.abb
 month.name
 pi
+@
+
+The base distribution of \R is very comprehensive, but there are thousands of contributed packages which are written by \R users. We will use several such packages in the book, so let us see how to do it.
+The package \pkg{lattice} provides `elegant high-level data visualization system with an emphasis on multivariate data'. To install the package, we use the \code{install.packages()} function.
+<<intro-pkg-inst, eval=FALSE, comment="">>=
+install.packages("lattice")
+@
+This has to be done just once. Occasionally, you may be prompted to install updates, which can also be done by using the \code{update.packages()} function.
+To use the package, we need to load it, using the \code{library()} function. In the following example we use a built-in dataset of opera singers, and we plot their heights by their vocal parts.
+<<intro-pkg, eval=TRUE, comment="",  fig.align='center', fig.width=4, fig.height=4, fig.cap="Using the lattice package to create boxplots">>=
+library("lattice")
+bwplot(voice.part ~ height, data=singer, xlab="Height (inches)")
+@
+
+
+When you want to finish your session, just type \code{quit()}.
 
