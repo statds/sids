@@ -1,5 +1,0 @@
-<<intro, eval=TRUE, >>=
-n <- 10000
-lambda <- 10
-x <- -log(runif(n))/lambda
-@ 

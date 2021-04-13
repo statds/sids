@@ -1,0 +1,62 @@
+
+We will introduce some statistical functions to summarize data. The most commonly used one is the mean (a.k.a. the average), $\overline{x}$:\\
+$$\overline{x}=\frac{x_1+\ldots+x_n}{n}\,.$$
+Other ways to estimate some sort of `central tendency' of a distribution are:
+ \begin{itemize}
+ \item The trimmed mean, which is similar to the mean, except that the smallest and largest $p\cdot 100\%$  of the values are excluded from the computation. For example, if we take $p=0.1$ with the simulated data, only 800 data points are used in the calculation of the trimmed mean; 
+ \item The median, which is a number (denoted here by $x_{0.5}$) such that half the data points are greater than $x_{0.5}$ and half are less than or equal to $x_{0.5}$. 
+ \end{itemize}
+
+Let's generate some data, and use what we've learned so far to plot a histogram of the data.
+<<intro-rexp1, eval=TRUE, >>=
+n <- 10000
+lambda <- 10
+x <- -log(runif(n))/lambda
+@ 
+
+Next, we will get the sample's mean, trimmed mean, and median. Notice that the mean is greater then trimmed mean, which is greater than the median. In general, the mean is not a great estimate of the `center' of a non-symmetric distribution. We say that the mean is more `sensitive to extreme values' than the median.
+<<intro-rexp2, eval=TRUE, comment="Output:">>=
+mean(x)
+mean(x, trim=0.1)
+median(x)
+@ 
+
+The formula we used to generate the data is the probability function of the exponential distribution, with rate parameter $\lambda=10$. We denote it by $X\sim exp(\lambda)$. The exponential distribution is often used to model random waiting times, like the time between arrivals of buses. We would usually generate it by using the \code{rexp()} function in \R.
+Mathematical analysis of the distribution leads to the fact that the expected value of an exponential random variable with rate $\lambda$, is $1/\lambda$. We see that the theoretical expected value of our example is 0.1, and the sample mean is very close to 0.1. This is no coincidence - we will discuss it in  later chapter.
+
+
+The distribution of \texttt{x} is shown below as a \textit{box-and-whisker plot} (or simply, boxplot). This is a very simple representation of numeric data, which is constructed by summarizing the data using a few numeric characteristics. The boxplot below is drawn horizontally, and the vertical grey line inside the box is the median. Similar to the median, we find the first quartile -- a point $x_{25}$ such that 25\% of the values are less than $x_{25}$ and 75\% are greater than $x_{25}$; and the third quartile -- a point $x_{75}$ such that 75\% of the values are less than $x_{75}$ and 25\% are greater than $x_{75}$. The first and third quartiles are the vertical edges of the box, also called the lower and upper hinges. So, the box represents 50\% of the data. The range between the first and third quartiles is called the \textit{Inter-Quartile Range}, or IQR, which is sometimes used to estimate the dispersion or spread of the data.
+The `whiskers', which are the dashed grey lines, are constructed by adding 1.5$\cdot$IQR to each side of the box. If the result is smaller than the minimum value (or greater than the maximum), then the whisker only extends to the minimum (maximum). Points within the range between the two whiskers are not plotted individually, since their distribution is summarized succinctly by the box-and-whiskers plot. Points outside the range between the two whiskers are considered `outliers', or extreme values, and are shown explicitly. 
+
+The plot was generated with the following code. Try it, and try changing some of the parameters to understand their role. We will cover the topic of visualization in a different chapter.
+
+<<intro-boxplot-rexp, eval=TRUE, fig.align='center', fig.width=6, fig.height=3, fig.cap="A boxplot." >>=
+boxplot(x, cex=0.5, col=4,border = "grey66", horizontal = T, axes=F, at=0.25)
+axis(1, pos = 0)
+points(mean(x),0.25,col=2, pch=19, cex=0.7)
+points(mean(x, trim=0.1),0.25, col="brown", pch=18)
+@ 
+
+
+A boxplot does not include the mean, or the trimmed mean, but we have added them here as a red circle and brown diamond, respectively, in order to show that they are different than the mean. The median is smaller than the mean in this case, so we say that the distribution is skewed to the left. The median does not depend on the scale of the data. It simply represents where half the data lies. 
+
+
+In addition to sample statistics which summarize some notion of the center of the distribution, we are often interested in estimating the dispersion of the data. The most commonly used measures of dispersion are the variance, and its square root - the standard deviation. The variance is defined as follows
+
+$$Var(X)=\frac{(x_1-\mu)^2+\ldots+(x_n-\mu)^2}{n-1}$$
+where $\mu$ is the mean the the distribution of X. Notice that in the denominator we have n-1, and not n. In words, the variance is the sum of squared deviations from the mean, divided by the sample size minus 1.
+
+The corresponding functions in \R are \code{var()} and \code{sd()}. In the following code we also demonstrate the \code{IQR()} function.
+<<intro-rexp3, eval=TRUE, comment="Output:">>=
+var(x)
+sd(x) # note that sd(x) is sqrt(sd(x))
+IQR(x)
+@ 
+
+summary, quantile, 
+discrete data
+matrices
+density plot
+Q-Q plot
+more distributions - Poisson, normal, beta, gamma, lognormal
+
