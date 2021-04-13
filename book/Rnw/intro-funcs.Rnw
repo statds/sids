@@ -1,0 +1,75 @@
+\R has many built-in functions, and many more in external packages. We will introduce them as we go, but let's get started with some basic ones.
+The documentation on each function can be obtained by using \code{?func} or \code{help(func)}where \texttt{func} is some function. For example, to get the documentation about using the \code{help()} function, try the following:
+<<intro-help, eval=FALSE>>=
+help(help)
+?help
+@
+
+Data is stored in variables. We can get the data from a file (Excel, comma-separated values, etc.), the Internet, or we can generate it ourselves. Let's start by generating some data.
+The simplest function to create data is called \code{c()}, which stands for `combine'.
+<<intro-c, eval=TRUE, comment="">>=
+(courseNames <- c("Data Science", "Statistics", "Probability"))
+@
+We created a variable called courseNames, and it contains three values. Note that we assigned the values into the variable by using the \verb|<-| operator. The parentheses around the whole statement cause the content of the variable to printed immediately to the console.
+We can now do things with this variable. For example, we can check the variable type, using the \code{class()} function.
+We can also get a bit more detailed information by checking its structure, using the \code{str()} function.
+<<intro-class, eval=TRUE, comment="">>=
+class(courseNames)
+str(courseNames)
+@
+The variable is of class `character', and it is a vector with three values. 
+We can check the number of elements in a vector by using the \code{length()} function:
+<<intro-length, eval=TRUE, comment="">>=
+length(courseNames)
+@
+
+Pick good variable names. They should describe the meaning of the value, yet be short enough to type. Variable names can only contain letters, numbers, the dot character, or the underline character. Variable names can only begin with (i) a letter, or (ii) a dot as long as it is not followed by a number. They should not be the same as an existing function name or other reserved words in the language.
+
+We can also generate variables which contain sequences of numbers. To do that, we use the \code{seq()} function. For example, we can create a variable which contains all the odd numbers between 1 and 20:
+<<intro-seq, eval=TRUE, comment="">>=
+(oddLT20 <- seq(1,20,by=2))
+length(oddLT20)
+@
+
+To generate consecutive values, we can also use the colon operator:
+<<intro-seq2, eval=TRUE, comment="">>=
+(firstThirteen <- 1:13)
+@
+
+Another useful function to generate data is \code{rep()}, which replicates values.
+We often have to generate a vector on ones or zeros, and we can do it like in the following example. We use this opportunitiy to also introduce the functions \code{sum()} and \code{cumsum()} (cumulative sum).
+<<intro-rep, eval=TRUE, comment="">>=
+(ones <- rep(1, 10))
+length(ones)
+sum(ones)
+cumsum(ones)
+@
+
+There are also many functions to handle text. The \code{paste()} functions attaches two strings of characters together. Note the usage of the collapse option (argument) in the second example:
+<<intro-paste, eval=TRUE, comment="">>=
+paste(courseNames)
+paste(courseNames, collapse=", ")
+@
+
+Let's combine what we've learned so far to create the 52 cards, using the four suits: Club, Diamond, Heart, and Spade:
+<<intro-deck, eval=TRUE, comment="">>=
+suits <- c(rep("C",13), rep("D",13), rep("H",13), rep("S",13))
+(cards <- paste0(suits, rep(1:13,4)))
+@
+Note that \code{paste0()} is the same as \code{paste(..., collapse="")}.
+
+Let's `deal' five cards to each player for a game of poker. We will use the \code{sample()} function.
+<<intro-poker, eval=TRUE, comment="">>=
+set.seed(5252)
+(pokerHand <- matrix(sample(cards,20,replace=FALSE), nrow=5, ncol=4))
+@
+The \code{sample()} function in this example us used to draw 20 cards at random from the deck, without replacement. Then, to divide it into four hands, we use the \code{matrix()} function, and specify the number of rows and the number of columns.
+
+Check the class and the structure of the variable pokerHand, using the functions we've mentioned earlier.
+
+LETTERS
+letters
+month.abb
+month.name
+pi
+
