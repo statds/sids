@@ -1,15 +1,15 @@
 <<probability-BertrandBox, eval=TRUE, >>=
 set.seed(2021)
-boxs = c("GG", "GS", "SS")
+boxs <- c("GG", "GS", "SS")
 
-boxcoin = function(boxs){
-    box = sample(boxs, 1)
-    idx = sample(1:2, 1)
-    coin = substr(box, start=idx, stop=idx)
+boxcoin <- function(boxs){
+    box <- sample(boxs, 1)
+    idx <- sample(1:2, 1)
+    coin <- substr(box, start=idx, stop=idx)
     return(c(box, coin))
 }
 
-res = replicate(n = 1000, boxcoin(boxs))
+res <- replicate(n=1000, boxcoin(boxs))
 
 mean(res[1, res[2,] == "G"] == "GG")
 @
