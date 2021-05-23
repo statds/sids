@@ -137,8 +137,8 @@ another shot, or spin the chamber again before shooting.
 Henry is a bit incredulous that his own ex-wife would carry out the punishment,
 and a bit sad that she was always such a rule follower. He steels himself as
 Gretchen loads the chambers, spins the revolver, and pulls the trigger. Whew! It
-was blank. Then Gretchen asks, "Do you want me to pull the trigger again, or
-should I spin the chamber a second time before pulling the trigger?" What should Henry choose?
+was blank. Then Gretchen asks, ``Do you want me to pull the trigger again, or
+should I spin the chamber a second time before pulling the trigger?'' What should Henry choose?
 
 We know that the first chamber Gretchen fired was one of the four empty
 chambers. Since the bullets were placed in consecutive order, one of the empty
@@ -235,8 +235,10 @@ It is a phenomenon in which a trend appears in several different
 groups of data but disappears or reverses when these groups are
 combined.
 
-\jy{we may define an example environment and a comment/discussion environment}
-\textbf{An urn example}: A black urn contains 5 red and 6 green balls,
+% \jy{we may define an example environment and a comment/discussion environment}
+% \textbf{An urn example}:
+\begin{example}[An urn example]
+A black urn contains 5 red and 6 green balls,
 and a white urn contains 3 red and 4 green balls. You are allowed to
 choose an urn and then choose a ball at random from the urn. If you
 choose a red ball, you get a prize. Which urn should you choose to
@@ -279,29 +281,31 @@ probabilities.
 \end{itemize}
 
 You should choose the white urn!
+\end{example}
 
-\textbf{UC Berkeley gender bias:} A famous example of Simpson's
+% \textbf{UC Berkeley gender bias:}
+\begin{example}[UC Berkeley gender bias]
+A famous example of Simpson's
 paradox is a study of gender bias among graduate school admissions to
 University of California, Berkeley. In 1973 UC Berkeley was sued for
 sex-discrimination. Here are the overall numbers for the six largest
 departments in fall admission of 1973.
 
-\begin{table}
-  \centering
+\begin{center}
 \begin{tabular}{crrcrr}\hline
  \multicolumn{3}{c}{Men} & \multicolumn{3}{c}{Women} \\\hline
  Applicants & \multicolumn{2}{c}{Admitted} & Applicants & \multicolumn{2}{c}{Admitted} \\\hline
  2691 & 1198 & ({\bf 44.5}\%) & 1835 & 557 & (30.4\%) \\\hline
 \end{tabular}
-\end{table}
+\end{center}
 
 This table shows that men were more likely than women to be admitted,
 and the difference was so significant. Let's see which departments
 were mainly responsible for this gender bias. To do this we broke open
 the data according to each departments.
 
-\begin{table}
-  \centering
+\begin{center}
+  % \centering
 \begin{tabular}{ccrrcrr}\hline
   & \multicolumn{3}{c}{Men}  & \multicolumn{3}{c}{Women} \\\cline{2-7}
 Department & Applicants  & \multicolumn{2}{c}{Admitted} & Applicants  & \multicolumn{2}{c}{Admitted} \\\hline
@@ -312,8 +316,8 @@ D & 417 & 138& (33\%) & 375 & 131& (35\%) \\
 E & 191 & 53 & (28\%) & 393 & 94 &(24\%)  \\
 F & 373 & 22 & (6\%) & 341 & 24 &(7\%)  \\\hline
 \end{tabular}
-\end{table}
-\jy{we need to set some style guidelines on code, floats, etc.}
+\end{center}
+% \jy{we need to set some style guidelines on code, floats, etc.}
 
 Things get strange after we divide the data according different
 departments. For the six departments, four of them accepted women more
@@ -322,6 +326,7 @@ tended to apply to more competitive departments with low admission
 rates even among qualified applicants, whereas men tended to apply to
 less competitive departments with high admission rates among the
 qualified applicants.
+\end{example}
 
 To use simulation to further illustrate this, we simulate a data set
 with four groups in the following.
