@@ -4,7 +4,7 @@
 \hypertarget{probability}{%
 \section{Probability}\label{probability}}
 
-The world is random. Probability theory has been used to quantify the
+The world is random. Probability theory has been developed to quantify the
 randomness. We will go through examples to see how probability helps
 interpret phenomena in real life and how probability may counter
 intuition.
@@ -39,13 +39,13 @@ Some concepts:
   floor. What is the explanation?
 \end{example}
 
-There are 12 floors below the 13th floor and 15 floors above it, so the probability that the elevator is below the 13th floor is $12/14\approx0.86>0.5$. Thus no matter when Mr. Smith wants to go home, it is more likely that the elevator is going up.
+When Mr.~Smith gets to the elevator, it may be below the 13th floor or above it. The elevator will goes up if it is below the 13th floor and it will goes down if it is above the 13th floor. There are 12 floors below the 13th floor and 2 floors above it, so the probability that the elevator is below the 13th floor is $12/14\approx0.86>0.5$. Thus no matter when Mr. Smith wants to go home, it is more likely that the elevator is going up.
 
-We can simulate this situation:
+We can simulate this situation:  
 
 \input{Rnw/probability-elevator}
 
-\jy{The location does not mean the moving direction}
+\jy{The location does not mean the moving direction}\why{See if it is clear now.}
 
 \hypertarget{birthday-problem}{%
   \section{Birthday Problem}\label{birthday-problem}}
@@ -56,10 +56,10 @@ days, this probability seems very small, but it is actually about
 0.5. What is the probability that some one in that room has the same
 birthday as yours? This probability is quite small
 ($\approx0.061$). In order to have the probability that someone's
-birthday is the same as yours, we need 253 random selected people to
+birthday is the same as yours to be 0.5, we need 253 random selected people to
 be in that room.
 
-Let's use s simulation to verify the aforementioned numbers.
+Let's use simulation to verify the aforementioned numbers.
 
 \input{Rnw/probability-birthday}
 
