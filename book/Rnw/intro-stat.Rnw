@@ -44,7 +44,7 @@ A boxplot does not include the mean, or the trimmed mean, but we have added them
 In addition to sample statistics which summarize some notion of the center of the distribution, we are often interested in estimating the dispersion of the data. The most commonly used measures of dispersion are the variance, and its square root - the standard deviation. The variance is defined as follows
 
 $$Var(X)=\frac{(x_1-\mu)^2+\ldots+(x_n-\mu)^2}{n-1}$$
-where $\mu$ is the mean the the distribution of X. Notice that in the denominator we have n-1, and not n. In words, the variance is the sum of squared deviations from the mean, divided by the sample size minus 1.
+\why{Is the denominator $n$ in this case?} where $\mu$ is the mean of the distribution of $X$. Notice that in the denominator we have n-1, and not n. In words, the variance is the sum of squared deviations from the mean, divided by the sample size minus 1.
 
 The corresponding functions in \R are \code{var()} and \code{sd()}. In the following code we also demonstrate the \code{IQR()} function.
 <<intro-rexp3, eval=TRUE, comment="Output:">>=
