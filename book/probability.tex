@@ -73,18 +73,24 @@ We can simulate this situation:
 \hypertarget{Fair-Division}{%
   \section{Fair Division}\label{Fair-Division}}
 
+\begin{example}[Fair Division]
 Tom and Jerry, each put 30 dollar in a jackpot to start a game. Suppose that
 they have equal chance to win and the one who wins three times takes all the 60
 dollars. Now, Tom has won twice and Jerry has won once, but then something
 happens and the game must be stopped. How should they split the 60 dollars
 according their probabilities of winning if the game was finished?
+\end{example}
 
 It seems Tom has won twice and Jerry has won once so the 60 dollars should be
 split as $40:20$. However, these are not proportional to their probabilities of
 winning. They need at most another two games to know the final winner. Here are
 the four possible results of the two games: \{Tom, Tom\}, \{Tom, Jerry\},
-\{Jerry, Tom\}, \{Jerry, Jerry\}. Tom will be the winner for three of the four
-results, so the fair division should be $45:15$.
+\{Jerry, Tom\}, \{Jerry, Jerry\}. The probabilities that Tom and Jerry would be the final winner are $\frac{3}{4}$ and $\frac{1}{4}$, respectively, so the fair division should be $45:15$.
+
+Let's use simulation to solve this problem.
+
+\input{Rnw/probability-FairDivision}
+
 
 \hypertarget{birthday-problem}{%
   \section{Birthday Problem}\label{birthday-problem}}
