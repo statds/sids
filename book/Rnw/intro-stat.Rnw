@@ -14,14 +14,16 @@ lambda <- 10
 x <- -log(runif(n))/lambda
 @ 
 
-Next, we will get the sample's mean, trimmed mean, and median. Notice that the mean is greater then trimmed mean, which is greater than the median. In general, the mean is not a great estimate of the `center' of a non-symmetric distribution. We say that the mean is more `sensitive to extreme values' than the median.
+Note that in \R, the \code{log} function uses the natural logarithm by default. To use base 10 or base 2, use \code{log10} and \code{log2}, respectively. To specify the base, use the \code{base} argument. For example, try  \code{log(16, base=4)}.
+
+Next, we will get the sample's mean, trimmed mean, and median. Notice that  in this example the mean is greater then trimmed mean, which is greater than the median. In general, the mean is not a great estimate of the `center' of a non-symmetric distribution. We say that the mean is more `sensitive to extreme values' than the median.
 <<intro-rexp2, eval=TRUE, comment="Output:">>=
 mean(x)
 mean(x, trim=0.1)
 median(x)
 @ 
 
-The formula we used to generate the data is the probability function of the exponential distribution, with rate parameter $\lambda=10$. We denote it by $X\sim exp(\lambda)$. The exponential distribution is often used to model random waiting times, like the time between arrivals of buses. We would usually generate it by using the \code{rexp()} function in \R.
+The formula we used to generate the data is the probability function of the exponential distribution, with rate parameter $\lambda=10$. We denote it by $X\sim exp(\lambda)$. The exponential distribution is often used to model random waiting times, like the time between incoming text messages. We would usually generate it by using the \code{rexp()} function in \R.
 Mathematical analysis of the distribution leads to the fact that the expected value of an exponential random variable with rate $\lambda$, is $1/\lambda$. We see that the theoretical expected value of our example is 0.1, and the sample mean is very close to 0.1. This is no coincidence - we will discuss it in  later chapter.
 
 
@@ -43,8 +45,9 @@ A boxplot does not include the mean, or the trimmed mean, but we have added them
 
 In addition to sample statistics which summarize some notion of the center of the distribution, we are often interested in estimating the dispersion of the data. The most commonly used measures of dispersion are the variance, and its square root - the standard deviation. The variance is defined as follows
 
-$$Var(X)=\frac{(x_1-\mu)^2+\ldots+(x_n-\mu)^2}{n-1}$$
-\why{Is the denominator $n$ in this case?} where $\mu$ is the mean of the distribution of $X$. Notice that in the denominator we have n-1, and not n. In words, the variance is the sum of squared deviations from the mean, divided by the sample size minus 1.
+$$Var(X)=\frac{(x_1-\mu)^2+\ldots+(x_n-\mu)^2}{n}$$
+ where $\mu$ is the mean of the distribution of $X$. In words, the variance is the average squared deviation from the mean.
+Notice that in \R the variance is computed with n-1 in the denominator (with n-1 we get an `unbiased estimator' for the true variance).
 
 The corresponding functions in \R are \code{var()} and \code{sd()}. In the following code we also demonstrate the \code{IQR()} function.
 <<intro-rexp3, eval=TRUE, comment="Output:">>=

@@ -48,7 +48,7 @@ To generate consecutive values, we can also use the colon operator:
 @
 
 Another useful function to generate data is \code{rep()}, which replicates values.
-We often have to generate a vector on ones or zeros, and we can do it like in the following example. We use this opportunitiy to also introduce the functions \code{sum()} and \code{cumsum()} (cumulative sum).
+We often have to generate a vector of ones or zeros, and we can do it like in the following example. We use this opportunitiy to also introduce the functions \code{sum()} and \code{cumsum()} (cumulative sum).
 <<intro-rep, eval=TRUE, comment="">>=
 (ones <- rep(1, 10))
 length(ones)
@@ -56,7 +56,7 @@ sum(ones)
 cumsum(ones)
 @
 
-There are also many functions to handle text. The \code{paste()} functions attaches two strings of characters together. Note the usage of the collapse option (argument) in the second example:
+There are also many functions to handle text. The \code{paste()} function attaches two strings of characters together. Note the usage of the collapse option (argument) in the second example:
 <<intro-paste, eval=TRUE, comment="">>=
 paste(courseNames)
 paste(courseNames, collapse=", ")
