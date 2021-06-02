@@ -16,7 +16,7 @@ geometry: margin=1in
 
 # Table of Contents
 
-## Introduction to R and RNG descriptive/graph data summary: Haim
+## 1. Introduction to R and RNG descriptive/graph data summary: Haim
 
 + Summary statistics
 + Boxplots / Violin plots
@@ -25,7 +25,9 @@ Homework ideas:
 
 + Generate data and summarize them
 
-## Paradoxes: HaiYing
+## 2. EDA (visualizaiton and maps): Jun
+
+## 3. Paradoxes: HaiYing
 
 + Birthday
 + Monte Hall
@@ -34,29 +36,30 @@ Homework ideas:
 
 Homework ideas:
 
-## Central Limit Theorem / Law of Large Number: Haim
+## 4. Central Limit Theorem / Law of Large Number: Haim
 
 + Statistics: mean/variance
 + Uncertainty
 + Limit to normal
++ Probability versus Statistics
 
-## Sampling design; data collection: HaiYing
-
-## Probability versus Statistics: ??
-
-## Hide and Seek: Estimation (point/interval): Jun
+## 5. Hide and Seek: Estimation (point/interval): Jun
 
 + Robustness-Efficiency Tradeoff
 + Bias-Variance Tradeoff
 + Bayesian?
 
-## Hypothesis Testing: Jun
+## 6. Sampling design; data collection: HaiYing
+
+## 7. Correlation and Regression: HaiYing
+
+## 8. Hypothesis Testing: Jun
 + Type I/II errors
 + P-value; uniform distribution under the null
++ Multiple testing issues
 
+## 9. A live project/capstone (could be flipped)
 
-
-## EDA (visualizaiton and maps)
 
 # Others
 ## Age group: high school
