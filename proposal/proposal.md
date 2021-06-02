@@ -42,18 +42,21 @@ Homework ideas:
 
 ## Sampling design; data collection: HaiYing
 
-## Probability versus Statistics
+## Probability versus Statistics: ??
 
 ## Hide and Seek: Estimation (point/interval): Jun
 
 + Robustness-Efficiency Tradeoff
 + Bias-Variance Tradeoff
++ Bayesian?
 
 ## Hypothesis Testing: Jun
++ Type I/II errors
++ P-value; uniform distribution under the null
+
+
 
 ## EDA (visualizaiton and maps)
-
-
 
 # Others
 ## Age group: high school
