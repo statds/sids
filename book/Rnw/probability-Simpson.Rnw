@@ -1,4 +1,4 @@
-<<probability-Simpson, eval=TRUE, >>=
+<<probability-Simpson, eval=TRUE, comment="", fig.align='center', fig.width=5, fig.height=4, fig.cap="Scatter plot for the whole data">>=
 set.seed(2021)
 g <- 4 # number of groups
 n <- 40 # number of instances in each group
@@ -6,6 +6,9 @@ z <- rep(1:4, each=n) # grouping variable
 x <- runif(n*g, 0, 2) + z # x variable that depends on z
 y <- 2 * z - x + rnorm(n*g) # y variable that depends on x and z
 plot(x, y) # plot the whole data
+@
+
+<<probability-Simpson2, eval=TRUE, comment="", fig.align='center', fig.width=5, fig.height=4, fig.cap="Scatter plot with different groups labeled">>=
 plot(x, y, pch=rep(1:g, each=n), col=rep(1:g, each=n))
 # label the points for different groups
 @
