@@ -38,14 +38,19 @@ Consider the following two problems:
   probability that both children are girls?
 \end{enumerate}
 \end{example}
-Here are the possibilities of \{older child, younger child\}:
-\{Boy, Boy\}, \{Boy, Girl\}, \{Girl, Boy\}, \{Girl,Girl\}, with equal probabilities to occur. 
+Here are the possibilities of \{older child, younger child\}: \{Boy, Boy\},
+\{Boy, Girl\}, \{Girl, Boy\}, \{Girl,Girl\}, with equal probabilities to occur.
 
-For the first question: two elements satisfy the situation (the sample space for the given situation) -- \{Girl, Boy\},
-\{Girl,Girl\}; one element corresponds to the event of two girls (number of elements in the event of interest). Thus the probability of two girls is $\frac{1}{2}$. This question can also be solved this way: Since the older child is a girl, the probability of two girls is the probability that the younger child is a girl which is $\frac{1}{2}$.
+For the first question: two elements satisfy the situation (the sample space for
+the given situation) -- \{Girl, Boy\}, \{Girl,Girl\}; one element corresponds to
+the event of two girls (number of elements in the event of interest). Thus the
+probability of two girls is $\frac{1}{2}$. This question can also be solved this
+way: Since the older child is a girl, the probability of two girls is the
+probability that the younger child is a girl which is $\frac{1}{2}$.
 
-For the second question, three elements satisfy the situation (the sample space for the given situation): \{Boy, Girl\},
-\{Girl, Boy\}, \{Girl,Girl\}. Thus the probability is $\frac{1}{3}$.
+For the second question, three elements satisfy the situation (the sample space
+for the given situation): \{Boy, Girl\}, \{Girl, Boy\}, \{Girl,Girl\}. Thus the
+probability is $\frac{1}{3}$.
 
 \hypertarget{example-elevator-waiting-time}{%
   \section{Elevator waiting
@@ -60,15 +65,18 @@ For the second question, three elements satisfy the situation (the sample space 
   floor. What is the explanation?
 \end{example}
 
-When Mr.~Smith gets to the elevator, it may be below the 13th floor or above it. The elevator will goes up if it is below the 13th floor and it will goes down if it is above the 13th floor. There are 12 floors below the 13th floor and 2 floors above it, so the probability that the elevator is below the 13th floor is $12/14\approx0.86>0.5$. Thus no matter when Mr. Smith wants to go home, it is more likely that the elevator is going up.
+When Mr.~Smith gets to the elevator, it may be below the 13th floor or above
+it. The elevator will goes up if it is below the 13th floor and it will goes
+down if it is above the 13th floor. There are 12 floors below the 13th floor and
+2 floors above it, so the probability that the elevator is below the 13th floor
+is $12/14\approx0.86>0.5$. Thus no matter when Mr. Smith wants to go home, it is
+more likely that the elevator is going up.
 
 We can simulate this situation:  
 
 \input{Rnw/probability-elevator}
 
 \jy{The location does not mean the moving direction}\why{See if it is clear now.}
-
-
 
 \hypertarget{Fair-Division}{%
   \section{Fair Division}\label{Fair-Division}}
@@ -85,7 +93,9 @@ It seems Tom has won twice and Jerry has won once so the 60 dollars should be
 split as $40:20$. However, these are not proportional to their probabilities of
 winning. They need at most another two games to know the final winner. Here are
 the four possible results of the two games: \{Tom, Tom\}, \{Tom, Jerry\},
-\{Jerry, Tom\}, \{Jerry, Jerry\}. The probabilities that Tom and Jerry would be the final winner are $\frac{3}{4}$ and $\frac{1}{4}$, respectively, so the fair division should be $45:15$.
+\{Jerry, Tom\}, \{Jerry, Jerry\}. The probabilities that Tom and Jerry would be
+the final winner are $\frac{3}{4}$ and $\frac{1}{4}$, respectively, so the fair
+division should be $45:15$.
 
 Let's use simulation to solve this problem.
 
@@ -111,7 +121,8 @@ Let's use simulation to verify the aforementioned numbers.
 \input{Rnw/probability-birthday}
 
 % \begin{equation*}
-%   P(A)=1-P(A^c)=1-\frac{P_{365,n}}{365^n}=1-\frac{365\times364\times\cdots\times(365 - n + 1)}{365^n}
+%   P(A)=1-P(A^c)=1-\frac{P_{365,n}}{365^n}=1-\frac{365\times364\times\cdots
+%                  \times(365 - n + 1)}{365^n}
 % \end{equation*}
 % Some numbers:\\
 % \begin{tabular}{lrrrrrr}\hline
@@ -138,7 +149,8 @@ Henry is a bit incredulous that his own ex-wife would carry out the punishment,
 and a bit sad that she was always such a rule follower. He steels himself as
 Gretchen loads the chambers, spins the revolver, and pulls the trigger. Whew! It
 was blank. Then Gretchen asks, ``Do you want me to pull the trigger again, or
-should I spin the chamber a second time before pulling the trigger?'' What should Henry choose?
+should I spin the chamber a second time before pulling the trigger?'' What
+should Henry choose?
 
 We know that the first chamber Gretchen fired was one of the four empty
 chambers. Since the bullets were placed in consecutive order, one of the empty
@@ -153,9 +165,10 @@ position out of the six possible chambers that would be in position.
 \input{Rnw/probability-HenryChoice}
 
 \hypertarget{Intransitive-Dice}{%
-\section{Intransitive Dice}\label{Intransitive-Dice}}
+  \section{Intransitive Dice}\label{Intransitive-Dice}}
 
-We know that in general if $A>B$ and $B>C$ then $C>A$. However, this may not be the case in the word of probability.
+We know that in general if $A>B$ and $B>C$ then $C>A$. However, this may not be
+the case in the word of probability.
 
 Consider three dice with different sides numbers:
 \begin{itemize}
@@ -164,7 +177,9 @@ Consider three dice with different sides numbers:
 \item Die C has sides 3, 3, 5, 5, 7, 7.
 \end{itemize}
 
-To play a game using dice A and B, you can chose which die to roll and your opponent rolls the other. The one who tolls a larger number wins. Which die do you want to choose?
+To play a game using dice A and B, you can chose which die to roll and your
+opponent rolls the other. The one who tolls a larger number wins. Which die do
+you want to choose?
 
 Let's table the possible results to see the better die.
 \begin{center}
@@ -179,7 +194,9 @@ Let's table the possible results to see the better die.
   \end{tabular}
 \end{center}
 
-Since die A wins five out of the nine possible results and all possible results occur with equal probability, we know that die A has a higher winning probability ($\frac{5}{9}$) than die B. We should choose die A over die B. 
+Since die A wins five out of the nine possible results and all possible results
+occur with equal probability, we know that die A has a higher winning
+probability ($\frac{5}{9}$) than die B. We should choose die A over die B.
 
 Now consider dice B and C.
 \begin{center}
@@ -194,9 +211,13 @@ Now consider dice B and C.
   \end{tabular}
 \end{center}
 
-We see that die B has a higher winning probability ($\frac{5}{9}$) than die C, so we should choose die B over die C. 
+We see that die B has a higher winning probability ($\frac{5}{9}$) than die C,
+so we should choose die B over die C.
 
-Since we should choose die A over die B, and choose die B over die C, does this mean that we should choose die A over die C if these two dice are to be selected. Surprisingly, the answer is NO. Here is the table of the possible results.
+Since we should choose die A over die B, and choose die B over die C, does this
+mean that we should choose die A over die C if these two dice are to be
+selected. Surprisingly, the answer is NO. Here is the table of the possible
+results.
 \begin{center}
   \begin{tabular}{cc|ccc}\hline
     &   & \multicolumn{3}{c}{C} \\
@@ -214,7 +235,12 @@ Here is an experiment to simulate the intransitive dice.
 
 \input{Rnw/probability-IntransitiveDice}
 
-A set of dice is intransitive if it contains three dice, A, B, and C, with the property that A rolls higher than B more than half the time, and B rolls higher than C more than half the time, but it is not true that A rolls higher than C more than half the time. In other words, a set of dice is intransitive if the binary relation – X rolls a higher number than Y more than half the time – on its elements is not transitive.
+A set of dice is intransitive if it contains three dice, A, B, and C, with the
+property that A rolls higher than B more than half the time, and B rolls higher
+than C more than half the time, but it is not true that A rolls higher than C
+more than half the time. In other words, a set of dice is intransitive if the
+binary relation – X rolls a higher number than Y more than half the time – on
+its elements is not transitive.
 
 \hypertarget{Bertrand-Box}{%
 \section{Bertrand's Box}\label{Bertrand-Box}}
@@ -294,11 +320,12 @@ sex-discrimination. Here are the overall numbers for the six largest
 departments in fall admission of 1973.
 
 \begin{center}
-\begin{tabular}{crrcrr}\hline
- \multicolumn{3}{c}{Men} & \multicolumn{3}{c}{Women} \\\hline
- Applicants & \multicolumn{2}{c}{Admitted} & Applicants & \multicolumn{2}{c}{Admitted} \\\hline
- 2691 & 1198 & ({\bf 44.5}\%) & 1835 & 557 & (30.4\%) \\\hline
-\end{tabular}
+  \begin{tabular}{crrcrr}\hline
+    \multicolumn{3}{c}{Men} & \multicolumn{3}{c}{Women} \\\hline
+    Applicants & \multicolumn{2}{c}{Admitted} & Applicants
+                                      & \multicolumn{2}{c}{Admitted} \\\hline
+    2691 & 1198 & ({\bf 44.5}\%) & 1835 & 557 & (30.4\%) \\\hline
+  \end{tabular}
 \end{center}
 
 This table shows that men were more likely than women to be admitted,
@@ -310,7 +337,8 @@ the data according to each departments.
   % \centering
 \begin{tabular}{ccrrcrr}\hline
   & \multicolumn{3}{c}{Men}  & \multicolumn{3}{c}{Women} \\\cline{2-7}
-Department & Applicants  & \multicolumn{2}{c}{Admitted} & Applicants  & \multicolumn{2}{c}{Admitted} \\\hline
+  Department & Applicants  & \multicolumn{2}{c}{Admitted} & Applicants
+                           & \multicolumn{2}{c}{Admitted} \\\hline
 A & 825 & 512& (62\%) & 108 & 89 &(82\%)  \\ 
 B & 560 & 353& (63\%) & 25  & 17 &(68\%)  \\
 C & 325 & 120& (37\%) & 593 & 202& (34\%) \\
@@ -375,21 +403,28 @@ gives the prisoners more than 0.30 probability to survive
   or has opened 50 drawers.
 \end{enumerate}
 
-In the following, we define two functions to simulate the method of randomly open 50 drawers and the better strategy, respectively. 
+In the following, we define two functions to simulate the method of randomly
+open 50 drawers and the better strategy, respectively.
 
 \input{Rnw/probability-100prisoners}
 
 \hypertarget{Monty-Hall-problem}{%
 \section{Monty Hall problem}\label{Monty-Hall-problem}}
 
-% The problem was originally posed (and solved) in a letter by Steve Selvin to the American Statistician in 1975.
-% Selvin, Steve (February 1975a). "A problem in probability (letter to the editor)". The American Statistician. 29 (1): 67–71.
-% Selvin, Steve (February 1975a). "A problem in probability (letter to the editor)". The American Statistician. 29 (1): 67–71.
-% It became famous as a question from reader Craig F. Whitaker's letter quoted in Marilyn vos Savant's "Ask Marilyn" column in Parade magazine in 1990:
-% Selvin, Steve (February 1975a). "A problem in probability (letter to the editor)". The American Statistician. 29 (1): 67–71.
-% The Monty Hall problem is mathematically equivalent to the earlier Three Prisoners problem
-% Gardner, Martin (October 1959). "Mathematical Games: Problems involving questions of probability and ambiguity". Scientific American. 201 (4): 174–182.
-% Gardner, Martin (1959). "Mathematical Games: How three modern mathematicians disproved a celebrated conjecture of Leonhard Euler". Scientific American. 201 (5): 188
+% The problem was originally posed (and solved) in a letter by Steve Selvin to
+% the American Statistician in 1975.  Selvin, Steve (February 1975a). "A problem
+% in probability (letter to the editor)". The American Statistician. 29 (1):
+% 67–71.  Selvin, Steve (February 1975a). "A problem in probability (letter to
+% the editor)". The American Statistician. 29 (1): 67–71.  It became famous as a
+% question from reader Craig F. Whitaker's letter quoted in Marilyn vos Savant's
+% "Ask Marilyn" column in Parade magazine in 1990: Selvin, Steve (February
+% 1975a). "A problem in probability (letter to the editor)". The American
+% Statistician. 29 (1): 67–71.  The Monty Hall problem is mathematically
+% equivalent to the earlier Three Prisoners problem Gardner, Martin (October
+% 1959). "Mathematical Games: Problems involving questions of probability and
+% ambiguity". Scientific American. 201 (4): 174–182.  Gardner, Martin
+% (1959). "Mathematical Games: How three modern mathematicians disproved a
+% celebrated conjecture of Leonhard Euler". Scientific American. 201 (5): 188
 
 Suppose you're on a game show, and you're given the choice of three doors:
 Behind one door is a car; behind the others, goats. You pick a door, say No. 1,
