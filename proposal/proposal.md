@@ -25,14 +25,14 @@ Homework ideas:
 
 + Generate data and summarize them
 
-## 2. EDA (visualizaiton and maps): Jun
+## 2. EDA (visualizaiton and maps): Haim
 
 ## 3. Paradoxes: HaiYing
 
 + Birthday
 + Monte Hall
 + Birth gender
-+ Simpson 
++ Simpson
 
 Homework ideas:
 
@@ -45,17 +45,22 @@ Homework ideas:
 
 ## 5. Hide and Seek: Estimation (point/interval): Jun
 
++ Confidence intervals
 + Robustness-Efficiency Tradeoff
 + Bias-Variance Tradeoff
 + Bayesian?
+
 
 ## 6. Sampling design; data collection: HaiYing
 
 ## 7. Correlation and Regression: HaiYing
 
 ## 8. Hypothesis Testing: Jun
+
++ Lady tasting tea
 + Type I/II errors
 + P-value; uniform distribution under the null
++ Random permutation; Fisher's exact.
 + Multiple testing issues
 
 ## 9. A live project/capstone (could be flipped)
