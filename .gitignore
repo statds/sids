@@ -71,6 +71,7 @@ Thumbs.db
 *.out
 *.aux
 *.synctex.gz
+uconn-pcs/syllabus.pdf
 
 _minted-*
 .Rproj.user
