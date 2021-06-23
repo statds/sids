@@ -1,0 +1,43 @@
+Here we construct bootstrap confidence interval for estimating the
+population median of a gamma distribution.
+<<ci-boot-mean, cache=TRUE>>=
+set.seed(2021)
+theta <- runif(1, 1, 10)
+myBootCI <- function(x, alpha = .05, B = 400, fun = mean) {
+    ## mb <- replicate(B, mean(sample(x, size = length(x), replace = TRUE)))
+    mb <- rep(0, B)
+    for (i in 1:B) {
+        xb <- sample(x, size = length(x), replace = TRUE)
+        mb[i] <- fun(xb)
+    }
+    quantile(mb, c(alpha / 2, 1 - alpha / 2))
+}
+
+n <- 50
+x <- rgamma(n, shape = theta / 2, scale = 2)
+myBootCI(x, fun = mean)
+
+nrep <- 1000
+do1rep <- function(n, theta, alpha = .05, B = 400, fun = mean) {
+    ## generate data
+    x <- rgamma(n, shape = theta / 2, scale = 2)
+    ## return the confidence interval
+    myBootCI(x, alpha, B, fun)
+}
+
+sim <- replicate(nrep, do1rep(n, theta, fun = mean))
+mean(sim[1, ] < theta & sim[2,] > theta)
+
+## let's try a smaller sample size
+sim <- replicate(nrep, do1rep(20, theta))
+mean(sim[1, ] < theta & sim[2,] > theta)
+@
+
+The same code could be used to estimate other target, say the
+population median.
+<<ci-boot-median, cashe=TRUE>>=
+## Let's estimate the population median with sample median
+sim <- replicate(nrep, do1rep(50, theta, fun = median))
+pmed <- qgamma(0.5, shape = theta / 2, scale = 2)
+mean(sim[1, ] < pmed & sim[2,] > pmed)
+@ 

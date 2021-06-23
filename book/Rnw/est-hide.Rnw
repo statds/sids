@@ -9,20 +9,24 @@ summary(x)
 @ 
 
 
-**Estimators**
+\paragraph{Estimators}
 
 Let us consider a few candidate estimators
 
-+ Sample mean,
-+ Sample median.
-+ Midrange.
+\begin{itemize}
+\item Sample mean
+\item Sample median
+\item Midrange
+\end{itemize}
 
 The three estimates based on the observed sample are
 <<hide-normal-one>>=
 (estimates <- c(mu1 = mean(x), mu2 = median(x), mu3 = mean(range(x))))
 @ 
 
-**Mean Squared Error**
+
+\paragraph{Mean Squared Error}
+
 To assess which estimator is better, we compare them with the true value of
 $\mu$. The squared error of an estimator $\hat\mu$ of $\mu$ is
 $(\hat\mu - \mu)^2$.
@@ -40,6 +44,7 @@ this game repeatedly, collect the squared errors of the estimators, and compare
 their means, that is, mean squared error.
 
 
+\begin{illustration}[Hide-and-seek with a normal population]
 Now the game becomes a racing game. We do it through a simulation study.
 Let us construct a function to do replicate of such game.
 <<hide-normal-do1rep>>=
@@ -72,7 +77,7 @@ rowMeans(sim)
 
 
 The first estimator, the sample mean, is a clear winner!
-
+\end{illustration}
 
 \begin{illustration}[Hide-and-seek with a Cauchy population]
   % \indexExSix{Computing ranks in the presence of ties}
@@ -98,3 +103,36 @@ rowMeans(sim)
 @
 Which estimator is the winner this time?
 \end{illustration}
+
+
+\begin{illustration}[Hide-and-seek with a uniform population]
+  % \indexExSix{Computing ranks in the presence of ties}
+\label{example:has-unif}
+Now let's change the distribution of the population to one with light tails.
+<<hide-unif>>=
+set.seed(1975)
+mu <- runif(1, min =- 10, max = 10)
+x <- runif(n, mu - 1, mu + 1)
+summary(x)
+
+do1rep <- function(n, mu) {
+    ## generate data
+    x <- runif(n, mu - 1, mu + 1)
+    ## collect estimates
+    est <-  c(mu1 = mean(x), mu2 = median(x), mu3 = mean(range(x)))
+    ## return squared error
+    return((est - mu)^2)
+}
+
+sim <- replicate(nrep, do1rep(n, mu))
+rowMeans(sim)
+@
+Which estimator is the winner this time?
+\end{illustration}
+
+
+Can we find an estimator that performs the best in all scenarios?
+
+Now that the performance depends on the true population which is
+unknown, can we make some good guesses and choose one? This is known
+as adaptive estimation. 

@@ -9,7 +9,7 @@ with this sample. An estimator is a quantity constructed from the observed
 sample, that is, it is a statistic. What estimators can we construct? How do we
 assess which is better?
 
-\input{Rnw/est-hide-normal}
+\input{Rnw/est-hide}
 
 \section{Seeking strategies}
 
@@ -40,15 +40,9 @@ The principle we use here is the so-called maximum likelihood estimation. The
 unknown true has 9 possibilities. We choose the one that gives the highest
 likelihood of observing a randomly selected ball being red.
 
+\section{Uncertainty}
 
-% The area of a circle with radiur \(r\) is
+\input{Rnw/est-ci-clt}
 
-% \begin{align}
-%     R = \pi r^2.
-% \label{eq:area}
-% \end{align}
-
-% \begin{align*}
-% \mathrm{MSE}(\hat\mu) = (\hat\mu - \mu)^2
-% \end{align*}
+\input{Rnw/est-ci-boot}
 

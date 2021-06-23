@@ -45,10 +45,12 @@ Homework ideas:
 
 ## 5. Hide and Seek: Estimation (point/interval): Jun
 
++ Strategies
++ Adaptive
 + Confidence intervals
 + Robustness-Efficiency Tradeoff
-+ Bias-Variance Tradeoff
-+ Bayesian?
++ Bias-Variance Tradeoff (borrow strength)
++ Bayesian 
 
 
 ## 6. Sampling design; data collection: HaiYing
@@ -64,6 +66,7 @@ Homework ideas:
 + Multiple testing issues
 
 ## 9. A live project/capstone (could be flipped)
+
 
 
 # Others

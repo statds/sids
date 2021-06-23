@@ -1,0 +1,50 @@
+Now let's play a game to appreciate the importance of uncertainty in
+estimation. We will use the asymptotic theory to construct the 95\%
+confidence intervals and check their actural coverage rates.
+
+\begin{illustration}
+Let's generate some $\theta$ that we do not know.
+<<ci-clt>>=
+set.seed(20210623)
+theta  <- runif(1, 1, 10)
+n <- 50
+x <- rgamma(n, shape = theta/2, scale = 2)
+ciclt <- function(x, alpha = .05) {
+    xbar <- mean(x)
+    ss <- sd(x)
+    z <- qnorm(1 - alpha / 2)
+    dd <- z * ss / sqrt(length(x))
+    c(xbar - dd, xbar + dd)
+}
+ciclt(x)
+
+x <- rgamma(n, shape = theta/2, scale = 2)
+ciclt(x)
+x <- rgamma(n, shape = theta/2, scale = 2)
+ciclt(x)
+@ 
+
+Does a 95\% onfidence interval constructed this way really give 95\%
+probability of covering the truth? By theory, it should when the
+sample size is large. Is $n = 50$ large enough for this to be good?
+We can check the actual coverage in a simulation study.
+<<ci-clt-cov>>=
+nrep <- 1000
+do1rep <- function(n, theta, alpha = .05) {
+    ## generate data
+    x <- rgamma(n, shape = theta / 2, scale = 2)
+    ## return the confidence interval
+    ciclt(x, alpha)
+}
+
+sim <- replicate(nrep, do1rep(n, theta))
+mean(sim[1, ] < theta & sim[2,] > theta)
+
+## let's try a smaller sample size
+sim <- replicate(nrep, do1rep(20, theta))
+mean(sim[1, ] < theta & sim[2,] > theta)
+@
+The simulation shows that the confidence intervals constructed from
+the large sample theory works well for sample size $n = 50$ but not so
+well for $n = 20$.
+\end{illustration}
