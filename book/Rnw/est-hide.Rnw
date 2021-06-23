@@ -56,6 +56,7 @@ do1rep <- function(n, mu) {
     ## return squared error
     return((est - mu)^2)
 }
+
 @
 
 Each time we call this function, the experiment is done and the squared errors
@@ -135,4 +136,4 @@ Can we find an estimator that performs the best in all scenarios?
 
 Now that the performance depends on the true population which is
 unknown, can we make some good guesses and choose one? This is known
-as adaptive estimation. 
+as adaptive estimation.
