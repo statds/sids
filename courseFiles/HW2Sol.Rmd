@@ -1,0 +1,136 @@
+---
+title: "Homework 2 - Solutions"
+author: "Haim Bar"
+date: "June 23, 2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1
+
+On HuskyCT you will find a file with the season's best results for men’s long-jump, since 1960 (longjump1.txt). Data were retrieved from Wikipedia: https://en.wikipedia.org/wiki/Long_jump#Men_5
+Use the following command to read the data:
+longjump <- read.csv("longjump1.txt",sep="\t",header=TRUE)
+If you get an error that the file is not found, make sure you set the working directory.
+
+a.	Use the commands you learned in class to create a frequency table, by the top athlete’s nationality.
+
+```{r comment=""}
+longjump <- read.csv("longjump1.txt",sep="\t",header=TRUE)
+table(longjump$Nationality)
+# or, we can sort it by frequency in the table:
+sort(table(longjump$Nationality))
+```
+
+b.	Use the commands you learned in class to find the minimum, maximum, and mean result across all years.
+
+```{r comment=""}
+cat("min=", min(longjump$Distancem), ", max=",max(longjump$Distancem),", mean=",mean(longjump$Distancem), ", sd=",sd(longjump$Distancem),"\n")
+```
+
+
+c.	Create a plot with the year on the x-axis and the best result on the y-axis. Create an aesthetically pleasing plot with the options you saw in the notes. Comment on the plot and describe the most striking observations which can be seen in the plot.
+
+```{r comment="",fig.height=4,fig.width=5, fig.align='center'}
+plot(longjump$Year,longjump$Distancem, type='b', pch=18, col="red",axes=FALSE, xlab="Year",ylab="Distance in meters")
+grid()
+axis(1)
+axis(2)
+```
+
+In 1966 an astounding recrord was set, which was much higher than any of the previous results, and it held the record for over 20 years. This record was set by Bob Bimon in the high-altitude conditions in Mexico City.
+There was a steady increase starting in 1979, but after a record was set in 1990 there was a general decline.
+
+## 2
+
+Run the following code to generate a data frame called ucb:
+
+```{r comment=""}
+gender <- rep(c("female","male"),c(1835,2691))
+admitted <- rep(c("yes","no","yes","no"),c(557,1278,1198,1493))
+dept <- rep(c("A","B","C","D","E","F","A","B","C","D","E","F"),
+           c(89,17,202,131,94,24,19,8,391,244,299,317))
+dept2 <- rep(c("A","B","C","D","E","F","A","B","C","D","E","F"),
+            c(512,353,120,138,53,22,313,207,205,279,138,351))
+department = c(dept,dept2)
+ucb <- data.frame(gender,admitted,department)
+rm(gender,admitted,dept,dept2,department)
+```
+
+a.	Use one of the functions you saw in class and the notes to create a summary of each variable.
+
+```{r comment=""}
+# Can use a 'flat table'
+ftable(ucb)
+# or just the table function for each variable
+table(ucb$gender)
+table(ucb$admitted)
+table(ucb$department)
+```
+
+b.	Create a contingency table of gender by department called GenderDept, and include the row and column sums.
+
+```{r comment=""}
+GenderDept <- table(ucb$gender,ucb$department)
+(GenderDept <- addmargins(GenderDept))
+```
+
+
+c.	Using the table you created, plot a spinogram.
+
+```{r comment="",fig.align='center',fig.height=4,fig.width=4}
+library(vcd)
+spine(t(GenderDept[1:2,1:6]),main="Gender vs Department")
+```
+
+
+d.	Does there seem to be a relationship between department and gender? 
+
+We can see obvious differences in the spinogram. The proportion of women in departments A adn B is much smaller than the proportion of men.
+As we saw in the previous lecture, this may be a result of how many men and women applied to each department, rather than some bias (Simpson's paradox.)
+
+## 3
+“airquality” is a built-in data set in R. It has 154 observations and 6 variables. Read the description by yourself by typing ?airquality
+
+a.	Get summary statistics on all 6 variables in “airquality”.
+
+```{r comment=""}
+summary(airquality)
+# 1st method
+by(data=airquality$Temp,IND = airquality$Month,FUN = summary)
+
+# 2nd Method
+
+tapply(airquality$Temp,INDEX = airquality$Month,summary)
+# 3rd Method
+aggregate(airquality$Temp,by=list(airquality$Month),summary)
+```
+
+b.	Draw a boxplot of the Temp variable.
+
+```{r comment="",fig.align='center',fig.height=4,fig.width=4}
+boxplot(airquality$Temp)
+```
+
+c.	Plot the kernel density graph of Wind by each month. And compare them on one graph. Add necessary titles, and legend.
+
+```{r comment="",fig.align='center',fig.height=4,fig.width=4}
+library(sm)
+attach(airquality)
+sm.density.compare(Wind,Month,lwd=3)
+title(main = "Wind Speed (mph) by Month")
+colfill <- c(2:(2+max(Month)-min(Month)))
+legend("topright",levels(as.factor(Month)),fill=colfill)
+detach(airquality)
+```
+
+
+d.	Are there any conclusions you can draw from the plots and tables? 
+
+From the last plot we can see that the wind speed looks about the same across months, but overall in May there are stronger winds, since the density plot is slightly shifted to the right.
+

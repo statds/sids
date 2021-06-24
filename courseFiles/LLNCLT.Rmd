@@ -1,0 +1,361 @@
+---
+title: "The Law of Large Numbers and the Central Limit Theorem"
+author: "Haim Bar"
+date: "June 18, 2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+#### Example 1
+
+IQ is normally distributed with mean 100, and standard deviation 15.
+
+Draw a sample of 200 'people' from this distribution and plot a histogram of their 'IQ'.
+
+```{r comment="", fig.align='center', fig.height=4, fig.width=4}
+n <- 200
+samp <- rnorm(n, 100, 15)
+hist(samp, freq=FALSE)
+```
+
+Add a density plot on top of it
+
+```{r comment="", fig.align='center', fig.height=4, fig.width=4}
+hist(samp, freq=FALSE)
+xs <- seq(40,180, length=1000)
+lines(xs, dnorm(xs, 100, 15), col=2, lwd=3)
+```
+
+
+Use the **qqnorm** function to check if the sample is normally distributed.
+
+```{r comment="", fig.align='center', fig.height=4, fig.width=4}
+qqnorm(samp, cex=0.7, pch=18, col="purple")
+abline(100,15,col="orange", lwd=3)
+```
+
+The points in the Q-Q plot lie very close to a straight line, indicating that the data are likely from a normal distribution.
+
+What are the sample mean and s.d.?
+
+```{r comment=""}
+cat(mean(samp),"\n")
+cat(sd(samp),"\n")
+```
+
+In order to be accepted to the Mensa club a person has to be in the top 2% of the IQ distribution.
+Use the **quantile** function to determine what is the minimum score required in order to be a Mensa member
+
+```{r comment=""}
+mensacutoff <- round(quantile(samp,probs = 0.98))
+cat(mensacutoff,"\n")
+```
+
+Use the **abline** function to show this cut-off on the histogram/density plot
+
+```{r comment="", fig.align='center', fig.height=4, fig.width=4}
+hist(samp, freq=FALSE)
+lines(xs, dnorm(xs, 100, 15), col=2, lwd=3)
+abline(v=mensacutoff, col="green", lwd=3, lty=2)
+```
+
+Use the **polygon** function to show the Mensa-eligible region under the distribution.
+
+```{r comment="", fig.align='center', fig.height=4, fig.width=4}
+hist(samp, freq=FALSE, main="IQ", xlab="IQ")
+lines(xs, dnorm(xs, 100, 15), col=2, lwd=3)
+xx <- seq(mensacutoff, 200, length=20)
+yy <- dnorm(xx, 100, 15)
+polygon(c(xx, rev(xx)), c(rep(0,length(xx)), rev(yy)), col="green")
+```
+
+You are given the IQ test results of 13 people and they are:
+139, 104, 115, 151, 116, 141, 117, 105, 134, 155, 130, 139, 121.
+Is this group different than the overall population? (Next lecture!)
+
+
+
+#### Example 2
+
+The pockets of the roulette wheel are numbered from 0 to 36.
+In number ranges from 1 to 10 and 19 to 28, odd numbers are red and even are black.
+In ranges from 11 to 18 and 29 to 36, odd numbers are black and even are red.
+There is a green pocket numbered 0 (zero).
+Suppose you want to bet on a color, say, red, and if the ball lands in a red pocket
+your payoff is twice your bet.
+
+
+What is the probability you win?
+
+
+what is your expected payoff?
+
+
+You have $10000, and you bet one dollar each time. 
+Plot distribution of the number of wins and losses.
+Check how much money you made or lost.
+
+```{r comment="", fig.align='center', fig.height=4, fig.width=4}
+n <- 10000
+roulette <- rbinom(n, 1, 18/37)
+hist(roulette)
+cat("Prob. win=", mean(roulette),"\n")
+cat("Paid: $", prettyNum(n, big.mark=","), ". Won: ", sum(roulette), "times.", "Total gain:", prettyNum(2*sum(roulette), big.mark = ","), "dollars. Net gain/loss:", prettyNum(2*sum(roulette)-n,big.mark = ","),"\n")
+```
+
+## Probability and Statistics
+
+We usually select a **mathematical model** which we believe fits the data, and then with the data we have collected we can check if this belief is reasonable. If so, we can use model to draw conclusions about the data.
+
+For example:
+
++ If the IQ has N(mean=100, sd=15) distribution, how likely it is to see a person with an IQ above 140?
++ If we have a sample of IQ tests from a group of students, is this group smarter than the average in the population?
+
+If we can repeat the experiment many times, we can draw conclusions based on the distribution of the results.
+In many cases, however, we can only perform an experiment once!
+How can we do statistical analysis based on one experiment???
+
+Given the (assumed) mathematical model, we pretend that we have an infinite number of experiments, and then we can ask questions about the single sample that we have.
+
+
+## The Law of Large Numbers
+
+#### Question 1
+
+As of June 16, 2021 Tony Snell from the Atlanta Hawks leads the NBA in 3pt accuracy with 53.8%.
+If he takes 3pt 10 shots per game over the next 10 games, how many three-point shots do you expect him to make?
+
+```{r,comment=""}
+p3pt <- 0.538
+n <- 100
+nsim <- 1
+set.seed(230091)
+made3pt <- rbinom(nsim, n, p3pt)
+cat(mean(made3pt),"\n")
+```
+
+#### Question 2
+
+In 2021 the boy to girl birth ratio in the USA is estimated to be 1.05
+If you took a random sample of 300 newborns across the USA, how many do you expect to be boys?
+
+```{r,comment=""}
+b2g <- 1.05 # B/G
+# We need B/(B+G)
+# Since B/G=1.05, B=1.05G, so:
+pboy <- 1.05/(1+1.05)
+n <- 300
+nsim <- 1
+set.seed(100091)
+boysInSample <- rbinom(nsim, n, pboy)
+cat("Prob. boy:", pboy, ". Simulated number of boys in a sample of 300 is:", mean(boysInSample),"\n")
+```
+
+
+Would it be very surprising if we actually see 148 in the random sample?
+
+Suppose we took a sample of 3000, instead. Would is be surprising if we observed 1480 boys? We'll revisit the question soon.
+
+
+Suppose that Tony Snell with his 3pt accuracy of 53.8% took 10 shots three-point shots and missed all.
+What is the probability he makes the next three-point shot?
+
+
+#### Question 3
+
+Suppose that you get a text message every 6 minutes (a rate of 10 per hour), and suppose that they arrive independently of one another. Use the Poisson distribution to generate 5 samples of the number of messages you get in 1 hour. Use the function rpois(5,10).
+Repeat this with 10, 20, 30,..., 1000, store the results in a vector called myMsg, and plot it vs. the number of samples.
+
+What do you think the true mean of this distribution is?
+
+
+```{r,comment=""}
+ssize <- c(5,seq(10,1000,by=10))
+myMsg <- rep(0,length(ssize))
+set.seed((40001))
+for (i in 1:length(ssize)) {
+  myMsg[i] <- mean(rpois(ssize[i], 10))
+}
+plot(ssize, myMsg,pch=17,col="blue")
+```
+
+
+#### Question 4
+
+Suppose now that you have two different samples, each of size 40, both from a standard normal distribution. Suppose that the two samples are independent. Define a third variable which is just the ratio between pairs from the two distributions. Calculate the mean of the ratios.
+
+```{r,comment=""}
+n <- 40
+s1 <- rnorm(n)
+s2 <- rnorm(n)
+r12 <- s1/s2
+cat(mean(r12),"\n")
+```
+
+
+Increase the sample size from 50 to 1000 (by=10) and plot the sample means vs. the sample size:
+```{r,comment=""}
+n <- seq(50,1000,by=10)
+set.seed(55111)
+allMeans <- rep(0,length(n))
+for (i in 1:length(n)) {
+  s1 <- rnorm(n[i])
+  s2 <- rnorm(n[i])
+  r12 <- s1/s2
+  allMeans[i] <- mean(r12)
+}
+plot(n, allMeans,pch=19,col=3)
+```
+
+### Law of large numbers - informal
+
+The results of an experiment tend to settle down to a fixed average when the experiment is repeated many times.
+
+The LLN does not imply that the results of future experiments will balance out what already happened! So, Tony Snell's next three-point attempt will succeed with probability 0.538.
+
+The LLN is very general - it doesn't matter if the question is about how many boy-births we expect to see ("binomial distribution"") or if we measure IQ ("normal distribution"").
+
+## The Central Limit Theorem
+
+The LLN says that as we increase the sample size, the sample mean converges to a fixed value (the true population mean). 
+It does not say anything, however, about how close the sample estimate is to the true value.
+In other words, it says nothing about our level of (un)certainty. 
+
+
+The central limit theorem (CLT) says that, in many (most) situations, when independent random variables are averaged, their normalized mean tends toward a normal distribution.
+This is true even if the original variables themselves are not normally distributed!
+
+#### Examples
+
+Draw a sample of size n from the following distributions:
+
++ Normal(0, 1) (the rnorm(n,0,1) function)
++ Poisson with rate parameter lambda=3 (use rpois(, 3))
++ Exponential with rate parameter 5.5 (use rexp(n, 5.5))
++ Binomial with probability 0.15
+
+In each case, create a histogram of the sample, draw the probability density function on top of it, then repeat it 10,000 times and each time calculate the sample mean. Draw a histogram of the 10,000 sample means.
+
+```{r,comment="", fig.height=4, fig.width=4}
+# one iteration to show the actual distribution of the sample - not normal!
+n <- 100
+samp <- rexp(n,5.5)
+hist(samp, freq = F, breaks=20) # show the empirical distribution
+xs <- seq(0, max(samp), length=1000)
+lines(xs, dexp(xs,5.5), lwd=3, col=2) # show the true distribution
+```
+
+
+```{r,comment="", fig.height=4, fig.width=4}
+# 10000 iterations - show the distribution of the sample means:
+n <- 100
+allMeans <- rep(0, 10000)
+for (i in 1:10000) {
+  samp <- rexp(n,5.5)
+  allMeans[i] <- mean(samp)
+}
+hist(allMeans, freq = F, breaks=40, xlim=c(0.1,0.3))
+abline(v=1/5.5, lwd=3, col="green")
+
+# repeat, this time with a larger sample size:
+# 10000 iterations - show the distribution of the sample means:
+n <- 1000
+allMeans <- rep(0, 10000)
+for (i in 1:10000) {
+  samp <- rexp(n,5.5)
+  allMeans[i] <- mean(samp)
+}
+hist(allMeans, freq = F, breaks=40, xlim=c(0.1,0.3))
+abline(v=1/5.5, lwd=3, col="green")
+```
+
+The mean is estimated quite accurately in both cases, and the overall shape of the 10000 sample means has the shape of a normal distribution. However, the spread (variance) of the distribution decreases as the sample size increases.
+
+Let's do one more, with a discrete and skewed distribution:
+
+```{r,comment="", fig.height=4, fig.width=4}
+# one iteration to show the actual distribution of the sample - not normal!
+n <- 100
+samp <- rbinom(n,1,0.15)
+hist(samp, freq = F, breaks=20)
+```
+
+
+```{r,comment="", fig.height=4, fig.width=4}
+# 10000 iterations - show the distribution of the sample means:
+n <- 100
+allMeans <- rep(0, 10000)
+for (i in 1:10000) {
+  samp <- rbinom(n,1,0.15)
+  allMeans[i] <- mean(samp)
+}
+hist(allMeans, freq = F, breaks=40, xlim=c(0.1,0.3))
+abline(v=0.15, lwd=3, col="green")
+
+# repeat, this time with a larger sample size:
+# 10000 iterations - show the distribution of the sample means:
+n <- 1000
+allMeans <- rep(0, 10000)
+for (i in 1:10000) {
+  samp <- rbinom(n,1,0.15)
+  allMeans[i] <- mean(samp)
+}
+hist(allMeans, freq = F, breaks=40, xlim=c(0.1,0.3))
+abline(v=0.15, lwd=3, col="green")
+```
+
+Notice that becaue p=0.15 is quite small, when n=100 the shape of the distribution of sample means is still skewed, but when n is large the bell shape appears! 
+
+
+Repeat the previous questions, but this time repeat each larger sample sizes and draw the distribution of the results. 
+
+For example, Question 2:
+
+```{r,comment="", fig.height=3, fig.width=9}
+n <- 300
+nsim <- 10000
+par(mfrow=c(1,3))
+set.seed(100091)
+boysInSample <- rbinom(nsim, n, pboy)
+hist(boysInSample, breaks=30,border="white",xlim=c(130,190),freq=FALSE,main="n=300")
+abline(v=pboy*n, col=3, lwd=3)
+abline(v=148, col=2, lwd=2)
+
+# sample size is 10 times larger:
+boysInSample2 <- rbinom(nsim, 10*n, pboy)
+hist(boysInSample2, breaks=30,border="white",xlim=c(1400,1700),freq=FALSE,main="n=3000")
+abline(v=pboy*10*n, col=3, lwd=3)
+abline(v=1480, col=2, lwd=2)
+
+# sample size is 100 times larger than the original example:
+boysInSample3 <- rbinom(nsim, 100*n, pboy)
+hist(boysInSample3, breaks=30,border="white",xlim=c(14500,16000),freq=FALSE,main="n=30000")
+abline(v=pboy*100*n, col=3, lwd=3)
+abline(v=14800, col=2, lwd=2)
+par(mfrow=c(1,1))
+```
+
+
+The CLT requires very little about the actual distribution of the data. The sample has to be i.i.d., and the distribution must have a finite variance. Let's revisit Question 4, with the ratio of two standard normal distributions, and let's use a large sample size:
+
+
+
+```{r,comment="", fig.height=4, fig.width=4}
+n <- 1000
+allMeans <- rep(0, 10000)
+for (i in 1:10000) {
+  s1 <- rnorm(n)
+  s2 <- rnorm(n)
+  allMeans[i] <-  mean(s1/s2)
+}
+hist(allMeans, freq = F, breaks=40)
+```
+
+We don't get a normal distribution, and the variance is huge. This is because the Cauchy distribution has no mean or variance, so the CLT does not hold in this case.
+
