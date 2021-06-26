@@ -1,0 +1,62 @@
+\documentclass[12pt]{article}
+
+\usepackage{amssymb, amsfonts, amsmath, amsthm, enumitem}
+
+\usepackage{fullpage}
+
+\def\dd{\mathrm{d}}
+\def\E{\mathrm{E}}
+
+
+\begin{document}
+\begin{center}
+  \bf Homework 4\\
+  UConn--PCS: Data Science, 2021\\
+  Due Date: 8pm June 25, 2021
+\end{center}
+
+\begin{enumerate}
+
+\item
+Trimmed mean removes a small designated percentage of the
+largest and smallest values before calculating the average. Using a
+trimmed mean helps eliminate the influence of outliers or data
+points on the tails that may unfairly affect the traditional mean.
+In R, for example, it can be done with the following:
+<<trimmed>>=
+set.seed(123)
+theta <- runif(1, -10, 10)
+x  <- rcauchy(100)
+mean(x, trim = 0.05)
+@ 
+In this example, a 5\% percent from the upper tail and 5\% percent
+from the lower tail of the observed data are trimmed before the mean
+is computed.
+\begin{enumerate}
+\item
+Add the trimmed mean (with trim percentage of 5\% on both sides) as a 4th
+estimator into the \texttt{do1rep()} function for comparison.
+\item
+Repeat the simulation study under the three settings shown in-class
+with the updated \texttt{do1rep()}. Comment on the results.
+\end{enumerate}
+
+\item
+Consider estimating the population mean with sample trimmed mean with
+trim percentage of 5\%.
+\begin{enumerate}
+\item
+Write a function mimicking \texttt{myBootCI()} shown in-class to return
+a bootstrap confidence interval of 95\% given a sample \texttt{x}
+using the trimmed mean.
+\item
+Run a simulation study to check the actual coverage rate of your
+bootstrap confidence interval with sample size $n = 50$.
+\item
+Repeat the simulation with a smaller sample size $n = 30$ and comment
+on the results.
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
