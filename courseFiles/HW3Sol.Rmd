@@ -1,0 +1,54 @@
+---
+title: "Homework 3 - Solutions"
+author: "HaiYing Wang"
+date: "June 26, 2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1
+
+```{r comment=""}
+set.seed(2021)
+A <- c(2, 2, 4, 4, 9, 9)
+B <- c(1, 1, 6, 6, 8, 8)
+C <- c(3, 3, 5, 5, 7, 7)
+n <- 10000
+rollA <- sample(A, n, replace=TRUE)
+rollB <- sample(B, n, replace=TRUE)
+rollC <- sample(C, n, replace=TRUE)
+mean(rollA > rollB)
+mean(rollB > rollC)
+mean(rollC > rollA)
+```
+## 2
+
+```{r comment=""}
+draw <- function(Bin1, Bin2) {
+    bin <- sample(c("Bin1", "Bin2"), 1)
+    if (bin == "Bin1") {
+        ball = sample(Bin1, 1)
+    } else {
+        ball = sample(Bin2, 1)
+    }
+    ball
+}
+
+Bin1 <- rep("W", 50)
+Bin2 <- rep("B", 50)
+mean(replicate(1000, draw(Bin1, Bin2)) == "W")
+
+Bin3 <- "W"
+Bin4 <- c(rep("W", 49), rep("B", 50))
+mean(replicate(1000, draw(Bin3, Bin4)) == "W")
+```
+
+## 3
+
+a. 0.5
+b. 0.75
