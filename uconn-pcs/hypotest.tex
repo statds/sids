@@ -1,0 +1,188 @@
+\documentclass[leqno]{beamer}
+
+\usetheme{Storrs}
+\usecolortheme{lily}
+\useinnertheme{rounded}
+
+\usepackage{setspace, graphicx,hyperref}
+\usepackage{amsfonts,amsthm,amsmath}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{textpos}
+\usepackage{tikz}
+\usepackage[authoryear]{natbib}
+\usepackage[linesnumbered,algoruled,boxed,lined]{algorithm2e}
+\hypersetup{
+	colorlinks,
+	citecolor=blue}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{soul} %% striketrhough texts
+\usepackage{bm}
+
+\newtheorem{proposition}{Proposition}
+
+% \usetheme{Madrid}
+% \usecolortheme{seahorse}
+
+%% notations
+\newcommand{\E}{\mathbb{E}\,}
+\newcommand{\V}{\mathbb{V}}
+
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+
+\usepackage{graphicx}
+% graphic path
+\graphicspath{{./}{../manuscript/image/}}
+
+\setbeamercovered{transparent}
+\setbeamertemplate{itemize item}[circle]
+\setbeamertemplate{enumerate item}[default]
+\setbeamertemplate{section in toc}[default]
+\setbeamertemplate{subsection in toc}[default]
+\setbeamertemplate{caption}[numbered]
+
+% \AtBeginSection[]{ 
+% 	\begin{frame}<beamer>{Overview} 
+% 	\tableofcontents[currentsection] 
+% \end{frame}} 
+
+\title[Estimation]{
+  Hypothesis Testing: Decision under Uncertainty}
+\subtitle[]{UConn-PCS 2021, Data Science}
+\author[Jun Yan]{Jun Yan$^{1,2,3}$}
+\institute[UConn]{
+$^{1}$Department of Statistics, University of Connecticut\\
+$^{2}$Center for Population Health, UConn Health\\
+$^{3}$Center for Environmental Sciences and Engineering, University of Connecticut
+}
+
+\date{June 28, 2021 @ UConn}
+
+\begin{document}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Hypothesis Testing}
+  \begin{itemize}
+  \item
+    Examples
+    \begin{itemize}
+    \item A new drug is effective in treating a disease
+    \item A commercial is more effective than another one on a website
+      (A-B test)
+    \item The increase in global mean temperature is attributable to
+      human activities.
+    \item The 30-day hospital readmission rate it higher among
+      minorities.
+    \end{itemize}
+  \item
+    Setup: a null hypothesis $H_0$; an alternative hypothesis $H_1$
+    (the one you want to ``prove'' in scientific research).
+  \item
+    Consider this as a game: the nature hides the truth; we want to make a
+    decision by selecting one of the hypotheses; we may make mistakes.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Lady Tasting Tea}
+  \begin{itemize}
+  \item
+    Popular science book: The Lady Tasting Tea: How Statistics
+    Revolutionized Science in the Twentieth Century written by
+    Dr. David Salsburg (2002), PhD in Statistics from UConn.
+  \item
+    A famous randomized experiment devised by
+    \href{https://en.wikipedia.org/wiki/Ronald_Fisher}{Sir Ronald A. Fisher} and
+    reported in his book The Design of Experiments (1935).
+  \item
+    A summer afternoon in 1920s at the Rothamsted Experimental
+    Station.
+  \item
+    \href{https://en.wikipedia.org/wiki/Muriel_Bristol}{B. Muriel
+      Bristol-Roach}, Ph.D., biologist at the Rothamsted Experimental
+    Station.
+  \item
+    See \url{https://en.wikipedia.org/wiki/Lady_tasting_tea}.
+  \item
+    The lady got all 8 cups right (4 successes in the 4 selected
+    cups), according to H. Fairfield Smith (UConn Stat Professor), who
+    was there that afternoon.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Test of Significance}
+  \begin{itemize}
+  \item
+    Do you have significant evidence against the null hypothesis?
+  \item
+    Stochastic version of proof by contradiction.
+  \item
+    Idea:
+    \begin{itemize}
+    \item
+      Start from the null hypothesis, compute the probability of
+      observing as extreme as or more extreme than the observed
+      statistic against the null hypothesis.
+    \item
+      If the probability is lower than some threshold, that’s support of
+      significance.
+    \end{itemize}
+  \item
+    Type I error: rejecting the null when it is true.
+  \item
+    Type II error: not rejecting the null when it is false.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Properties of a Test}
+  \begin{itemize}
+  \item
+    Testing statistic: a statistic whose distribution under $H_0$ is
+    known and is sensitive to deviation from $H_0$.
+  \item
+    P-value: The probability of observing as extreme as or more
+    extreme than the observed statistic against the null hypothesis.    
+  \item
+    Type I error rate: probability of rejecting the true $H_0$.
+  \item
+    Type II error rate: probability of accepting the false $H_0$.
+  \item
+    Power: probability of rejecting false $H_0$; 1 minus type II error rate.
+  \item
+    Power curve: Power as a function of deviation from $H_0$.
+  \item
+    The higher the better. 
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Summary}
+  \begin{itemize}
+  \item
+    Hypothesis testing is also a hide-and-seek game.
+  \item
+    A decision may have types of errors.
+  \item
+    Under the $H_0$, a good test should maintain its size.
+  \item
+    Under the $H_1$, a good test should have substantial power.
+  \item
+    Test can be based on permutation or asymptotic results.
+  \end{itemize}
+\end{frame}
+\end{document}

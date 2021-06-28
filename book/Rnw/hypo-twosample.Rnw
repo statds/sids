@@ -1,0 +1,136 @@
+Consider testing whether two sample have the same mean.
+
+<<hypo-start>>=
+set.seed(20210628)
+delta <- 0
+n1 <- n2 <- n <- 30
+x1 <- rnorm(n)
+x2 <- rnorm(n2) + delta
+t.test(x1, x2)
+## understand the output
+wilcox.test(x1, x2) # rank-based
+@
+
+Let's investigate the properties of the two tests. The validity of a
+test is affected by the sample size $n$, the data-generating
+distribution, the deviation $\delta$ from the null.
+<<hypo-twosample-do1rep>>=
+do1rep <- function(n, datagen, delta = 0) {
+    x1 <- datagen(n)
+    x2 <- datagen(n) + delta
+    p1 <- t.test(x1, x2)$p.value
+    p2 <- wilcox.test(x1, x2)$p.value
+    c(t = p1, wilcox=p2)
+}
+
+do1rep(30, rnorm, 0)
+
+@
+
+Now we can check the empirical rejection rates of the tests in a
+simulation study.
+<<hypo-twosample-emp>>=
+nrep <- 1000
+sim <- replicate(nrep, do1rep(n, rnorm, 0))
+rowMeans(sim < .05)
+
+## put them into a function for ease of accessing
+empRejRate <- function(nrep, n, datagen, delta = 0, alpha = .05) {
+    sim <- replicate(nrep, do1rep(n, datagen, delta))
+    rowMeans(sim < alpha)
+}
+
+## normal population
+empRejRate(nrep, n, rnorm, 0)
+empRejRate(nrep, n, rnorm, 0.5)
+
+## Cauchy population
+empRejRate(nrep, n, rcauchy, 0)
+empRejRate(nrep, n, rcauchy, 0.5)
+@
+
+We can draw power curves to compare two tests.
+<<hypo-twosample-power>>=
+delta <- seq(0, 1, by = .2)
+## normal distribuion
+rejrate <- sapply(delta, function(x) empRejRate(nrep, n, rnorm, x))
+plot(delta, rejrate["t", ], type = "l", ylab = "emporical rejection rate", ylim = c(0, 1))
+lines(delta, rejrate["wilcox", ], lty = 2, col = "blue")
+abline(.05, 0)
+
+## Cauchy distribuion
+rejrate <- sapply(delta, function(x) empRejRate(nrep, n, rcauchy, x))
+plot(delta, rejrate["t", ], type = "l", ylab = "emporical rejection rate", ylim = c(0, 1))
+lines(delta, rejrate["wilcox", ], lty = 2, col = "blue")
+abline(.05, 0)
+@
+
+Sometimes, we don't need to resort to tests based on large sample
+theory. Consider the setting where we compare the two arms of
+treatment in a clinical trial: treatment versus placebo. Suppose that
+we want to show that the treatment leads to an increase in an outcome
+of interest. Let $\mu_0$ and $\mu_1$ denote the mean of the outcome
+under placebo and treatment, respectively. The hypotheses to be tested
+are
+\[
+  H_0: \mu_1 = \mu_0,
+  \quad \mbox{vs} \quad
+  H_1: \mu_1 > \mu_0.
+\]
+
+
+Under $H_0$, the labels of the treatment arms are exchangeable.
+Consider test statistics $T$, the difference in the two sample means.
+<<hypo-perm-ex>>=
+xpooled <- c(x1, x2)
+xperm <- sample(xpooled, size = length(xpooled), replace = FALSE)
+xd <-  mean(xperm[(n1 + 1):(n1 + n2)]) - mean(xperm[1:n1]) 
+## put in a function
+myPermTest <- function(x1, x2, nperm = 1000) {
+    n1 <- length(x1)
+    n2 <- length(x2)
+    stat <- mean(x2) - mean(x1)
+    xpooled <- c(x1, x2)
+    stat.sim <- replicate(nperm, {
+        xperm <- sample(xpooled, size = length(xpooled), replace = FALSE)
+        xd <- mean(xperm[(n1 + 1):(n1 + n2)]) - mean(xperm[1:n1])
+    })
+    p.value  <- mean(stat.sim >= stat)
+    p.value
+}
+
+delta <- 1
+x1 <- rgamma(n, shape = 2, scale = 2)
+x2 <- rgamma(n, shape = 2, scale = 2) + delta
+myPermTest(x1, x2)
+
+## try a simulation study
+do1rep <- function(n, datagen, delta = 0) {
+    x1 <- datagen(n)
+    x2 <- datagen(n) + delta
+    myPermTest(x1, x2)
+}
+
+sim <- replicate(200, do1rep(n, rnorm, delta = .5))
+mean(sim < .05)
+
+sim <- replicate(200, do1rep(n, rcauchy, delta = 1))
+mean(sim < .05)
+@
+
+
+We can test on data generated from a distribution with flexible
+shapes, the generalized Tukey's lambda family, which is defined in
+terms of the inverse of the distribution function.
+<<hypo-gtl>>=
+rgtl <- function(n, lambda1 = 0, lambda2 = 1, lambda3 = 0, lambda4 = 1) {
+    u <- runif(n)
+    lambda1 + (u ^ lambda3 - (1 - u) ^ lambda4) / lambda2
+}
+
+sim <- replicate(200,
+                 do1rep(n,
+                        function(n) rgtl(n, lambda3 = 1.5, lambda4 = 5.8),
+                        delta = .2))
+
+@ 
