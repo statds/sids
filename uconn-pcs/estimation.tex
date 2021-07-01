@@ -1,0 +1,236 @@
+\documentclass[leqno]{beamer}
+
+\usetheme{Storrs}
+\usecolortheme{lily}
+\useinnertheme{rounded}
+
+\usepackage{setspace, graphicx,hyperref}
+\usepackage{amsfonts,amsthm,amsmath}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{textpos}
+\usepackage{tikz}
+\usepackage[authoryear]{natbib}
+\usepackage[linesnumbered,algoruled,boxed,lined]{algorithm2e}
+\hypersetup{
+	colorlinks,
+	citecolor=blue}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{soul} %% striketrhough texts
+\usepackage{bm}
+
+\newtheorem{proposition}{Proposition}
+
+% \usetheme{Madrid}
+% \usecolortheme{seahorse}
+
+%% notations
+\newcommand{\E}{\mathbb{E}\,}
+\newcommand{\V}{\mathbb{V}}
+
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+
+\usepackage{graphicx}
+% graphic path
+\graphicspath{{./}{../manuscript/image/}}
+
+\setbeamercovered{transparent}
+\setbeamertemplate{itemize item}[circle]
+\setbeamertemplate{enumerate item}[default]
+\setbeamertemplate{section in toc}[default]
+\setbeamertemplate{subsection in toc}[default]
+\setbeamertemplate{caption}[numbered]
+
+% \AtBeginSection[]{ 
+% 	\begin{frame}<beamer>{Overview} 
+% 	\tableofcontents[currentsection] 
+% \end{frame}} 
+
+\title[Estimation]{
+  Estimation: A hide-and-seek game with the nature}
+\subtitle[]{UConn-PCS 2021, Data Science}
+\author[Jun Yan]{Jun Yan$^{1,2,3}$}
+\institute[UConn]{
+$^{1}$Department of Statistics, University of Connecticut\\
+$^{2}$Center for Population Health, UConn Health\\
+$^{3}$Center for Environmental Sciences and Engineering, University of Connecticut
+}
+
+\date{June 23, 2021 @ UConn}
+
+\begin{document}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Hide-and-Seek}
+  \begin{itemize}
+  \item
+    Examples (from my own research)
+    \begin{itemize}
+    \item Survival time of lymphoma cancer patients
+    \item Climate change attributable to human activities
+    \item Time a mountain lion spend in moving/resting
+    \item Which NCAA team should rank the first
+    \end{itemize}
+  \item
+    This is a game: the nature hides something that we are interested
+    in; we want to find it with some clues (inference!)
+  \item
+    Statisticians/data scientists are detectives: reveal the unknown
+    truth from observed data.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{A Simple Setup}
+  \begin{itemize}
+  \item We observe a random sample $X_1, \ldots, X_n$ from a
+    population, which is characterized by an unknown location
+    parameter $\theta$.
+    \begin{itemize}
+    \item A location parameter shifts the location of a distribution.
+    \end{itemize}
+
+  \item Population examples:
+    Normal with mean/location $\theta$ and variance~1;    
+    Cauchy with location $\theta$ and scale~1.
+
+  \item Statistics: summaries from the observed sample.
+    \begin{itemize}
+    \item A statistics is computable from a sample (which contains no
+      unknown information).
+    \item Sample moments are statistics.
+    \item An estimator is a statistic.
+    \end{itemize}    
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Estimating the Location of a Symmetric Distribution}
+  \begin{itemize}
+  \item
+    Candidate estimators $\hat\theta$
+    \begin{itemize}
+    \item Sample mean
+    \item Sample median
+    \item Mid sample range
+    % \item Trimmed mean
+    % \item Winsorized mean
+    \end{itemize}
+  \item
+    A realization of an estimator is called an estimate.
+  \item
+    Performance in one specific sample does not mean much.
+  \item
+    Comparison criterion: \underline{mean} squared error
+    $E[(\hat\theta - \theta)^2]$
+    \begin{itemize}
+    \item The mean part can be approximated through replicates.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Uncertainty in Estimator}
+  \begin{itemize}
+  \item 
+    Never just give a point estimate.
+  \item
+    Confidence interval: an interval estimator of the target with an
+    associated confidence level that gives the probability with which
+    the interval contain the target.
+  \item
+    Example: a 95\% confidence interval for the population mean
+    $(L, U)$ means that this interval has probability 95\% covering
+    the target.
+  \item
+    Construction
+    \begin{itemize}
+    \item Asymptotic results (theory that approximates well the
+      reality when the sample size is large enough)
+    \item Bootstrap (self-assisted).
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Confidence Interval for Population Mean $\mu$}
+  \begin{itemize}
+  \item
+    From theory (CLT, LLN, Slutsky)
+    \[
+      \frac{\bar X_n - \mu}{S_n/\sqrt{n}} \sim N(0, 1)
+    \]
+    where $\bar X_n$ is sample mean and $S_n^2$ is the sample variance.
+  \item So
+    \[
+      \Pr\left(-z_{\alpha/2} < \frac{\sqrt{n}(\bar X_n - \mu)}{S_n}
+        < z_{\alpha/2} \right)
+      = 1 - \alpha
+    \]
+    where $z_{\alpha/2}$ is the upper $1 - \alpha/2$ quantile of
+    $N(0, 1)$ (In R,  \texttt{qnorm(1 - alpha/2)} ).
+    
+  \item A $(1 - \alpha)$ confidence interval is
+    \[
+      \left(\bar X_n - z_{\alpha/2} \frac{ S_n }{\sqrt{n}}, \qquad
+        \bar X_n + z_{\alpha/ 2} \frac{S_n} {\sqrt{n}}\right)
+    \]
+  \item Narrower for larger sample (more information)
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Bootstrap Confidence Interval (General)}
+  \begin{itemize}
+  \item
+    One of the breakthroughs in Statistics (Efron, 1979).
+  \item
+    Widely applicable; no need for variance derivation/estimation; at the
+    cost of intensive computation.
+  \item A bootstrap copy of the estimator:
+    \begin{itemize}
+    \item Resample with replacement to form a bootstrap sample.
+    \item Compute the estimate for the bootstrap sample.
+    \end{itemize}
+  \item Repeat the resampling many times ($B$) and obtain a large collection
+    of bootstrap copies of the estimates
+  \item Use the empirical quantiles of the collections to construct
+    confidence interval for the target for this estimator.
+  \item
+    Theoretically justified for large $B$ and $n$.
+   \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Summary}
+  \begin{itemize}
+  \item
+    Statistical inference is a hide-and-seek game.
+  \item
+    Statisticians/data scientists are detectives.
+  \item
+    Different estimator (strategies) have different performance under
+    different scenarios.
+  \item
+    An estimator needs to have a companion uncertainty measure.
+  \item
+    Confidence intervals: A valid confidence interval has actual
+    coverage equal to the nominal level.
+  \end{itemize}
+\end{frame}
+\end{document}
