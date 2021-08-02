@@ -1,0 +1,18 @@
+<<datacollect-Berkson, eval=TRUE, comment="", fig.align='center', fig.width=5, fig.height=4, fig.cap="No linear association between goodness of movie and goodness of book">>=
+set.seed(2021)
+n  <- 1000
+book  <- rnorm(n)
+movie <- rnorm(n)
+plot(book, movie) # plot all the books and movies
+abline(lm(movie~book))
+cor(book, movie)
+@
+
+<<datacollect-Berkson2, eval=TRUE, comment="", fig.align='center', fig.width=5, fig.height=4, fig.cap="Negative linear association for top 10 percent books and/or movie">>=
+good.b <- book > quantile(book, 0.9)
+good.m <- movie > quantile(movie, 0.9)
+good  <- good.b | good.m
+plot(book[good], movie[good]) # plot only the good books or good movies
+abline(lm(movie[good]~book[good]))
+cor(book[good], movie[good])
+@

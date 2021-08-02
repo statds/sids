@@ -8,6 +8,7 @@ _book/
 _bookdown_files/
 book/figure/
 book/Rnw/figure/
+book/Rnw/cache/
 book/main.bbl
 book/main.blg
 book/main.idx
