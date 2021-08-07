@@ -1,5 +1,5 @@
 \R has many built-in functions, and many more in external packages. We will introduce them as we go, but let's get started with some basic ones.
-The documentation on each function can be obtained by using \code{?func} or \code{help(func)}where \texttt{func} is some function. For example, to get the documentation about using the \code{help()} function, try the following:
+The documentation on each function can be obtained by using \code{?func} or \code{help(func)} where \texttt{func} is some function. For example, to get the documentation about using the \code{help()} function, try the following:
 <<intro-help, eval=FALSE>>=
 help(help)
 ?help
@@ -14,7 +14,7 @@ If we want (and we often will), we may change the working directory by using \co
 <<intro-setwd, eval=TRUE, comment="">>=
 setwd("~/Desktop")
 @
-The \verb|~/| notation is a shortcut to your home directory. Using this shortcut is convenient because if you are using different computers, the home directory may be different on each one.
+The \verb|~/| notation is a shortcut to your home directory. Using this shortcut is convenient because if you are using different computers or you share code with others, the home directory may be different on each computer.
 
 Data is stored in variables. We can get the data from a file (Excel, comma-separated values, etc.), the Internet, or we can generate it ourselves. Let's start by generating some data.
 The simplest function to create data is called \code{c()}, which stands for `combine'.
@@ -56,7 +56,7 @@ sum(ones)
 cumsum(ones)
 @
 
-There are also many functions to handle text. The \code{paste()} function attaches two strings of characters together. Note the usage of the collapse option (also called `argument') in the second example:
+There are also many functions to handle text. The \code{paste()} function attaches two strings of characters together. Note the usage of the collapse option (also called an `argument' of the function) in the second example:
 <<intro-paste, eval=TRUE, comment="">>=
 paste(courseNames)
 paste(courseNames, collapse=", ")
@@ -74,11 +74,11 @@ Let's `deal' five cards to each player for a game of poker. We will use the \cod
 set.seed(5252)
 (pokerHand <- matrix(sample(cards,20,replace=FALSE), nrow=5, ncol=4))
 @
-The \code{sample()} function in this example us used to draw 20 cards at random from the deck, without replacement. Then, to divide it into four hands, we use the \code{matrix()} function, and specify the number of rows and the number of columns.
+The \code{sample()} function in this example is used to draw 20 cards at random from the deck, without replacement. Then, to divide it into four hands, we use the \code{matrix()} function, and specify the number of rows and the number of columns.
 
 Check the class and the structure of the variable pokerHand, using the functions we've mentioned earlier.
 
-We can save variables to a file, in order to use them in a later session.
+We can save variables to a file in order to use them in a later session.
 <<intro-save, eval=FALSE, comment="">>=
 save(pokerHand, file="pokerHand.RData")
 @
