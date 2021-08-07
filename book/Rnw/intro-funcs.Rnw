@@ -34,7 +34,7 @@ We can check the number of elements in a vector by using the \code{length()} fun
 length(courseNames)
 @
 
-Pick good variable names. They should describe the meaning of the value, yet be short enough to type. Variable names can only contain letters, numbers, the dot character, or the underline character. Variable names can only begin with (i) a letter, or (ii) a dot as long as it is not followed by a number. They should not be the same as an existing function name or other reserved words in the language.
+Pick good variable names. They should describe the meaning of the value, yet be short enough to type. Variable names can only contain letters, numbers, the dot character, or the underline character. Variable names can only begin with either a letter, or a dot as long as it is not followed by a number. They should not be the same as an existing function name or other reserved words in the language (like `while', `if', `quit'.)
 
 We can also generate variables which contain sequences of numbers. To do that, we use the \code{seq()} function. For example, we can create a variable which contains all the odd numbers between 1 and 20:
 <<intro-seq, eval=TRUE, comment="">>=
@@ -56,13 +56,13 @@ sum(ones)
 cumsum(ones)
 @
 
-There are also many functions to handle text. The \code{paste()} function attaches two strings of characters together. Note the usage of the collapse option (argument) in the second example:
+There are also many functions to handle text. The \code{paste()} function attaches two strings of characters together. Note the usage of the collapse option (also called `argument') in the second example:
 <<intro-paste, eval=TRUE, comment="">>=
 paste(courseNames)
 paste(courseNames, collapse=", ")
 @
 
-Let's combine what we've learned so far to create the 52 cards, using the four suits: Club, Diamond, Heart, and Spade:
+Let's combine what we've learned so far to create the 52 cards  in a standard deck, which includes four suits: Club, Diamond, Heart, and Spade:
 <<intro-deck, eval=TRUE, comment="">>=
 suits <- c(rep("C",13), rep("D",13), rep("H",13), rep("S",13))
 (cards <- paste0(suits, rep(1:13,4)))
