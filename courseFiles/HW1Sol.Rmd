@@ -1,0 +1,96 @@
+---
+title: "Homework 1 - Solutions"
+author: "Haim Bar"
+date: "June 21, 2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1
+
+What is wrong with the following R program?
+```
+d <- 3
+y <- D*3
+cat(mean(y),"\n")
+```
+
+Answer: R is case-sensitive. D is not the same as d, so D in this case is undefined.
+
+## 2
+
+Create a variable called Sevens which contains the first 100 integers which are divisible by 7 without remainder.
+
+Answer:
+
+```{r comment=""}
+Sevens <- 7*(1:100)
+cat(Sevens,"\n")
+```
+
+## 3
+
+Use the examples shown in class to generate 10000 values from a binomial(N,p) distribution, and plot a histogram and a boxplot. Do it for N=100 and p=0.1, 0.2, ., 0.9.
+What happens when you change N to be 10?
+
+```{r comment="", fig.height=3}
+for (i in 1:9) {
+  binSample <- rbinom(10000, 100, i/10)
+  par(mfrow=c(1,2))
+  hist(binSample, main=paste("p=", i/10), xlim=c(0,100))
+  boxplot(binSample, ylim=c(0,100))
+}
+```
+
+When N=10, the sample is more spread-out (higher variance). (Try it!)
+ 
+## 4
+
+We also saw an example of the syntax of a "for" loop. Write a for loop which runs for 100 iterations, and in each one a random sample of size n=30 is drawn from a standard normal distribution (using the rnorm(n) function). In each iteration print to the screen the mean of the sample, the median, the difference between the mean and the median, and the standard deviation of the sample (with the sd() function).
+Also, use the examples shown in class to collect all the means from all the iterations and store these 100 values in a variable called allMeans. What is the mean of the vector allMEans? What is its standard deviation?
+
+```{r comment="", fig.height=4}
+nsamp = 100
+allMEans <- rep(0,nsamp)  
+for (i in 1:nsamp) {
+  smp <- rnorm(30)
+  #cat('mean=',mean(smp),'median=',median(smp),'mean minus median=',mean(smp)-median(smp),'sd=',sd(smp),"\n")
+  allMEans[i] <- mean(smp)
+}
+cat(mean(allMEans),"\n")
+cat(sd(allMEans),"\n")
+```
+
+
+## 5
+
+Run the following program which generates the first 15 elements famous Fibonacci sequence:
+
+```{r comment=""}
+# Fibonacci
+n <- 15
+fib <- rep(0,n)
+fib[1] <- 1
+fib[2] <- 1
+for (i in 3:n) {
+  fib[i] <- fib[i-1] + fib[i-2]
+}
+cat(fib,"\n")
+```
+
+
+Add R code which will keep the ratio between pairs of consecutive elements in a vector called FibRatio. Note that this vector will have 14 elements.
+Print the values of FibRatio using the cat() function, and show them as a graph, using the plot() function.
+What do you observe about the sequence of ratios?
+
+```{r comment=""}
+FibRatio <- fib[-1] / fib[-n]
+plot(FibRatio, pch=17, col=4, xlab="n", ylab="Consecutive Fibonacci ratios")
+```
+
+Although the sequence grows very quickly, the consecutive ratios converge very quickly to the ['golden ratio'](https://en.wikipedia.org/wiki/Golden_ratio).
