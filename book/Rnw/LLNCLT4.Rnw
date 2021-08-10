@@ -1,0 +1,31 @@
+\subsection{Example \#4 -- when the LLN doesn't work}
+We have two groups of students who have to take a math test. Group A has a mean score of 70 and a standard deviation of 10, while group B has mean 60 and standard deviation 20. Both groups have a normal distribution.
+We take a sample of size $n$ from each group and calculate the sample means. Then, we calculate the difference between the sample means, $d_{AB}=\bar{x}_A-\bar{x}_B$, and the ratio between the means, $r_{AB}=\bar{x}_A/\bar{x}_B$.
+As before, we increase the sample size and see how it affects $d_{AB}$ and $r_{AB}$.
+
+<<intro-lln4-0, eval=TRUE, fig.align='center', fig.width=6, fig.height=3.5, fig.cap="Simulated test scores - difference and ratio between two groups." >>=
+n <- seq(50,5000,by=10)
+set.seed(59112)
+allDiffs <- rep(0,length(n))
+allRatios <- rep(0,length(n))
+for (i in 1:length(n)) {
+  sA <- rnorm(n[i],70,10)
+  sB <- rnorm(n[i],60,20)
+  dAB <- sA - sB
+  rAB <- sA / sB
+  allDiffs[i] <- mean(dAB)
+  allRatios[i] <- mean(rAB)
+}
+par(mfrow=c(1,2))
+plot(n, allDiffs,pch=19,col=3, xlab="n", ylab="Diff.", cex=0.5)
+abline(h=10,col=2,lwd=2)
+plot(n, allRatios,pch=19,col="orange", xlab="n", ylab="Ratio", cex=0.5)
+abline(h=70/60,col=2,lwd=2)
+par(mfrow=c(1,1))
+@
+
+What we see here is that the mean difference between the groups, $d_{AB}$, converges to the true difference between the groups (10), but the ratio, $r_{AB}$, does not converge -- $n$ can be as large as we want, and we will still see ratios that are quite extreme. (Note that the mean of a ratio between two distributions is generally not equal to the ratio of the means of the distributions, so we don't expect $r_{AB}$ to converge to exactly 70/60.)
+
+What is happening here? The answer is that while a difference between two normal random variables is still normal (and hence, has a mean), the ratio between two normal distributions follows a Cauchy distribution which doesn't have a theoretical mean, so the LLN does not apply to  $r_{AB}$.
+
+Although the LLN applies to almost any distribution we will ever encounter, the lesson here is that taking the ratio between two perfectly well-behaved distributions may lead to a distribution to which the LLN does not apply. Other manipulations of random variables may lead to similar results.
