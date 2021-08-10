@@ -1,0 +1,113 @@
+\subsection{Example \#1 -- the IQ score}
+We get a random sample of 200 people and give them an IQ test. From this sample, we want to infer the true distribution in the entire population.
+
+Suppose that the IQ in the general population has a normal distribution with mean=100 and  standard deviation =15, and from this population we draw 200 people, and calculate the sample mean and standard deviation:
+
+<<intro-lln1-0, eval=TRUE, fig.align='center', fig.width=3.5, fig.height=3.5, fig.cap="Simulated IQ scores." >>=
+set.seed(95473)
+n <- 200
+samp <- rnorm(n, 100, 15)
+cat("Mean=",mean(samp), ", SD=",sd(samp),"\n")
+@
+
+We notice that the sample mean is 99.4 and the sample standard deviation is 15.6. Both are very close to the true values. 
+
+Let's pretend that just like in real life, we don't know the true distribution, so we have to check if the mathematical model we chose (normal distribution) is appropriate for the data from the finite sample. When it is assumed that the data come from a normal distribution, we can use the \code{qqnorm} function to check if the assumption is reasonable:
+
+<<intro-lln1-1, eval=TRUE, fig.align='center', fig.width=3.5, fig.height=3.5, fig.cap="Q-Q plot for the simulated IQ scores.">>=
+qqnorm(samp, cex=0.7, pch=18, col="purple")
+abline(100,15,col="orange", lwd=3)
+@
+
+The points in the Q-Q plot lie very close to a straight line, indicating that the sample  was  likely drawn from a normal distribution (because we generated it this way, this is not surprising. However, when we get a random sample and we do not know the true distribution, this plot is useful to check whether our mathematical model is reasonable.)
+
+To understand what the LLN, let's obtain samples of varying sizes and see what happens to the sample mean as we increase $n$. 
+
+<<intro-lln1-2, eval=TRUE, fig.align='center', fig.width=3.5, fig.height=3.5, fig.cap="Q-Q plot for the simulated IQ scores.">>=
+set.seed(95473)
+ns <- seq(10, 2000, by=10)
+L <- length(ns)
+allMeans <- rep(0, L)
+for (i in 1:L) {
+  samp <- rnorm(ns[i], 100, 15)
+  allMeans[i] <- mean(samp)
+}
+plot(ns, allMeans, pch=19, cex=0.5, col=3, axes=FALSE)
+axis(1); axis(2)
+abline(h=100, lwd=3,col=2)
+@
+
+We see that as $n$ increases, the sample mean gets closer to the true mean (100)
+
+%How close is it to the true distribution of the whole population?\\
+%How likely is it that we find a person with IQ greater than 150?\\
+%In order to be accepted to the Mensa club a person has to be in the top 2\% of the IQ distribution. What is the minimum score required in order to be a Mensa member?
+
+%
+%
+%
+%In order to be accepted to the Mensa club a person has to be in the top 2\% of the IQ distribution.
+%
+%Use the quantile function to determine what is the minimum score%required in order to be a Mensa member.%Use abline to show this cut-off on the histogram/density plot.%Use the polygon function to show the Mensa-eligible region under the distribution.
+% we may ask how likely it is to see a person with an IQ above 140. 
+%As usual in this book, we explore such questions with simulations. We draw a sample of 200 `people' from this distribution and plot a histogram of their 'IQ'. We also add a density plot on top of it.
+%
+%<<intro-lln19, eval=TRUE, fig.align='center', fig.width=3.5, fig.height=3.5, fig.cap="Simulated IQ scores." >>=
+%n <- 200
+%samp <- rnorm(n, 100, 15)
+%hist(samp, freq=FALSE, main="", xlab="IQ")
+%xs <- seq(40,180, length=1000)
+%lines(xs, dnorm(xs, 100, 15), col=2, lwd=3)
+%@ 
+%
+%
+%
+%
+%What are the sample mean and s.d.?
+%
+%<<intro-lln4, eval=TRUE, >>=
+%cat(mean(samp),"\n")
+%cat(sd(samp),"\n")
+%@
+%
+%Use the \code{polygon} function to show the Mensa-eligible region under the distribution.
+%
+%<<intro-lln5, eval=TRUE, >>=
+%hist(samp, freq=FALSE, main="IQ", xlab="IQ")
+%lines(xs, dnorm(xs, 100, 15), col=2, lwd=3)
+%xx <- seq(mensacutoff, 200, length=20)
+%yy <- dnorm(xx, 100, 15)
+%polygon(c(xx, rev(xx)), c(rep(0,length(xx)), rev(yy)), col="green")
+%@
+%
+%You are given the IQ test results of 13 people and they are:
+%139, 104, 115, 151, 116, 141, 117, 105, 134, 155, 130, 139, 121.
+%Is this group different than the overall population? (Next chapter.)
+%
+%
+%In order to be accepted to the Mensa club a person has to be in the top 2% of the IQ distribution.
+%Use the **quantile** function to determine what is the minimum score required in order to be a Mensa member
+%
+%%mensacutoff <- round(quantile(samp,probs = 0.98))
+%%cat(mensacutoff,"\n")
+%
+%Use the **abline** function to show this cut-off on the histogram/density plot
+%
+%hist(samp, freq=FALSE)
+%lines(xs, dnorm(xs, 100, 15), col=2, lwd=3)
+%abline(v=mensacutoff, col="green", lwd=3, lty=2)
+%
+%Use the **polygon** function to show the Mensa-eligible region under the distribution.
+%
+%hist(samp, freq=FALSE, main="IQ", xlab="IQ")
+%lines(xs, dnorm(xs, 100, 15), col=2, lwd=3)
+%xx <- seq(mensacutoff, 200, length=20)
+%yy <- dnorm(xx, 100, 15)
+%polygon(c(xx, rev(xx)), c(rep(0,length(xx)), rev(yy)), col="green")
+%
+%You are given the IQ test results of 13 people and they are:
+%139, 104, 115, 151, 116, 141, 117, 105, 134, 155, 130, 139, 121.
+%Is this group different than the overall population? (Next lecture!)
+%
+%Or, if we have a sample of IQ tests from a group of students, we may ask whether this group is smarter than the average in the population.
+%

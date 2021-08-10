@@ -1,0 +1,26 @@
+\subsection{Example \#2 -- the roulette wheel}
+Here, the outcome is binary -- we either win or lose. The probability of winning if we choose the red color, is $18/37$.
+Let's simulate 40 bets at the roulette wheel, where, in each we put a dollar on red. Each bet is won with a Bernoulli distribution, $Ber(18/37)$ and we repeat it 40 times. Equivalently, we can look at it as a single binomial sample, with $n=40$ and $p=18/37$.
+
+<<intro-lln2-0, eval=TRUE>>=
+set.seed(75473)
+n <- 40
+samp <- rbinom(n, size=1, prob=18/37)
+cat("Mean=",mean(samp), ", SD=",sd(samp),"\n")
+@
+
+Notice that in those 40 bets, our probability of winning was 0.575 (greater than 0.5.) This seems great -- if we keep going we might get rich. However, let's see what happens to the sample mean as we increase $n$. 
+
+<<intro-lln1-2, eval=TRUE, fig.align='center', fig.width=3.5, fig.height=3.5, fig.cap="The sample mean from n bets at the roulette wheel.">>=
+set.seed(95473)ns <- seq(10, 2000, by=10)L <- length(ns)allMeans <- rep(0, L)for (i in 1:L) {  samp <- rbinom(ns[i], size=1, prob=18/37)  allMeans[i] <- mean(samp)}plot(ns, allMeans, pch=19, cex=0.5, col=3, axes=FALSE)axis(1); axis(2)abline(h=18/37, lwd=3,col=2)@
+
+As before, the sample mean gets closer to the true mean of the distribution, which is $p=18/37$, which is less than 0.5, so if we keep placing bets we will end up losing money. In fact, we can check how much we will lose if we bet \$1 each time, and do it 10,000 time
+
+<<intro-lln1-3, eval=TRUE>>=
+n <- 10000
+roulette <- rbinom(n, 1, 18/37)
+cat("Prob. win=", mean(roulette),"\n")
+cat("Paid: $", prettyNum(n, big.mark=","), ". Won: ", sum(roulette), "times.", "Total gain:", prettyNum(2*sum(roulette), big.mark = ","), "dollars. Net gain/loss:", prettyNum(2*sum(roulette)-n,big.mark = ","),"\n")
+@
+
+To the casino it doesn't matter if one person bets \$1,000,000 or if 1,000 people each bets on \$1,000 -- in both cases the casino will win with probability 19/37.

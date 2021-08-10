@@ -1,0 +1,17 @@
+\subsection{Example \#3 -- receiving test messages}
+Let's simulate $n$ days, and in each one count the number of messages, if they arrive independently from a Poisson distribution with rate=10. In each day we count messages over 12 hours, so notice that how we multiply by 12 in the code below.
+
+<<intro-lln2-0, eval=TRUE, fig.align='center', fig.width=3.5, fig.height=3.5, fig.cap="Simulated text messages." >>=
+ssize <- c(5,seq(10,1000,by=10))
+myMsg <- rep(0,length(ssize))
+set.seed((40001))
+for (i in 1:length(ssize)) {
+    myMsg[i] <- mean(12*rpois(ssize[i], 10))
+}
+plot(ssize, myMsg,pch=17,col="blue", axes=FALSE)
+axis(1); axis(2)
+abline(h=12*10, lwd=2,col=2)
+@
+
+
+If we continue to get text messages at this fixed rate over a long period of time, and we calculate the average daily messages (from 8am to 8pm) we see that that average converges to 12*10=120 messages per day. 
