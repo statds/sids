@@ -1,0 +1,49 @@
+on:
+  push:
+    branches:
+      - main
+      - master
+
+name: knit
+
+jobs:
+  knit:
+    runs-on: macOS-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@v1
+
+      - uses: r-lib/actions/setup-pandoc@v1
+
+      - name: Cache Renv packages
+        uses: actions/cache@v2
+        with:
+          path: $HOME/.local/share/renv
+          key: r-${{ hashFiles('renv.lock') }}
+          restore-keys: r-
+
+      - name: Install packages
+        run: |
+          R -e 'install.packages("renv")'
+          R -e 'renv::restore()'
+
+      - name: Knit Rnw to LaTex source
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          make -C book tex
+          git remote set-branches origin overleaf
+          git fetch origin overleaf
+          mkdir .overleaf
+          git worktree add --track -B overleaf .overleaf origin/overleaf
+          rm -rf .overleaf/*
+          rsync -avr --exclude="*.Rnw" --exclude="cache" --exclude=".gitignore" book/* .overleaf
+          cd .overleaf
+          git add -A .
+          git commit --allow-empty -m "GHA for $GITHUB_SHA"
+          git push origin overleaf
+          git worktree remove .overleaf
+          rm -rf .overleaf
