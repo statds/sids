@@ -1,0 +1,66 @@
+Here we construct bootstrap confidence interval for estimating the
+population median of a gamma distribution.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{2021}\hlstd{)}
+\hlstd{theta} \hlkwb{<-} \hlkwd{runif}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{10}\hlstd{)}
+\hlstd{myBootCI} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{,} \hlkwc{alpha} \hlstd{=} \hlnum{.05}\hlstd{,} \hlkwc{B} \hlstd{=} \hlnum{400}\hlstd{,} \hlkwc{fun} \hlstd{= mean) \{}
+    \hlcom{## mb <- replicate(B, mean(sample(x, size = length(x), replace = TRUE)))}
+    \hlstd{mb} \hlkwb{<-} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{, B)}
+    \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{B) \{}
+        \hlstd{xb} \hlkwb{<-} \hlkwd{sample}\hlstd{(x,} \hlkwc{size} \hlstd{=} \hlkwd{length}\hlstd{(x),} \hlkwc{replace} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+        \hlstd{mb[i]} \hlkwb{<-} \hlkwd{fun}\hlstd{(xb)}
+    \hlstd{\}}
+    \hlkwd{quantile}\hlstd{(mb,} \hlkwd{c}\hlstd{(alpha} \hlopt{/} \hlnum{2}\hlstd{,} \hlnum{1} \hlopt{-} \hlstd{alpha} \hlopt{/} \hlnum{2}\hlstd{))}
+\hlstd{\}}
+
+\hlstd{n} \hlkwb{<-} \hlnum{50}
+\hlstd{x} \hlkwb{<-} \hlkwd{rgamma}\hlstd{(n,} \hlkwc{shape} \hlstd{= theta} \hlopt{/} \hlnum{2}\hlstd{,} \hlkwc{scale} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{myBootCI}\hlstd{(x,} \hlkwc{fun} \hlstd{= mean)}
+\end{alltt}
+\begin{verbatim}
+##     2.5%    97.5% 
+## 3.603285 5.368040
+\end{verbatim}
+\begin{alltt}
+\hlstd{nrep} \hlkwb{<-} \hlnum{1000}
+\hlstd{do1rep} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{n}\hlstd{,} \hlkwc{theta}\hlstd{,} \hlkwc{alpha} \hlstd{=} \hlnum{.05}\hlstd{,} \hlkwc{B} \hlstd{=} \hlnum{400}\hlstd{,} \hlkwc{fun} \hlstd{= mean) \{}
+    \hlcom{## generate data}
+    \hlstd{x} \hlkwb{<-} \hlkwd{rgamma}\hlstd{(n,} \hlkwc{shape} \hlstd{= theta} \hlopt{/} \hlnum{2}\hlstd{,} \hlkwc{scale} \hlstd{=} \hlnum{2}\hlstd{)}
+    \hlcom{## return the confidence interval}
+    \hlkwd{myBootCI}\hlstd{(x, alpha, B, fun)}
+\hlstd{\}}
+
+\hlstd{sim} \hlkwb{<-} \hlkwd{replicate}\hlstd{(nrep,} \hlkwd{do1rep}\hlstd{(n, theta,} \hlkwc{fun} \hlstd{= mean))}
+\hlkwd{mean}\hlstd{(sim[}\hlnum{1}\hlstd{, ]} \hlopt{<} \hlstd{theta} \hlopt{&} \hlstd{sim[}\hlnum{2}\hlstd{,]} \hlopt{>} \hlstd{theta)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.933
+\end{verbatim}
+\begin{alltt}
+\hlcom{## let's try a smaller sample size}
+\hlstd{sim} \hlkwb{<-} \hlkwd{replicate}\hlstd{(nrep,} \hlkwd{do1rep}\hlstd{(}\hlnum{20}\hlstd{, theta))}
+\hlkwd{mean}\hlstd{(sim[}\hlnum{1}\hlstd{, ]} \hlopt{<} \hlstd{theta} \hlopt{&} \hlstd{sim[}\hlnum{2}\hlstd{,]} \hlopt{>} \hlstd{theta)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.899
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+The same code could be used to estimate other target, say the
+population median.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Let's estimate the population median with sample median}
+\hlstd{sim} \hlkwb{<-} \hlkwd{replicate}\hlstd{(nrep,} \hlkwd{do1rep}\hlstd{(}\hlnum{50}\hlstd{, theta,} \hlkwc{fun} \hlstd{= median))}
+\hlstd{pmed} \hlkwb{<-} \hlkwd{qgamma}\hlstd{(}\hlnum{0.5}\hlstd{,} \hlkwc{shape} \hlstd{= theta} \hlopt{/} \hlnum{2}\hlstd{,} \hlkwc{scale} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{mean}\hlstd{(sim[}\hlnum{1}\hlstd{, ]} \hlopt{<} \hlstd{pmed} \hlopt{&} \hlstd{sim[}\hlnum{2}\hlstd{,]} \hlopt{>} \hlstd{pmed)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.947
+\end{verbatim}
+\end{kframe}
+\end{knitrout}

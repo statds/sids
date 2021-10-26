@@ -1,0 +1,77 @@
+Now let's play a game to appreciate the importance of uncertainty in
+estimation. We will use the asymptotic theory to construct the 95\%
+confidence intervals and check their actural coverage rates.
+
+\begin{illustration}
+Let's generate some $\theta$ that we do not know.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{20210623}\hlstd{)}
+\hlstd{theta}  \hlkwb{<-} \hlkwd{runif}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{10}\hlstd{)}
+\hlstd{n} \hlkwb{<-} \hlnum{50}
+\hlstd{x} \hlkwb{<-} \hlkwd{rgamma}\hlstd{(n,} \hlkwc{shape} \hlstd{= theta}\hlopt{/}\hlnum{2}\hlstd{,} \hlkwc{scale} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlstd{ciclt} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{,} \hlkwc{alpha} \hlstd{=} \hlnum{.05}\hlstd{) \{}
+    \hlstd{xbar} \hlkwb{<-} \hlkwd{mean}\hlstd{(x)}
+    \hlstd{ss} \hlkwb{<-} \hlkwd{sd}\hlstd{(x)}
+    \hlstd{z} \hlkwb{<-} \hlkwd{qnorm}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{alpha} \hlopt{/} \hlnum{2}\hlstd{)}
+    \hlstd{dd} \hlkwb{<-} \hlstd{z} \hlopt{*} \hlstd{ss} \hlopt{/} \hlkwd{sqrt}\hlstd{(}\hlkwd{length}\hlstd{(x))}
+    \hlkwd{c}\hlstd{(xbar} \hlopt{-} \hlstd{dd, xbar} \hlopt{+} \hlstd{dd)}
+\hlstd{\}}
+\hlkwd{ciclt}\hlstd{(x)}
+\end{alltt}
+\begin{verbatim}
+## [1] 2.089077 3.249442
+\end{verbatim}
+\begin{alltt}
+\hlstd{x} \hlkwb{<-} \hlkwd{rgamma}\hlstd{(n,} \hlkwc{shape} \hlstd{= theta}\hlopt{/}\hlnum{2}\hlstd{,} \hlkwc{scale} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{ciclt}\hlstd{(x)}
+\end{alltt}
+\begin{verbatim}
+## [1] 2.130422 3.616720
+\end{verbatim}
+\begin{alltt}
+\hlstd{x} \hlkwb{<-} \hlkwd{rgamma}\hlstd{(n,} \hlkwc{shape} \hlstd{= theta}\hlopt{/}\hlnum{2}\hlstd{,} \hlkwc{scale} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{ciclt}\hlstd{(x)}
+\end{alltt}
+\begin{verbatim}
+## [1] 1.985616 3.233137
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Does a 95\% onfidence interval constructed this way really give 95\%
+probability of covering the truth? By theory, it should when the
+sample size is large. Is $n = 50$ large enough for this to be good?
+We can check the actual coverage in a simulation study.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{nrep} \hlkwb{<-} \hlnum{1000}
+\hlstd{do1rep} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{n}\hlstd{,} \hlkwc{theta}\hlstd{,} \hlkwc{alpha} \hlstd{=} \hlnum{.05}\hlstd{) \{}
+    \hlcom{## generate data}
+    \hlstd{x} \hlkwb{<-} \hlkwd{rgamma}\hlstd{(n,} \hlkwc{shape} \hlstd{= theta} \hlopt{/} \hlnum{2}\hlstd{,} \hlkwc{scale} \hlstd{=} \hlnum{2}\hlstd{)}
+    \hlcom{## return the confidence interval}
+    \hlkwd{ciclt}\hlstd{(x, alpha)}
+\hlstd{\}}
+
+\hlstd{sim} \hlkwb{<-} \hlkwd{replicate}\hlstd{(nrep,} \hlkwd{do1rep}\hlstd{(n, theta))}
+\hlkwd{mean}\hlstd{(sim[}\hlnum{1}\hlstd{, ]} \hlopt{<} \hlstd{theta} \hlopt{&} \hlstd{sim[}\hlnum{2}\hlstd{,]} \hlopt{>} \hlstd{theta)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.945
+\end{verbatim}
+\begin{alltt}
+\hlcom{## let's try a smaller sample size}
+\hlstd{sim} \hlkwb{<-} \hlkwd{replicate}\hlstd{(nrep,} \hlkwd{do1rep}\hlstd{(}\hlnum{20}\hlstd{, theta))}
+\hlkwd{mean}\hlstd{(sim[}\hlnum{1}\hlstd{, ]} \hlopt{<} \hlstd{theta} \hlopt{&} \hlstd{sim[}\hlnum{2}\hlstd{,]} \hlopt{>} \hlstd{theta)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.895
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+The simulation shows that the confidence intervals constructed from
+the large sample theory works well for sample size $n = 50$ but not so
+well for $n = 20$.
+\end{illustration}

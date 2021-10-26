@@ -1,0 +1,23 @@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{2021}\hlstd{)}
+\hlstd{players} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"Tom"}\hlstd{,} \hlstr{"Jerry"}\hlstd{)}
+\hlstd{res} \hlkwb{<-} \hlkwd{replicate}\hlstd{(}\hlkwc{n}\hlstd{=}\hlnum{1000}\hlstd{,} \hlkwd{sample}\hlstd{(players,} \hlnum{5}\hlstd{,} \hlkwc{replace}\hlstd{=}\hlnum{TRUE}\hlstd{))}
+\hlcom{## Simulate the game n times}
+\hlstd{TomFirst} \hlkwb{=} \hlstd{(res[}\hlnum{1}\hlopt{:}\hlnum{3}\hlstd{,]} \hlopt{==} \hlstr{"Tom"}\hlstd{)}
+\hlcom{## Whether Tom won in the first three rounds}
+\hlstd{TomTwice} \hlkwb{=} \hlkwd{colSums}\hlstd{(TomFirst)} \hlopt{==} \hlnum{2}
+\hlcom{## Whether Tom won twice in the first three rounds}
+\hlstd{TomFinal} \hlkwb{=} \hlstd{(}\hlkwd{colSums}\hlstd{(res} \hlopt{==} \hlstr{"Tom"}\hlstd{)} \hlopt{>=}\hlnum{3}\hlstd{)} \hlopt{&} \hlstd{TomTwice}
+\hlcom{## Whether Tom would be the final winner}
+\hlstd{TomP} \hlkwb{=} \hlkwd{sum}\hlstd{(TomFinal)} \hlopt{/} \hlkwd{sum}\hlstd{(TomTwice)}
+\hlcom{## The probability that Tom would be the final winner}
+\hlkwd{c}\hlstd{(}\hlkwc{Tom}\hlstd{=TomP,} \hlkwc{Jerry}\hlstd{=}\hlnum{1}\hlopt{-}\hlstd{TomP)}
+\end{alltt}
+\begin{verbatim}
+##       Tom     Jerry 
+## 0.7647059 0.2352941
+\end{verbatim}
+\end{kframe}
+\end{knitrout}

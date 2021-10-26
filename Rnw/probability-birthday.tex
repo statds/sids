@@ -1,0 +1,32 @@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{2021}\hlstd{)}
+\hlstd{birthday} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{n}\hlstd{=}\hlnum{23}\hlstd{,} \hlkwc{yours}\hlstd{=}\hlstr{"1980-05-01"}\hlstd{)\{}
+    \hlcom{# n is the number of people}
+    \hlcom{# yours is your birthday with format "year-mm-dd"}
+    \hlstd{N} \hlkwb{<-} \hlnum{365} \hlcom{# number of days each year}
+    \hlstd{room} \hlkwb{<-} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlstd{N,} \hlkwc{size}\hlstd{=n,} \hlkwc{replace}\hlstd{=}\hlnum{TRUE}\hlstd{)} \hlcom{# randomly choose n people}
+    \hlstd{doy} \hlkwb{<-} \hlkwd{as.numeric}\hlstd{(}\hlkwd{strftime}\hlstd{(yours,} \hlkwc{format}\hlstd{=}\hlstr{"%j"}\hlstd{))}
+    \hlcom{# convert the convert your birthday to day of year}
+    \hlstd{share} \hlkwb{<-} \hlkwd{length}\hlstd{(}\hlkwd{unique}\hlstd{(room))} \hlopt{<} \hlstd{n}
+    \hlcom{## if there are people sharing a common birthday}
+    \hlstd{same} \hlkwb{<-} \hlstd{doy} \hlopt{%in%} \hlstd{room} \hlcom{# if someone's birthday the same as yours}
+    \hlkwd{return} \hlstd{(}\hlkwd{c}\hlstd{(share, same))}
+\hlstd{\}}
+
+\hlstd{res} \hlkwb{<-} \hlkwd{replicate}\hlstd{(}\hlkwc{n}\hlstd{=}\hlnum{1000}\hlstd{,} \hlkwd{birthday}\hlstd{(}\hlnum{23}\hlstd{))}
+\hlkwd{rowMeans}\hlstd{(res)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.506 0.073
+\end{verbatim}
+\begin{alltt}
+\hlstd{res} \hlkwb{<-} \hlkwd{replicate}\hlstd{(}\hlkwc{n}\hlstd{=}\hlnum{1000}\hlstd{,} \hlkwd{birthday}\hlstd{(}\hlnum{253}\hlstd{))}
+\hlkwd{rowMeans}\hlstd{(res)}
+\end{alltt}
+\begin{verbatim}
+## [1] 1.00 0.51
+\end{verbatim}
+\end{kframe}
+\end{knitrout}

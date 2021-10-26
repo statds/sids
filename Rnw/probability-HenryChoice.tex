@@ -1,0 +1,27 @@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{2021}\hlstd{)}
+\hlstd{n} \hlkwb{<-} \hlnum{10000} \hlcom{# number of simulations}
+\hlstd{spin.shot} \hlkwb{<-} \hlkwd{replicate}\hlstd{(n,} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{6}\hlstd{,} \hlnum{2}\hlstd{,} \hlkwc{replace}\hlstd{=}\hlnum{TRUE}\hlstd{))}
+\hlcom{## Assume that the bullets are in chambers 1 and 2.}
+\hlstd{first.blank} \hlkwb{<-} \hlstd{spin.shot[}\hlnum{1}\hlstd{,]} \hlopt{>} \hlnum{2}
+\hlstd{prob1} \hlkwb{<-} \hlkwd{sum}\hlstd{(spin.shot[}\hlnum{2}\hlstd{,first.blank]} \hlopt{<=} \hlnum{2}\hlstd{)} \hlopt{/} \hlkwd{sum}\hlstd{(first.blank)}
+\hlstd{twoshots} \hlkwb{<-} \hlkwa{function}\hlstd{() \{}
+    \hlstd{first.shot}  \hlkwb{<-}  \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{6}\hlstd{,} \hlnum{1}\hlstd{)}
+    \hlstd{second.shot}  \hlkwb{<-}  \hlkwd{ifelse}\hlstd{(first.shot} \hlopt{==} \hlnum{6}\hlstd{,} \hlnum{1}\hlstd{, first.shot}\hlopt{+}\hlnum{1}\hlstd{)}
+    \hlkwd{c}\hlstd{(first.shot, second.shot)}
+\hlstd{\}}
+\hlstd{shot.again} \hlkwb{<-} \hlkwd{replicate}\hlstd{(n,} \hlkwd{twoshots}\hlstd{())}
+\hlstd{first.blank} \hlkwb{<-} \hlstd{shot.again[}\hlnum{1}\hlstd{,]} \hlopt{>} \hlnum{2}
+\hlstd{prob2} \hlkwb{<-} \hlkwd{sum}\hlstd{(shot.again[}\hlnum{2}\hlstd{,first.blank]} \hlopt{<=} \hlnum{2}\hlstd{)} \hlopt{/} \hlkwd{sum}\hlstd{(first.blank)}
+\hlkwd{c}\hlstd{(prob1, prob2)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.3348978 0.2562649
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+% ## revolver = 1:6
+% ## bullet = 1:2

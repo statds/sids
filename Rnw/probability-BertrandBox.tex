@@ -1,0 +1,22 @@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{2021}\hlstd{)}
+\hlstd{boxs} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"GG"}\hlstd{,} \hlstr{"GS"}\hlstd{,} \hlstr{"SS"}\hlstd{)}
+
+\hlstd{boxcoin} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{boxs}\hlstd{)\{}
+    \hlstd{box} \hlkwb{<-} \hlkwd{sample}\hlstd{(boxs,} \hlnum{1}\hlstd{)}
+    \hlstd{idx} \hlkwb{<-} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{2}\hlstd{,} \hlnum{1}\hlstd{)}
+    \hlstd{coin} \hlkwb{<-} \hlkwd{substr}\hlstd{(box,} \hlkwc{start}\hlstd{=idx,} \hlkwc{stop}\hlstd{=idx)}
+    \hlkwd{return}\hlstd{(}\hlkwd{c}\hlstd{(box, coin))}
+\hlstd{\}}
+
+\hlstd{res} \hlkwb{<-} \hlkwd{replicate}\hlstd{(}\hlkwc{n}\hlstd{=}\hlnum{1000}\hlstd{,} \hlkwd{boxcoin}\hlstd{(boxs))}
+
+\hlkwd{mean}\hlstd{(res[}\hlnum{1}\hlstd{, res[}\hlnum{2}\hlstd{,]} \hlopt{==} \hlstr{"G"}\hlstd{]} \hlopt{==} \hlstr{"GG"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.6759443
+\end{verbatim}
+\end{kframe}
+\end{knitrout}

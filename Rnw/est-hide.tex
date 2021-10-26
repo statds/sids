@@ -1,0 +1,214 @@
+Let's set up a true $\mu$ that no one knows and generate a random sample of size
+$n = 20$.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{123}\hlstd{)} \hlcom{# each student can contribute a digit to make mu really unknown}
+\hlstd{mu} \hlkwb{<-} \hlkwd{runif}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwc{min} \hlstd{=}\hlopt{-} \hlnum{10}\hlstd{,} \hlkwc{max} \hlstd{=} \hlnum{10}\hlstd{)}
+\hlstd{n} \hlkwb{<-} \hlnum{20}
+\hlstd{x} \hlkwb{<-} \hlkwd{rnorm}\hlstd{(n,} \hlkwc{mean} \hlstd{= mu,} \hlkwc{sd} \hlstd{=} \hlnum{1}\hlstd{)}
+\hlkwd{summary}\hlstd{(x)}
+\end{alltt}
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  -5.976  -4.520  -3.877  -3.946  -3.046  -1.720
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\paragraph{Estimators}
+
+Let us consider a few candidate estimators
+
+\begin{itemize}
+\item Sample mean
+\item Sample median
+\item Midrange
+\end{itemize}
+
+The three estimates based on the observed sample are
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(estimates} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwc{mu1} \hlstd{=} \hlkwd{mean}\hlstd{(x),} \hlkwc{mu2} \hlstd{=} \hlkwd{median}\hlstd{(x),} \hlkwc{mu3} \hlstd{=} \hlkwd{mean}\hlstd{(}\hlkwd{range}\hlstd{(x))))}
+\end{alltt}
+\begin{verbatim}
+##       mu1       mu2       mu3 
+## -3.945533 -3.877437 -3.847917
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\paragraph{Mean Squared Error}
+
+To assess which estimator is better, we compare them with the true value of
+$\mu$. The squared error of an estimator $\hat\mu$ of $\mu$ is
+$(\hat\mu - \mu)^2$.
+For the three estimates based on the given sample, we have:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(estimates} \hlopt{-} \hlstd{mu)}\hlopt{^}\hlnum{2}
+\end{alltt}
+\begin{verbatim}
+##        mu1        mu2        mu3 
+## 0.09175876 0.13765041 0.16042665
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+Note that this comparison is for only the given sample. A good estimator may by
+chance behaves worse than a bad estimator. A real assessment of the quality of
+the estimator should be based on a large number of replicates, where we can
+check which estimator performs the best on average. To do so, we need to play
+this game repeatedly, collect the squared errors of the estimators, and compare
+their means, that is, mean squared error.
+
+
+\begin{illustration}[Hide-and-seek with a normal population]
+Now the game becomes a racing game. We do it through a simulation study.
+Let us construct a function to do replicate of such game.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{do1rep} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{n}\hlstd{,} \hlkwc{mu}\hlstd{) \{}
+    \hlcom{## generate data}
+    \hlstd{x} \hlkwb{<-} \hlkwd{rnorm}\hlstd{(n,} \hlkwc{mean} \hlstd{= mu,} \hlkwc{sd} \hlstd{=} \hlnum{1}\hlstd{)}
+    \hlcom{## collect estimates}
+    \hlstd{est} \hlkwb{<-}  \hlkwd{c}\hlstd{(}\hlkwc{mu1} \hlstd{=} \hlkwd{mean}\hlstd{(x),} \hlkwc{mu2} \hlstd{=} \hlkwd{median}\hlstd{(x),} \hlkwc{mu3} \hlstd{=} \hlkwd{mean}\hlstd{(}\hlkwd{range}\hlstd{(x)))}
+    \hlcom{## return squared error}
+    \hlkwd{return}\hlstd{((est} \hlopt{-} \hlstd{mu)}\hlopt{^}\hlnum{2}\hlstd{)}
+\hlstd{\}}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Each time we call this function, the experiment is done and the squared errors
+of the three estimators are returned.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{do1rep}\hlstd{(n, mu)}
+\end{alltt}
+\begin{verbatim}
+##        mu1        mu2        mu3 
+## 0.17323711 0.07180305 1.16285198
+\end{verbatim}
+\begin{alltt}
+\hlkwd{do1rep}\hlstd{(n, mu)}
+\end{alltt}
+\begin{verbatim}
+##        mu1        mu2        mu3 
+## 0.02543683 0.02323603 0.03439818
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+Which estimator is winning the game? Let's repeat the experiment 1000 times and
+compare the MSE.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{nrep} \hlkwb{<-} \hlnum{1000}
+\hlstd{sim} \hlkwb{<-} \hlkwd{replicate}\hlstd{(nrep,} \hlkwd{do1rep}\hlstd{(n, mu))}
+\hlkwd{rowMeans}\hlstd{(sim)}
+\end{alltt}
+\begin{verbatim}
+##        mu1        mu2        mu3 
+## 0.05115881 0.07603630 0.13703344
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+The first estimator, the sample mean, is a clear winner!
+\end{illustration}
+
+\begin{illustration}[Hide-and-seek with a Cauchy population]
+  % \indexExSix{Computing ranks in the presence of ties}
+\label{example:has-cauchy}
+Now let's change the distribution of the population from normal to Cauchy.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{1979}\hlstd{)}
+\hlstd{mu} \hlkwb{<-} \hlkwd{runif}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwc{min} \hlstd{=}\hlopt{-} \hlnum{10}\hlstd{,} \hlkwc{max} \hlstd{=} \hlnum{10}\hlstd{)}
+\hlstd{x} \hlkwb{<-} \hlkwd{rcauchy}\hlstd{(n,} \hlkwc{location} \hlstd{= mu)}
+\hlkwd{summary}\hlstd{(x)}
+\end{alltt}
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   3.871   7.999   8.884  10.031   9.821  25.848
+\end{verbatim}
+\begin{alltt}
+\hlstd{do1rep} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{n}\hlstd{,} \hlkwc{mu}\hlstd{) \{}
+    \hlcom{## generate data}
+    \hlstd{x} \hlkwb{<-} \hlkwd{rcauchy}\hlstd{(n,} \hlkwc{location} \hlstd{= mu)}
+    \hlcom{## collect estimates}
+    \hlstd{est} \hlkwb{<-}  \hlkwd{c}\hlstd{(}\hlkwc{mu1} \hlstd{=} \hlkwd{mean}\hlstd{(x),} \hlkwc{mu2} \hlstd{=} \hlkwd{median}\hlstd{(x),} \hlkwc{mu3} \hlstd{=} \hlkwd{mean}\hlstd{(}\hlkwd{range}\hlstd{(x)))}
+    \hlcom{## return squared error}
+    \hlkwd{return}\hlstd{((est} \hlopt{-} \hlstd{mu)}\hlopt{^}\hlnum{2}\hlstd{)}
+\hlstd{\}}
+
+\hlstd{sim} \hlkwb{<-} \hlkwd{replicate}\hlstd{(nrep,} \hlkwd{do1rep}\hlstd{(n, mu))}
+\hlkwd{rowMeans}\hlstd{(sim)}
+\end{alltt}
+\begin{verbatim}
+##          mu1          mu2          mu3 
+## 3.133503e+04 1.430156e-01 3.128879e+06
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+Which estimator is the winner this time?
+\end{illustration}
+
+
+\begin{illustration}[Hide-and-seek with a uniform population]
+  % \indexExSix{Computing ranks in the presence of ties}
+\label{example:has-unif}
+Now let's change the distribution of the population to one with light tails.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{1975}\hlstd{)}
+\hlstd{mu} \hlkwb{<-} \hlkwd{runif}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwc{min} \hlstd{=}\hlopt{-} \hlnum{10}\hlstd{,} \hlkwc{max} \hlstd{=} \hlnum{10}\hlstd{)}
+\hlstd{x} \hlkwb{<-} \hlkwd{runif}\hlstd{(n, mu} \hlopt{-} \hlnum{1}\hlstd{, mu} \hlopt{+} \hlnum{1}\hlstd{)}
+\hlkwd{summary}\hlstd{(x)}
+\end{alltt}
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.3267  0.8011  1.4551  1.2868  1.6794  2.1342
+\end{verbatim}
+\begin{alltt}
+\hlstd{do1rep} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{n}\hlstd{,} \hlkwc{mu}\hlstd{) \{}
+    \hlcom{## generate data}
+    \hlstd{x} \hlkwb{<-} \hlkwd{runif}\hlstd{(n, mu} \hlopt{-} \hlnum{1}\hlstd{, mu} \hlopt{+} \hlnum{1}\hlstd{)}
+    \hlcom{## collect estimates}
+    \hlstd{est} \hlkwb{<-}  \hlkwd{c}\hlstd{(}\hlkwc{mu1} \hlstd{=} \hlkwd{mean}\hlstd{(x),} \hlkwc{mu2} \hlstd{=} \hlkwd{median}\hlstd{(x),} \hlkwc{mu3} \hlstd{=} \hlkwd{mean}\hlstd{(}\hlkwd{range}\hlstd{(x)))}
+    \hlcom{## return squared error}
+    \hlkwd{return}\hlstd{((est} \hlopt{-} \hlstd{mu)}\hlopt{^}\hlnum{2}\hlstd{)}
+\hlstd{\}}
+
+\hlstd{sim} \hlkwb{<-} \hlkwd{replicate}\hlstd{(nrep,} \hlkwd{do1rep}\hlstd{(n, mu))}
+\hlkwd{rowMeans}\hlstd{(sim)}
+\end{alltt}
+\begin{verbatim}
+##         mu1         mu2         mu3 
+## 0.015830990 0.041249277 0.004328254
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+Which estimator is the winner this time?
+\end{illustration}
+
+
+Can we find an estimator that performs the best in all scenarios?
+
+Now that the performance depends on the true population which is
+unknown, can we make some good guesses and choose one? This is known
+as adaptive estimation.

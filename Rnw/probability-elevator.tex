@@ -1,0 +1,16 @@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{123}\hlstd{)} \hlcom{## set the random seed so that results are reproducible}
+\hlstd{n} \hlkwb{<-} \hlnum{10000} \hlcom{## number of days to simulate}
+\hlcom{## the sample space is the possible locations of the elevator [1, 15]}
+\hlstd{elevator} \hlkwb{<-} \hlkwd{runif}\hlstd{(n,} \hlkwc{min}\hlstd{=}\hlnum{1}\hlstd{,} \hlkwc{max}\hlstd{=}\hlnum{15}\hlstd{)} \hlcom{## outcomes of experiments}
+\hlstd{up} \hlkwb{<-} \hlstd{(elevator} \hlopt{<} \hlnum{13}\hlstd{)}
+\hlcom{## the elevator is below the 13th floor so that it will goes up}
+\hlkwd{sum}\hlstd{(up)} \hlopt{/} \hlstd{n}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.8633
+\end{verbatim}
+\end{kframe}
+\end{knitrout}

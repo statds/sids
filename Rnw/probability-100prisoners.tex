@@ -1,0 +1,59 @@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{2021}\hlstd{)}
+\hlstd{n} \hlkwb{<-} \hlnum{100} \hlcom{# number of prisoners}
+\hlstd{prisoners} \hlkwb{<-} \hlnum{1}\hlopt{:}\hlstd{n} \hlcom{# prisoners' numbers}
+\hlcom{# simulate the procedure of randomly open 50 (n/2) drawers}
+\hlstd{open.random} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{prisoners}\hlstd{,} \hlkwc{n}\hlstd{=}\hlkwd{length}\hlstd{(prisoners)) \{}
+    \hlstd{drawers} \hlkwb{<-} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlstd{n,} \hlkwc{size}\hlstd{=n,} \hlkwc{replace}\hlstd{=}\hlnum{FALSE}\hlstd{)}
+    \hlcom{# randomly put prisoners’ numbers in the drawers}
+    \hlstd{pardon} \hlkwb{<-} \hlnum{TRUE} \hlcom{# initialize pardon to be true}
+    \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlstd{prisoners) \{}
+        \hlstd{opens} \hlkwb{<-} \hlkwd{sample}\hlstd{(drawers, n}\hlopt{/}\hlnum{2}\hlstd{)}
+        \hlcom{# randomly open n/2 drawers}
+        \hlkwa{if} \hlstd{(}\hlopt{!}\hlstd{(i} \hlopt{%in%} \hlstd{opens)) \{}
+            \hlcom{# if any prisoner does not find his number}
+            \hlcom{# all prisoners die}
+            \hlstd{pardon} \hlkwb{<-} \hlnum{FALSE}
+            \hlkwa{break}
+        \hlstd{\}}
+    \hlstd{\}}
+    \hlkwd{return} \hlstd{(pardon)}
+\hlstd{\}}
+
+\hlstd{open.smart} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{prisoners}\hlstd{,} \hlkwc{n}\hlstd{=}\hlkwd{length}\hlstd{(prisoners)) \{}
+    \hlstd{drawers} \hlkwb{<-} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlstd{n,} \hlkwc{size}\hlstd{=n,} \hlkwc{replace}\hlstd{=}\hlnum{FALSE}\hlstd{)}
+    \hlstd{pardon} \hlkwb{<-} \hlnum{TRUE}
+    \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlstd{prisoners) \{}
+        \hlstd{opens} \hlkwb{<-} \hlkwd{rep}\hlstd{(}\hlnum{NA}\hlstd{, n}\hlopt{/}\hlnum{2}\hlstd{)}
+        \hlstd{opens[}\hlnum{1}\hlstd{]} \hlkwb{<-} \hlstd{drawers[i]}
+        \hlkwa{for} \hlstd{(j} \hlkwa{in} \hlnum{2}\hlopt{:}\hlstd{(n}\hlopt{/}\hlnum{2}\hlstd{))\{}
+            \hlkwa{if} \hlstd{(opens[j}\hlopt{-}\hlnum{1}\hlstd{]} \hlopt{==} \hlstd{i) \{}
+                \hlkwa{break}
+            \hlstd{\}} \hlkwa{else} \hlstd{\{}
+                \hlstd{opens[j]} \hlkwb{<-} \hlstd{drawers[opens[j}\hlopt{-}\hlnum{1}\hlstd{]]}
+            \hlstd{\}}
+        \hlstd{\}}
+        \hlkwa{if} \hlstd{(}\hlopt{!}\hlstd{(i} \hlopt{%in%} \hlstd{opens)) \{}
+            \hlstd{pardon} \hlkwb{<-} \hlnum{FALSE}
+            \hlkwa{break}
+        \hlstd{\}}
+    \hlstd{\}}
+    \hlkwd{return} \hlstd{(pardon)}
+\hlstd{\}}
+\hlcom{# survival probability of randomly open}
+\hlkwd{mean}\hlstd{(}\hlkwd{replicate}\hlstd{(}\hlnum{10000}\hlstd{,} \hlkwd{open.random}\hlstd{(prisoners)))}
+\end{alltt}
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+\begin{alltt}
+\hlcom{# survival probability of using the better strategy}
+\hlkwd{mean}\hlstd{(}\hlkwd{replicate}\hlstd{(}\hlnum{10000}\hlstd{,} \hlkwd{open.smart}\hlstd{(prisoners)))}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.2999
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
