@@ -8,7 +8,7 @@ name: knit
 
 jobs:
   knit:
-    runs-on: macOS-latest
+    runs-on: ubuntu-20.04
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -16,7 +16,14 @@ jobs:
 
       - uses: r-lib/actions/setup-r@v1
 
-      - uses: r-lib/actions/setup-pandoc@v1
+      - uses: r-lib/actions/setup-tinytex@v1
+
+      - name: Install fonts
+        run: |
+          echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | /usr/bin/sudo debconf-set-selections
+          /usr/bin/sudo DEBIAN_FRONTEND=noninteractive apt-get install -y ttf-mscorefonts-installer fonts-inconsolata
+          fc-cache -fv
+          fc-list : family | sort
 
       - name: Cache Renv packages
         uses: actions/cache@v2
@@ -25,25 +32,25 @@ jobs:
           key: r-${{ hashFiles('renv.lock') }}
           restore-keys: r-
 
-      - name: Install packages
+      - name: Install R packages
         run: |
           R -e 'install.packages("renv")'
           R -e 'renv::restore()'
 
-      - name: Knit Rnw to LaTex source
+      - name: Compile Rnw/LaTeX to PDF
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          make -C book tex
-          git remote set-branches origin overleaf
-          git fetch origin overleaf
-          mkdir .overleaf
-          git worktree add --track -B overleaf .overleaf origin/overleaf
-          rm -rf .overleaf/*
-          rsync -avr --exclude="*.Rnw" --exclude="cache" --exclude=".gitignore" book/* .overleaf
-          cd .overleaf
+          make -C book pdf
+          git remote set-branches origin gh-pages
+          git fetch origin gh-pages
+          mkdir .gh-pages
+          git worktree add --track -B gh-pages .gh-pages origin/gh-pages
+          rm -rf .gh-pages/*
+          cp -v book/main.pdf .gh-pages
+          cd .gh-pages
           git add -A .
           git commit --allow-empty -m "GHA for $GITHUB_SHA"
-          git push origin overleaf
-          git worktree remove .overleaf
-          rm -rf .overleaf
+          git push origin gh-pages
+          git worktree remove .gh-pages
+          rm -rf .gh-pages

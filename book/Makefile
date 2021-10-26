@@ -20,9 +20,10 @@ html: $(HTMLOUT)
 tex: $(RNW_OUT)
 
 $(PDFOUT): $(TEXSRC) $(BIBSRC) $(RNW_OUT)
-	$(TEX) $(MAIN)
-	$(BIBTEX) $(MAIN)
-	while grep -e 'Rerun to get' -e 'run LaTeX again' *.log ; do $(TEX) $(MAIN) ; done
+	@Rscript -e "tinytex::latexmk('$(MAIN).tex', '$(TEX)', '$(BIBTEX)', clean = FALSE)"
+# $(TEX) $(MAIN)
+# $(BIBTEX) $(MAIN)
+# while grep -e 'Rerun to get' -e 'run LaTeX again' *.log ; do $(TEX) $(MAIN) ; done
 	$(MAKEINDEX) $(MAIN)
 	$(TEX) $(MAIN)
 
