@@ -1,4 +1,6 @@
 MAIN = main
+MAIN_RNW = $(MAIN).Rnw
+MAIN_TEX = $(MAIN).tex
 PDFOUT  = $(MAIN).pdf
 HTMLOUT = $(MAIN).html
 RNW_DIR = Rnw
@@ -19,8 +21,11 @@ html: $(HTMLOUT)
 .PHONY: tex
 tex: $(RNW_OUT)
 
-$(PDFOUT): $(TEXSRC) $(BIBSRC) $(RNW_OUT)
-	@Rscript -e "tinytex::latexmk('$(MAIN).tex', '$(TEX)', '$(BIBTEX)', clean = FALSE)"
+$(MAIN_TEX): $(MAIN_RNW)
+	@Rscript -e "knitr::knit('$<', output = '$@')"
+
+$(PDFOUT): $(TEXSRC) $(BIBSRC) $(MAIN_TEX) $(RNW_OUT)
+	@Rscript -e "tinytex::latexmk('$(MAIN_TEX)', '$(TEX)', '$(BIBTEX)', clean = FALSE)"
 # $(TEX) $(MAIN)
 # $(BIBTEX) $(MAIN)
 # while grep -e 'Rerun to get' -e 'run LaTeX again' *.log ; do $(TEX) $(MAIN) ; done
@@ -35,7 +40,7 @@ Rnw/%.tex: Rnw/%.Rnw
 
 .PNONY: clean cleaner
 clean:
-	$(RM) -rf $(OUT) *~ .*~ .\#* .Rhistory *.aux *.bbl *.blg *.dvi *.out *.log *.toc \
+	$(RM) -r $(OUT) *~ .*~ .\#* .Rhistory *.aux *.bbl *.blg *.dvi *.out *.log *.toc \
 	*.fff *.fdb_latexmk *.fls *.ttt *diff* *oldtmp* .blb *.idx *.ilg *.ind
 
 cleaner: clean
