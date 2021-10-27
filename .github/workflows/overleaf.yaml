@@ -1,0 +1,34 @@
+on:
+  push:
+    branches:
+      - main
+      - master
+
+name: overleaf
+
+jobs:
+  overleaf:
+    runs-on: ubuntu-20.04
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Prepare all the necessary source for sync
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git remote set-branches origin overleaf
+          git fetch origin overleaf
+          cd book
+          mkdir .overleaf
+          git worktree add --track -B overleaf .overleaf origin/overleaf
+          rm -rf .overleaf/*
+          cp -vr *.tex *.bib *.cls images .overleaf
+          rsync -avr --exclude="*.tex" Rnw .overleaf
+          cd .overleaf
+          git add -A .
+          git commit --allow-empty -m "GHA for $GITHUB_SHA"
+          git push origin overleaf
+          git worktree remove .overleaf
+          rm -rf .overleaf
