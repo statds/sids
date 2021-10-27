@@ -25,6 +25,20 @@
 \begin{document}
 \maketitle
 
+<<knit-all-Rnw, include = FALSE>>=
+## for Overleaf only: knit all Rnw to LaTex files
+## cache can be enabled for those time-consuming chunks
+knitAll <- function(RnwDir, wd = RnwDir) {
+    oldWd <- getwd()
+    on.exit(setwd(oldWd))
+    setwd(wd)
+    RnwFiles <- list.files(pattern = "Rnw$")
+    for (f in RnwFiles) knitr::knit(f)
+    invisible()
+}
+knitAll("Rnw")
+@
+
 % you may need to leave a few empty pages before the dedication page (CRC guidelines are that the Table of Contents starts on page v. The title page is page i.)
 \cleardoublepage\newpage
 
