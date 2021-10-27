@@ -25,7 +25,8 @@
 \begin{document}
 \maketitle
 
-<<knit-all-Rnw, include = FALSE>>=
+% only run on Overleaf
+<<knit-all-Rnw, eval = {system2("whoami", stdout = TRUE) == "tex"}, include = FALSE>>=
 ## for Overleaf only: knit all Rnw to LaTex files
 ## cache can be enabled for those time-consuming chunks
 knitAll <- function(RnwDir, wd = RnwDir) {
