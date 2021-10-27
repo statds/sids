@@ -19,7 +19,7 @@ html: $(HTMLOUT)
 
 # knit Rnw/*.Rnw to Rnw/*.tex as needed
 .PHONY: tex
-tex: $(TEXOUT)
+tex: $(RNW_OUT)
 
 $(MAIN_TEX): $(MAIN_RNW)
 	@Rscript -e "knitr::knit('$<', output = '$@')"
